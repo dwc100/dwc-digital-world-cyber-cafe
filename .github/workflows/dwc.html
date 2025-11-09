@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital World Cyber Café</title>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+:root {
+  --blue:#00eaff;
+  --purple:#7a3dff;
+  --pink:#ff2d95;
+  --white:#ffffff;
+  --accent:#0a0f2e;
+  --accent2:#1a1f3a;
+  --text:#eaf6ff;
+}
+
+#wallpaperCanvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Navbar */
+nav.nav{position:sticky;top:0;width:100%;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:10px 15px;gap:8px;background:rgba(0,0,0,.2);backdrop-filter:blur(12px);border:2px solid var(--purple);border-radius:14px;box-shadow:0 0 25px var(--purple),0 0 50px rgba(125,60,255,.6);animation:glowBorder 3s infinite alternate;}
+@keyframes glowBorder{0%{box-shadow:0 0 15px var(--purple)}100%{box-shadow:0 0 25px var(--blue)}}
+.logo-circle{width:60px;height:60px;border-radius:50%;overflow:hidden;animation:spin 12s linear infinite;box-shadow:0 0 25px var(--blue),0 0 40px var(--purple);transition:.3s;flex-shrink:0;}
+.logo-circle img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.nav-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;flex:1;}
+nav.nav a{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:25px;background:rgba(255,255,255,.1);font-weight:600;font-size:clamp(13px,2.6vw,15px);color:var(--purple);text-decoration:none;transition:.4s ease;}
+nav.nav a:hover{color:var(--blue);background:rgba(255,255,255,.25);box-shadow:0 0 15px var(--purple);}
+.hamburger{display:none;font-size:26px;color:var(--blue);cursor:pointer;}
+
+/* Hero Section */
+header.hero{text-align:center;padding:70px 15px 40px;}
+/* ==== Glowing Logo ==== */
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo-img {
+  width: clamp(160px, 25vw, 260px);
+  height: clamp(160px, 25vw, 260px);
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--pink);
+  box-shadow: 0 0 30px var(--purple), 0 0 60px var(--blue);
+  animation: logoPulse 3s ease-in-out infinite alternate;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+.logo-img:hover {
+  transform: scale(1.1);
+  filter: brightness(1.3);
+}
+
+@keyframes logoPulse {
+  0% { box-shadow: 0 0 25px var(--blue), 0 0 60px var(--pink); }
+  100% { box-shadow: 0 0 45px var(--pink), 0 0 90px var(--purple); }
+}
+
+/* ==== Glowing Gradient Text ==== */
+.brand {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(36px, 6vw, 76px);
+  background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  letter-spacing: 1px;
+  animation: glow 3s infinite alternate;
+  text-shadow: 0 0 20px var(--blue), 0 0 40px var(--pink);
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 20px var(--blue), 0 0 40px var(--pink); }
+  to { text-shadow: 0 0 35px var(--purple), 0 0 60px var(--blue); }
+}
+@keyframes glow{0%{text-shadow:0 0 8px var(--blue)}100%{text-shadow:0 0 18px var(--purple)}}
+.hero-btn{display:inline-block;margin-top:28px;padding:14px 32px;font-size:clamp(14px,3vw,18px);border-radius:30px;text-decoration:none;font-weight:700;background:linear-gradient(135deg,var(--blue),var(--purple));color:var(--blue);box-shadow:0 0 15px var(--purple);transition:.3s;}
+.hero-btn:hover{transform:scale(1.05);box-shadow:0 0 25px var(--pink)}
+
+/* Curved Box */
+.curved-box{width:100%;max-width:1200px;margin:30px auto;background:rgba(255,255,255,.05);border-radius:40px;border:2px solid var(--blue);box-shadow:0 15px 40px rgba(0,170,255,.25);padding:30px;display:flex;flex-direction:column;align-items:center;backdrop-filter:blur(12px);}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;width:100%;margin:20px 0;}
+.service-btn{padding:16px 18px;border-radius:30px;font-size:15px;font-weight:600;border:none;cursor:pointer;background:linear-gradient(135deg,#00aaff,#0044ff);color:#fff;box-shadow:0 0 12px rgba(0,170,255,0.55);transition:.3s;}
+.service-btn:hover{transform:scale(1.05);background:linear-gradient(135deg,#0044ff,#00e6ff);}
+.bottom-buttons{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:20px 0;}
+.bottom-btn{padding:14px 22px;border-radius:30px;font-size:16px;font-weight:700;border:none;cursor:pointer;background:linear-gradient(135deg,#ff6600,#ff0044);color:#fff;transition:.3s;}
+.bottom-btn:hover{transform:scale(1.05);}
+.note-box {
+  margin-top: 20px;
+  background: rgba(0, 0, 0, 0.2); /* optional slightly dark bg for contrast */
+  border-left: 6px solid var(--blue);
+  padding: 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #fff; /* fallback */
+  font-weight: 600;
+  background: linear-gradient(90deg, #00eaff, #7a3dff, #ff2d95, #ffea00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: glowText 3s infinite alternate;
+  text-shadow: 0 0 5px #00eaff, 0 0 10px #7a3dff, 0 0 15px #ff2d95, 0 0 20px #ffea00;
+}
+
+@keyframes glowText {
+  0% {
+    text-shadow: 0 0 8px #00eaff, 0 0 16px #7a3dff, 0 0 24px #ff2d95, 0 0 32px #ffea00;
+  }
+  50% {
+    text-shadow: 0 0 12px #00eaff, 0 0 24px #7a3dff, 0 0 36px #ff2d95, 0 0 48px #ffea00;
+  }
+  100% {
+    text-shadow: 0 0 8px #00eaff, 0 0 16px #7a3dff, 0 0 24px #ff2d95, 0 0 32px #ffea00;
+  }
+}
+
+
+/* Context Menu */
+.ctx-menu{position:fixed;min-width:200px;display:none;z-index:9999;padding:6px;border-radius:10px;background:var(--accent2);color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.5);}
+.ctx-item{padding:9px;font-size:.9rem;font-weight:600;border-radius:8px;cursor:pointer;transition:.2s;}
+.ctx-item:hover{background:#1a233a;}
+.ctx-sep{height:1px;background:#333;margin:4px 0;}
+
+/* Modal */
+.modal-back{position:fixed;inset:0;display:none;place-items:center;z-index:9998;background:rgba(0,0,0,.85);}
+.modal{width:90%;max-width:320px;padding:22px;border-radius:12px;background:var(--accent2);color:#fff;}
+.modal input{width:100%;padding:10px;margin-top:8px;border-radius:8px;border:1px solid #444;background:#0a0f2e;color:#fff;}
+.actions{display:flex;gap:8px;margin-top:12px;justify-content:flex-end;}
+.btn{padding:8px 12px;border-radius:8px;font-weight:700;cursor:pointer;border:0;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;}
+.btn.ghost{background:#333;color:#ccc;}
+
+/* Offer Popup */
+.offer-popup{position: fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;z-index:99999;animation:fadeIn .6s ease-in-out;}
+.offer-content{text-align:center;background:linear-gradient(135deg,#6a11cb,#2575fc);padding:35px 25px;border-radius:18px;color:#fff;max-width:520px;width:92%;box-shadow:0 8px 28px rgba(0,0,0,.4);animation:popIn .6s ease;}
+.offer-content h1{font-size:28px;margin-bottom:12px;text-shadow:0 0 10px rgba(255,255,255,.6);}
+.offer-content p{font-size:18px;margin-bottom:22px;font-weight:500;}
+.btn-group{display:flex;gap:12px;justify-content:center;}
+.claim-btn,.not-claim-btn{padding:12px 28px;font-size:16px;font-weight:700;border:none;border-radius:40px;cursor:pointer;transition:all .3s;box-shadow:0 5px 15px rgba(0,0,0,.25);}
+.claim-btn{background:linear-gradient(135deg,#ff7e5f,#feb47b);color:#fff;}
+.claim-btn:hover{transform:scale(1.05);background:linear-gradient(135deg,#feb47b,#ff7e5f);}
+.not-claim-btn{background:#eee;color:#333;}
+.not-claim-btn:hover{background:#ddd;transform:scale(1.05);}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes popIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* Confetti Canvas */
+#confettiCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100000;}
+
+/* Mobile */
+@media(max-width:768px){
+  .nav-links{display:none;flex-direction:column;width:100%;background:#111;padding:10px;border-radius:10px;}
+  .nav-links.show{display:flex;}
+  .hamburger{display:block;}
+  .curved-box{padding:18px;border-radius:20px;}
+  .service-btn{font-size:14px;padding:12px;}
+  .bottom-btn{width:100%;max-width:280px;}
+  .note-box{font-size:13px;}
+}
+</style>
+</head>
+<body>
+
+<!-- 🌌 Glass Glow Popup with Image in Heading -->
+<div id="popupBox" class="popup-overlay active">
+  <div class="popup-content">
+    <div class="popup-header">
+      <img src="https://i.ibb.co/1gQKw6b/56.png" alt="Logo" class="popup-logo">
+      <h2>Welcome to <span class="glow-text">Digital World</span></h2>
+    </div>
+    <p>Explore powerful tools and creative <span class="shine">Softwares</span></p>
+    <div class="popup-buttons">
+      <a href="allsoftwarearea.html"><button class="main-btn">🚀 Softwares</button></a>
+    </div>
+    <span id="closePopup" class="close-btn">&times;</span>
+  </div>
+</div>
+
+<style>
+/* ==== Overlay ==== */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top left, rgba(80, 0, 140, 0.35), rgba(0, 0, 0, 0.8));
+  backdrop-filter: blur(15px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.7s ease, visibility 0.7s;
+  z-index: 9999;
+}
+.popup-overlay.active { opacity: 1; visibility: visible; }
+
+/* ==== Popup Box ==== */
+.popup-content {
+  position: relative;
+  background: rgba(25, 0, 50, 0.3);
+  border: 1px solid rgba(200, 0, 255, 0.4);
+  border-radius: 25px;
+  padding: 45px 35px;
+  width: 90%;
+  max-width: 440px;
+  text-align: center;
+  color: #fff;
+  box-shadow:
+    0 0 20px rgba(180, 0, 255, 0.5),
+    0 0 60px rgba(100, 0, 255, 0.3),
+    inset 0 0 25px rgba(200, 0, 255, 0.15);
+  backdrop-filter: blur(25px);
+  overflow: hidden;
+  animation: popupIn 0.8s ease forwards;
+}
+
+/* ==== Border Animation ==== */
+.popup-content::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  background: linear-gradient(130deg, #ff00ff, #7b00ff, #00ffff, #ff00ff);
+  border-radius: 25px;
+  z-index: -1;
+  opacity: 0.6;
+  filter: blur(25px);
+  animation: borderFlow 6s linear infinite;
+}
+@keyframes borderFlow { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(360deg); } }
+
+/* ==== Header with Image ==== */
+.popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+.popup-logo {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ff00ff;
+  box-shadow: 0 0 15px #ff00ff, 0 0 25px #00ffff;
+  animation: logoGlow 2s ease-in-out infinite alternate;
+}
+@keyframes logoGlow {
+  from { box-shadow: 0 0 12px #ff00ff, 0 0 25px #00ffff; }
+  to { box-shadow: 0 0 25px #00ffff, 0 0 40px #ff00ff; }
+}
+
+/* ==== Heading ==== */
+.popup-content h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  color: #fff;
+  text-shadow: 0 0 20px #b400ff, 0 0 40px #00e0ff;
+}
+.glow-text {
+  color: #ffb6ff;
+  animation: glowPulse 2s infinite alternate;
+}
+@keyframes glowPulse {
+  from { text-shadow: 0 0 10px #ff00ff, 0 0 20px #00e0ff; }
+  to { text-shadow: 0 0 25px #ff33ff, 0 0 45px #00ffff; }
+}
+
+/* ==== Subtext ==== */
+.popup-content p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  color: #d8b6ff;
+  margin-bottom: 35px;
+}
+.shine {
+  background: linear-gradient(90deg, #00ffff, #ff00ff, #a020f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shineMove 5s linear infinite;
+}
+@keyframes shineMove { 0% { background-position: 0%; } 100% { background-position: 200%; } }
+
+/* ==== Main Button ==== */
+.main-btn {
+  background: linear-gradient(90deg, #9d00ff, #00ffff, #9d00ff);
+  background-size: 300%;
+  border: none;
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  padding: 14px 40px;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow:
+    0 0 20px rgba(200, 0, 255, 0.5),
+    inset 0 0 10px rgba(255, 255, 255, 0.2);
+  transition: all 0.4s ease;
+  animation: gradientMove 4s linear infinite, btnPulse 2s ease-in-out infinite;
+}
+@keyframes gradientMove { 0% { background-position: 0%; } 100% { background-position: 300%; } }
+@keyframes btnPulse {
+  0%,100% { transform: scale(1); box-shadow: 0 0 25px rgba(200, 0, 255, 0.6); }
+  50% { transform: scale(1.08); box-shadow: 0 0 45px rgba(0, 255, 255, 0.7); }
+}
+.main-btn:hover { transform: scale(1.12); filter: brightness(1.3); }
+
+/* ==== Close Button ==== */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 18px;
+  font-size: 30px;
+  cursor: pointer;
+  color: #fff;
+  text-shadow: 0 0 20px #ff00ff;
+  transition: all 0.3s ease;
+}
+.close-btn:hover { color: #00ffff; transform: rotate(90deg); }
+
+/* ==== Entrance Animation ==== */
+@keyframes popupIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+</style>
+
+<script>
+document.getElementById("closePopup").addEventListener("click",()=>{
+  document.getElementById("popupBox").classList.remove("active");
+});
+</script>
+
+
+<canvas id="wallpaperCanvas"></canvas>
+
+<div class="tiles-container">
+  <!-- Generate enough tiles to cover full page -->
+  <div class="tile"></div>
+  <div class="tile"></div>
+  <div class="tile"></div>
+  <div class="tile"></div>
+  <div class="tile"></div>
+  <div class="tile"></div>
+  <div class="tile"></div>
+  <div class="tile"></div>
+  <!-- repeat as many as needed -->
+</div>
+
+<!-- Context Menu -->
+<div id="ctx" class="ctx-menu">
+  <div class="ctx-item" id="ctx_view"><i class="fa fa-eye"></i> View page</div>
+  <div class="ctx-item" id="ctx_refresh"><i class="fa fa-rotate"></i> Refresh</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item" id="ctx_secret" style="display:none;"><i class="fa fa-lock-open"></i> Secret Action</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item" id="ctx_help"><i class="fa fa-question-circle"></i> Help</div>
+</div>
+
+<!-- Modal -->
+<div id="modalBack" class="modal-back">
+  <div class="modal">
+    <div style="font-weight:800;color:var(--blue)">Enter Secret Passphrase</div>
+    <input type="password" id="passInput" placeholder="Type passphrase here"/>
+    <div class="actions">
+      <button class="btn ghost" id="modalCancel">Cancel</button>
+      <button class="btn" id="modalOk">Unlock</button>
+    </div>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav class="nav">
+  <div class="logo-circle"><img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="Logo"></div>
+  <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+  <div class="nav-links" id="navLinks">
+  <a id="homeButton" href="home.html"><i class="fa fa-house"></i> Home</a>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB7y7XkW7FeU0Nb0Tul4HifxoLNHR7O8V0",
+      authDomain: "on-off-d8263.firebaseapp.com",
+      databaseURL: "https://on-off-d8263-default-rtdb.firebaseio.com",
+      projectId: "on-off-d8263",
+      storageBucket: "on-off-d8263.appspot.com",
+      messagingSenderId: "1087218871311",
+      appId: "1:1087218871311:web:e18803aa2ec36b6b79877a",
+      measurementId: "G-R9WKF4QVHQ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const homeButton = document.getElementById('homeButton');
+    const statusRef = ref(db, 'controls/homeButton');
+
+    onValue(statusRef, (snapshot) => {
+      const status = snapshot.val() ?? 'on';
+
+      if (status === 'hide') {
+        // Hide button completely
+        homeButton.style.display = 'none';
+        homeButton.removeAttribute('href');
+        homeButton.classList.remove('disabled');
+      } else if (status === 'off') {
+        // Show button disabled
+        homeButton.style.display = 'inline-block';
+        homeButton.classList.add('disabled');
+        homeButton.removeAttribute('href'); // disable link
+      } else {
+        // 'on' or any other value means active & visible
+        homeButton.style.display = 'inline-block';
+        homeButton.classList.remove('disabled');
+        homeButton.href = 'home.html';
+      }
+    }, (error) => {
+      console.error("Failed to read status:", error);
+      // Default to visible & enabled
+      homeButton.style.display = 'inline-block';
+      homeButton.classList.remove('disabled');
+      homeButton.href = 'home.html';
+    });
+  </script><a id="servicesButton" href="services.html"><i class="fa fa-screwdriver-wrench"></i>Services</a>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyB7y7XkW7FeU0Nb0Tul4HifxoLNHR7O8V0",
+    authDomain: "on-off-d8263.firebaseapp.com",
+    databaseURL: "https://on-off-d8263-default-rtdb.firebaseio.com",
+    projectId: "on-off-d8263",
+    storageBucket: "on-off-d8263.appspot.com",
+    messagingSenderId: "1087218871311",
+    appId: "1:1087218871311:web:e18803aa2ec36b6b79877a",
+    measurementId: "G-R9WKF4QVHQ"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  // --- Buttons ---
+  const homeButton = document.getElementById('homeButton');
+  const servicesButton = document.getElementById('servicesButton');
+
+  // --- Firebase References ---
+  const homeRef = ref(db, 'controls/homeButton');
+  const servicesRef = ref(db, 'controls/servicesButton');
+
+  // --- Function to apply status ---
+  function applyStatus(button, status, href) {
+    if (!button) return;
+    
+    if (status === 'hide') {
+      button.style.display = 'none';
+      button.removeAttribute('href');
+      button.classList.remove('disabled');
+    } else if (status === 'off') {
+      button.style.display = 'inline-block';
+      button.classList.add('disabled');
+      button.removeAttribute('href');
+    } else {
+      // 'on' or any other value
+      button.style.display = 'inline-block';
+      button.classList.remove('disabled');
+      button.href = href;
+    }
+  }
+
+  // --- Listen to Firebase ---
+  onValue(homeRef, (snapshot) => {
+    const status = snapshot.val() ?? 'on';
+    applyStatus(homeButton, status, 'home.html');
+  }, (error) => {
+    console.error("Failed to read homeButton status:", error);
+    applyStatus(homeButton, 'on', 'home.html');
+  });
+
+  onValue(servicesRef, (snapshot) => {
+    const status = snapshot.val() ?? 'on';
+    applyStatus(servicesButton, status, 'services.html');
+  }, (error) => {
+    console.error("Failed to read servicesButton status:", error);
+    applyStatus(servicesButton, 'on', 'services.html');
+  });
+
+</script>
+
+<a id="aboutButton" href="about.html"><i class="fa fa-circle-info"></i> About</a>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB7y7XkW7FeU0Nb0Tul4HifxoLNHR7O8V0",
+  authDomain: "on-off-d8263.firebaseapp.com",
+  databaseURL: "https://on-off-d8263-default-rtdb.firebaseio.com",
+  projectId: "on-off-d8263",
+  storageBucket: "on-off-d8263.appspot.com",
+  messagingSenderId: "1087218871311",
+  appId: "1:1087218871311:web:e18803aa2ec36b6b79877a",
+  measurementId: "G-R9WKF4QVHQ"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// --- Buttons ---
+const homeButton = document.getElementById('homeButton');
+const servicesButton = document.getElementById('servicesButton');
+const aboutButton = document.getElementById('aboutButton'); // Added About button
+
+// --- Firebase References ---
+const homeRef = ref(db, 'controls/homeButton');
+const servicesRef = ref(db, 'controls/servicesButton');
+const aboutRef = ref(db, 'controls/aboutButton'); // Firebase node for About
+
+// --- Function to apply status ---
+function applyStatus(button, status, href) {
+  if (!button) return;
+  
+  if (status === 'hide') {
+    button.style.display = 'none';
+    button.removeAttribute('href');
+    button.classList.remove('disabled');
+  } else if (status === 'off') {
+    button.style.display = 'inline-block';
+    button.classList.add('disabled');
+    button.removeAttribute('href');
+  } else {
+    // 'on' or any other value
+    button.style.display = 'inline-block';
+    button.classList.remove('disabled');
+    button.href = href;
+  }
+}
+
+// --- Listen to Firebase ---
+onValue(homeRef, (snapshot) => {
+  const status = snapshot.val() ?? 'on';
+  applyStatus(homeButton, status, 'home.html');
+}, (error) => {
+  console.error("Failed to read homeButton status:", error);
+  applyStatus(homeButton, 'on', 'home.html');
+});
+
+onValue(servicesRef, (snapshot) => {
+  const status = snapshot.val() ?? 'on';
+  applyStatus(servicesButton, status, 'services.html');
+}, (error) => {
+  console.error("Failed to read servicesButton status:", error);
+  applyStatus(servicesButton, 'on', 'services.html');
+});
+
+onValue(aboutRef, (snapshot) => {
+  const status = snapshot.val() ?? 'on';
+  applyStatus(aboutButton, status, 'about.html');
+}, (error) => {
+  console.error("Failed to read aboutButton status:", error);
+  applyStatus(aboutButton, 'on', 'about.html');
+});
+</script>
+
+   <a id="contactButton" href="contact.html"><i class="fa fa-envelope"></i> Contact</a>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB7y7XkW7FeU0Nb0Tul4HifxoLNHR7O8V0",
+  authDomain: "on-off-d8263.firebaseapp.com",
+  databaseURL: "https://on-off-d8263-default-rtdb.firebaseio.com",
+  projectId: "on-off-d8263",
+  storageBucket: "on-off-d8263.appspot.com",
+  messagingSenderId: "1087218871311",
+  appId: "1:1087218871311:web:e18803aa2ec36b6b79877a",
+  measurementId: "G-R9WKF4QVHQ"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const contactButton = document.getElementById('contactButton');
+const contactRef = ref(db, 'controls/contactButton');
+
+function applyStatus(button, status, href) {
+  if (!button) return;
+  if (status === 'hide') {
+    button.style.display = 'none';
+    button.removeAttribute('href');
+    button.classList.remove('disabled');
+  } else if (status === 'off') {
+    button.style.display = 'inline-block';
+    button.classList.add('disabled');
+    button.removeAttribute('href');
+  } else {
+    button.style.display = 'inline-block';
+    button.classList.remove('disabled');
+    button.href = href;
+  }
+}
+
+onValue(contactRef, (snapshot) => {
+  const status = snapshot.val() ?? 'on';
+  applyStatus(contactButton, status, 'contact.html');
+}, (error) => {
+  console.error("Failed to read contactButton status:", error);
+  applyStatus(contactButton, 'on', 'contact.html');
+});
+</script>
+
+  <a id="printingButton" href="printing.html"><i class="fa fa-print"></i> Printing</a>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB7y7XkW7FeU0Nb0Tul4HifxoLNHR7O8V0",
+  authDomain: "on-off-d8263.firebaseapp.com",
+  databaseURL: "https://on-off-d8263-default-rtdb.firebaseio.com",
+  projectId: "on-off-d8263",
+  storageBucket: "on-off-d8263.appspot.com",
+  messagingSenderId: "1087218871311",
+  appId: "1:1087218871311:web:e18803aa2ec36b6b79877a",
+  measurementId: "G-R9WKF4QVHQ"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const printingButton = document.getElementById('printingButton');
+const printingRef = ref(db, 'controls/printingButton');
+
+function applyStatus(button, status, href) {
+  if (!button) return;
+  if (status === 'hide') {
+    button.style.display = 'none';
+    button.removeAttribute('href');
+    button.classList.remove('disabled');
+  } else if (status === 'off') {
+    button.style.display = 'inline-block';
+    button.classList.add('disabled');
+    button.removeAttribute('href');
+  } else {
+    button.style.display = 'inline-block';
+    button.classList.remove('disabled');
+    button.href = href;
+  }
+}
+
+onValue(printingRef, (snapshot) => {
+  const status = snapshot.val() ?? 'on';
+  applyStatus(printingButton, status, 'printing.html');
+}, (error) => {
+  console.error("Failed to read printingButton status:", error);
+  applyStatus(printingButton, 'on', 'printing.html');
+});
+</script>
+
+<a id="photosButton" href="photos.html"><i class="fa fa-id-card"></i> Photos</a>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB7y7XkW7FeU0Nb0Tul4HifxoLNHR7O8V0",
+  authDomain: "on-off-d8263.firebaseapp.com",
+  databaseURL: "https://on-off-d8263-default-rtdb.firebaseio.com",
+  projectId: "on-off-d8263",
+  storageBucket: "on-off-d8263.appspot.com",
+  messagingSenderId: "1087218871311",
+  appId: "1:1087218871311:web:e18803aa2ec36b6b79877a",
+  measurementId: "G-R9WKF4QVHQ"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const photosButton = document.getElementById('photosButton');
+const photosRef = ref(db, 'controls/photosButton');
+
+function applyStatus(button, status, href) {
+  if (!button) return;
+  if (status === 'hide') {
+    button.style.display = 'none';
+    button.removeAttribute('href');
+    button.classList.remove('disabled');
+  } else if (status === 'off') {
+    button.style.display = 'inline-block';
+    button.classList.add('disabled');
+    button.removeAttribute('href');
+  } else {
+    button.style.display = 'inline-block';
+    button.classList.remove('disabled');
+    button.href = href;
+  }
+}
+
+onValue(photosRef, (snapshot) => {
+  const status = snapshot.val() ?? 'on';
+  applyStatus(photosButton, status, 'photos.html');
+}, (error) => {
+  console.error("Failed to read photosButton status:", error);
+  applyStatus(photosButton, 'on', 'photos.html');
+});
+</script>
+
+   <a id="supportButton" href="support.html"><i class="fa fa-headset"></i> Support</a>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB7y7XkW7FeU0Nb0Tul4HifxoLNHR7O8V0",
+  authDomain: "on-off-d8263.firebaseapp.com",
+  databaseURL: "https://on-off-d8263-default-rtdb.firebaseio.com",
+  projectId: "on-off-d8263",
+  storageBucket: "on-off-d8263.appspot.com",
+  messagingSenderId: "1087218871311",
+  appId: "1:1087218871311:web:e18803aa2ec36b6b79877a",
+  measurementId: "G-R9WKF4QVHQ"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const supportButton = document.getElementById('supportButton');
+const supportRef = ref(db, 'controls/supportButton');
+
+function applyStatus(button, status, href) {
+  if (!button) return;
+  
+  if (status === 'hide') {
+    button.style.display = 'none';
+    button.removeAttribute('href');
+    button.classList.remove('disabled');
+  } else if (status === 'off') {
+    button.style.display = 'inline-block';
+    button.classList.add('disabled');
+    button.removeAttribute('href');
+  } else {
+    button.style.display = 'inline-block';
+    button.classList.remove('disabled');
+    button.href = href;
+  }
+}
+
+onValue(supportRef, (snapshot) => {
+  const status = snapshot.val() ?? 'on';
+  applyStatus(supportButton, status, 'support.html');
+}, (error) => {
+  console.error("Failed to read supportButton status:", error);
+  applyStatus(supportButton, 'on', 'support.html');
+});
+</script>
+
+   <a id="galleryButton" href="gallery.html"><i class="fa fa-image"></i> Gallery</a>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB7y7XkW7FeU0Nb0Tul4HifxoLNHR7O8V0",
+  authDomain: "on-off-d8263.firebaseapp.com",
+  databaseURL: "https://on-off-d8263-default-rtdb.firebaseio.com",
+  projectId: "on-off-d8263",
+  storageBucket: "on-off-d8263.appspot.com",
+  messagingSenderId: "1087218871311",
+  appId: "1:1087218871311:web:e18803aa2ec36b6b79877a",
+  measurementId: "G-R9WKF4QVHQ"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const galleryButton = document.getElementById('galleryButton');
+const galleryRef = ref(db, 'controls/galleryButton');
+
+function applyStatus(button, status, href) {
+  if (!button) return;
+
+  if (status === 'hide') {
+    button.style.display = 'none';
+    button.removeAttribute('href');
+    button.classList.remove('disabled');
+  } else if (status === 'off') {
+    button.style.display = 'inline-block';
+    button.classList.add('disabled');
+    button.removeAttribute('href');
+  } else {
+    button.style.display = 'inline-block';
+    button.classList.remove('disabled');
+    button.href = href;
+  }
+}
+
+onValue(galleryRef, (snapshot) => {
+  const status = snapshot.val() ?? 'on';
+  applyStatus(galleryButton, status, 'gallery.html');
+}, (error) => {
+  console.error("Failed to read galleryButton status:", error);
+  applyStatus(galleryButton, 'on', 'gallery.html');
+});
+</script>
+
+<a id="softwaresButton" href="softwares.html"><i class="fa fa-code"></i> Softwares</a>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB7y7XkW7FeU0Nb0Tul4HifxoLNHR7O8V0",
+  authDomain: "on-off-d8263.firebaseapp.com",
+  databaseURL: "https://on-off-d8263-default-rtdb.firebaseio.com",
+  projectId: "on-off-d8263",
+  storageBucket: "on-off-d8263.appspot.com",
+  messagingSenderId: "1087218871311",
+  appId: "1:1087218871311:web:e18803aa2ec36b6b79877a",
+  measurementId: "G-R9WKF4QVHQ"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const softwaresButton = document.getElementById('softwaresButton');
+const softwaresRef = ref(db, 'controls/softwaresButton');
+
+function applyStatus(button, status, href) {
+  if (!button) return;
+
+  if (status === 'hide') {
+    button.style.display = 'none';
+    button.removeAttribute('href');
+    button.classList.remove('disabled');
+  } else if (status === 'off') {
+    button.style.display = 'inline-block';
+    button.classList.add('disabled');
+    button.removeAttribute('href');
+  } else {
+    button.style.display = 'inline-block';
+    button.classList.remove('disabled');
+    button.href = href;
+  }
+}
+
+onValue(softwaresRef, (snapshot) => {
+  const status = snapshot.val() ?? 'on';
+  applyStatus(softwaresButton, status, 'softwares.html');
+}, (error) => {
+  console.error("Failed to read softwaresButton status:", error);
+  applyStatus(softwaresButton, 'on', 'softwares.html');
+});
+</script>
+
+	    <a id="loginButton" href="login.html" style="color: var(--blue);"><i class="fas fa-sign-in-alt"></i> Login</a>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB7y7XkW7FeU0Nb0Tul4HifxoLNHR7O8V0",
+  authDomain: "on-off-d8263.firebaseapp.com",
+  databaseURL: "https://on-off-d8263-default-rtdb.firebaseio.com",
+  projectId: "on-off-d8263",
+  storageBucket: "on-off-d8263.appspot.com",
+  messagingSenderId: "1087218871311",
+  appId: "1:1087218871311:web:e18803aa2ec36b6b79877a",
+  measurementId: "G-R9WKF4QVHQ"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const loginButton = document.getElementById('loginButton');
+const loginRef = ref(db, 'controls/loginButton');
+
+function applyStatus(button, status, href) {
+  if (!button) return;
+
+  if (status === 'hide') {
+    button.style.display = 'none';
+    button.removeAttribute('href');
+    button.classList.remove('disabled');
+  } else if (status === 'off') {
+    button.style.display = 'inline-block';
+    button.classList.add('disabled');
+    button.removeAttribute('href');
+  } else {
+    button.style.display = 'inline-block';
+    button.classList.remove('disabled');
+    button.href = href;
+  }
+}
+
+onValue(loginRef, (snapshot) => {
+  const status = snapshot.val() ?? 'on';
+  applyStatus(loginButton, status, 'login.html');
+}, (error) => {
+  console.error("Failed to read loginButton status:", error);
+  applyStatus(loginButton, 'on', 'login.html');
+});
+</script>
+
+<a id="signupButton" href="signup.html" style="color: var(--blue);"><i class="fas fa-user-plus"></i> Sign Up</a>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB7y7XkW7FeU0Nb0Tul4HifxoLNHR7O8V0",
+  authDomain: "on-off-d8263.firebaseapp.com",
+  databaseURL: "https://on-off-d8263-default-rtdb.firebaseio.com",
+  projectId: "on-off-d8263",
+  storageBucket: "on-off-d8263.appspot.com",
+  messagingSenderId: "1087218871311",
+  appId: "1:1087218871311:web:e18803aa2ec36b6b79877a",
+  measurementId: "G-R9WKF4QVHQ"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const signupButton = document.getElementById('signupButton');
+const signupRef = ref(db, 'controls/signupButton');
+
+function applyStatus(button, status, href) {
+  if (!button) return;
+
+  if (status === 'hide') {
+    button.style.display = 'none';
+    button.removeAttribute('href');
+    button.classList.remove('disabled');
+  } else if (status === 'off') {
+    button.style.display = 'inline-block';
+    button.classList.add('disabled');
+    button.removeAttribute('href');
+  } else {
+    button.style.display = 'inline-block';
+    button.classList.remove('disabled');
+    button.href = href;
+  }
+}
+
+onValue(signupRef, (snapshot) => {
+  const status = snapshot.val() ?? 'on';
+  applyStatus(signupButton, status, 'signup.html');
+}, (error) => {
+  console.error("Failed to read signupButton status:", error);
+  applyStatus(signupButton, 'on', 'signup.html');
+});
+</script>
+
+  </div>
+  <div class="logo-circle"><img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="Logo"></div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+<img src="https://i.ibb.co/1gQKw6b/56.png" alt="Digital World Logo" class="logo-img">
+  <h1 class="brand">Digital World Cyber Café</h1>
+<a id="exploreButton" href="explore.html" class="hero-btn"><i class="fas fa-compass"></i> Explore Services</a>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB7y7XkW7FeU0Nb0Tul4HifxoLNHR7O8V0",
+  authDomain: "on-off-d8263.firebaseapp.com",
+  databaseURL: "https://on-off-d8263-default-rtdb.firebaseio.com",
+  projectId: "on-off-d8263",
+  storageBucket: "on-off-d8263.appspot.com",
+  messagingSenderId: "1087218871311",
+  appId: "1:1087218871311:web:e18803aa2ec36b6b79877a",
+  measurementId: "G-R9WKF4QVHQ"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// Contact button logic
+const contactButton = document.getElementById('contactButton');
+const contactRef = ref(db, 'controls/contactButton');
+
+// Explore button logic
+const exploreButton = document.getElementById('exploreButton');
+const exploreRef = ref(db, 'controls/exploreButton');
+
+function applyStatus(button, status, href) {
+  if (!button) return;
+  if (status === 'hide') {
+    button.style.display = 'none';
+    button.removeAttribute('href');
+    button.classList.remove('disabled');
+  } else if (status === 'off') {
+    button.style.display = 'inline-block';
+    button.classList.add('disabled');
+    button.removeAttribute('href');
+  } else {
+    button.style.display = 'inline-block';
+    button.classList.remove('disabled');
+    button.href = href;
+  }
+}
+
+// Listen for contact button status
+onValue(contactRef, (snapshot) => {
+  const status = snapshot.val() ?? 'on';
+  applyStatus(contactButton, status, 'contact.html');
+}, (error) => {
+  console.error("Failed to read contactButton status:", error);
+  applyStatus(contactButton, 'on', 'contact.html');
+});
+
+// Listen for explore button status
+onValue(exploreRef, (snapshot) => {
+  const status = snapshot.val() ?? 'on';
+  applyStatus(exploreButton, status, 'explore.html');
+}, (error) => {
+  console.error("Failed to read exploreButton status:", error);
+  applyStatus(exploreButton, 'on', 'explore.html');
+});
+</script>
+
+</header>
+
+<!-- Services -->
+<div class="curved-box" id="services">
+  <div class="services-grid">
+    <button class="service-btn">1. Online Forms</button>
+    <button class="service-btn">2. Aadhaar / PAN</button>
+    <button class="service-btn">3. Passport / Visa</button>
+    <button class="service-btn">4. Banking & KYC</button>
+    <button class="service-btn">5. Education</button>
+    <button class="service-btn">6. Scholarships</button>
+    <button class="service-btn">7. Exam Forms</button>
+    <button class="service-btn">8. Results Download</button>
+  </div>
+  <div class="bottom-buttons">
+    <button class="bottom-btn">📞 Contact Us</button>
+    <button class="bottom-btn">ℹ️ About Us</button>
+    <button class="bottom-btn">📍 Location</button>
+    <button class="bottom-btn">💬 Feedback</button>
+  </div>
+  <div class="note-box">
+    <strong>Note:</strong> किसी भी कार्य को शुरू करने से पहले कृपया WhatsApp पर संपर्क करें और कार्य की पुष्टि करें।
+  </div>
+</div>
+<script>
+// Show popup when page loads
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('popupBox').classList.add('active');
+  }, 1000); // show after 1 second
+});
+
+// Close popup
+document.getElementById('closePopup').addEventListener('click', () => {
+  document.getElementById('popupBox').classList.remove('active');
+});
+
+</script>
+
+<script>
+// Animated Wallpaper Canvas
+const wallpaper = document.getElementById('wallpaperCanvas');
+const wCtx = wallpaper.getContext('2d');
+wallpaper.width = window.innerWidth;
+wallpaper.height = window.innerHeight;
+
+window.addEventListener('resize', () => {
+  wallpaper.width = window.innerWidth;
+  wallpaper.height = window.innerHeight;
+});
+
+const stars = [];
+for (let i = 0; i < 150; i++) {
+  stars.push({
+    x: Math.random() * wallpaper.width,
+    y: Math.random() * wallpaper.height,
+    r: Math.random() * 2 + 1,
+    dx: Math.random() * 0.5 - 0.25,
+    dy: Math.random() * 0.5 - 0.25
+  });
+}
+
+function drawWallpaper() {
+  wCtx.clearRect(0, 0, wallpaper.width, wallpaper.height);
+  stars.forEach(star => {
+    wCtx.beginPath();
+    wCtx.arc(star.x, star.y, star.r, 0, Math.PI*2);
+    wCtx.fillStyle = '#0ff';
+    wCtx.fill();
+    star.x += star.dx;
+    star.y += star.dy;
+
+    // Wrap around screen
+    if (star.x > wallpaper.width) star.x = 0;
+    if (star.x < 0) star.x = wallpaper.width;
+    if (star.y > wallpaper.height) star.y = 0;
+    if (star.y < 0) star.y = wallpaper.height;
+  });
+  requestAnimationFrame(drawWallpaper);
+}
+
+drawWallpaper();
+
+</script>
+</body>
+</html>
