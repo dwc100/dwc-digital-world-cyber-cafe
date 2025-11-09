@@ -1,25 +1,25 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- ✅ Google Verification -->
-  <meta name="google-site-verification" content="8qeE21l3B1EsLTwZJdzF2YUfM1a3ASTyY9BsrpAIL3o" />
-  <meta name="google-site-verification" content="JrG-SBaeHRlatMYXaPUX2LDymGCw8FJCBRUGCa0rzS4" />
+  <!-- ✅ Google Verification (दोनों valid codes रखे गए हैं) -->
+  <meta name="google-site-verification" content="8qeE21l3B1EsLTwZJdzF2YUfM1a3ASTyY9BsrpAIL3o">
+  <meta name="google-site-verification" content="JrG-SBaeHRlatMYXaPUX2LDymGCw8FJCBRUGCa0rzS4">
 
+  <!-- ✅ Basic Setup -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to DWC</title>
 
   <!-- ✅ SEO Essentials -->
-  <title>Welcome to DWC</title>
-  <meta http-equiv="Strict-Transport-Security" content="max-age=63072000; includeSubDomains; preload">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob:;">
-<meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
-
   <meta name="description" content="DWC provides top digital services including cyber cafe, online forms, and digital solutions.">
   <meta name="keywords" content="DWC, Digital World, Cyber Cafe, Online Forms, Services, dwc100, GitHub Pages">
   <meta name="author" content="DWC Team">
   <link rel="canonical" href="https://dwc100.github.io/dwc-digital-world-cyber-cafe/">
 
   <!-- ✅ Security Headers -->
+  <meta http-equiv="Strict-Transport-Security" content="max-age=63072000; includeSubDomains; preload">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob:;">
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="Referrer-Policy" content="no-referrer-when-downgrade">
 
@@ -44,33 +44,33 @@
   </script>
 
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-   body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: radial-gradient(circle at top, #ffffff 60%, #eef2ff 100%);
-  font-family: 'Poppins', sans-serif;
-  overflow: hidden;
-}
+    * {margin:0;padding:0;box-sizing:border-box}
 
-.loader {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 260px;
-  height: 260px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.ring{
+    body {
+      height:100vh;
+      width:100vw;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      background:radial-gradient(circle at top, #ffffff 60%, #eef2ff 100%);
+      font-family:'Poppins',sans-serif;
+      overflow:hidden;
+    }
+
+    .loader {
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      width:260px;
+      height:260px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .ring {
       position:absolute;
       inset:0;
       border-radius:50%;
@@ -79,9 +79,10 @@
       filter:drop-shadow(0 0 25px rgba(0,183,255,.6));
       will-change:transform;
     }
-    @keyframes spin{to{transform:rotate(360deg)}}
 
-    .mask{
+    @keyframes spin {to {transform:rotate(360deg)}}
+
+    .mask {
       position:absolute;
       inset:20px;
       border-radius:50%;
@@ -91,20 +92,22 @@
                  inset 0 0 10px rgba(255,255,255,.6);
     }
 
-    .logo{
-      width:180px;height:180px;
+    .logo {
+      width:180px;
+      height:180px;
       border-radius:50%;
       object-fit:cover;
       z-index:3;
       animation:logoGlow 3s ease-in-out infinite alternate;
       will-change:filter;
     }
-    @keyframes logoGlow{
-      from{filter:drop-shadow(0 0 12px #00e0ff) drop-shadow(0 0 20px #a020f0);}
-      to{filter:drop-shadow(0 0 22px #ff00e0) drop-shadow(0 0 30px #00b3ff);}
+
+    @keyframes logoGlow {
+      from {filter:drop-shadow(0 0 12px #00e0ff) drop-shadow(0 0 20px #a020f0);}
+      to {filter:drop-shadow(0 0 22px #ff00e0) drop-shadow(0 0 30px #00b3ff);}
     }
 
-    .welcome-text{
+    .welcome-text {
       margin-top:40px;
       font-size:26px;
       font-weight:700;
@@ -114,28 +117,33 @@
       -webkit-text-fill-color:transparent;
       animation:textFlow 6s linear infinite;
     }
-    @keyframes textFlow{
-      0%{background-position:0% 50%}
-      100%{background-position:100% 50%}
+
+    @keyframes textFlow {
+      0% {background-position:0% 50%}
+      100% {background-position:100% 50%}
     }
 
-    .dots{display:inline-flex;margin-left:6px;}
-    .dot{
-      width:8px;height:8px;
+    .dots {display:inline-flex;margin-left:6px;}
+    .dot {
+      width:8px;
+      height:8px;
       border-radius:50%;
       background:#00bfff;
-      margin:0 4px;opacity:.2;
+      margin:0 4px;
+      opacity:.2;
       animation:blink 1.5s infinite;
     }
+
     .dot:nth-child(2){animation-delay:.3s}
     .dot:nth-child(3){animation-delay:.6s}
-    @keyframes blink{
-      0%,20%{opacity:.2;transform:scale(.8)}
-      40%{opacity:1;transform:scale(1.4)}
-      60%,100%{opacity:.2;transform:scale(.8)}
+
+    @keyframes blink {
+      0%,20% {opacity:.2;transform:scale(.8)}
+      40% {opacity:1;transform:scale(1.4)}
+      60%,100% {opacity:.2;transform:scale(.8)}
     }
 
-    .fade{
+    .fade {
       position:fixed;
       inset:0;
       background:#fff;
@@ -144,39 +152,39 @@
       transition:opacity 1s ease;
       z-index:10;
     }
-    .fade.show{opacity:1}
+    .fade.show {opacity:1}
 
-    /* ✅ Stylish Network Popup (Toast Notification) */
     .toast {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      min-width: 260px;
-      padding: 14px 18px;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 600;
-      color: #fff;
-      background: #007bff;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-      opacity: 0;
-      transform: translateY(30px);
-      pointer-events: none;
-      transition: all 0.4s ease;
-      z-index: 999;
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      min-width:260px;
+      padding:14px 18px;
+      border-radius:12px;
+      font-size:15px;
+      font-weight:600;
+      color:#fff;
+      background:#007bff;
+      box-shadow:0 4px 20px rgba(0,0,0,0.2);
+      opacity:0;
+      transform:translateY(30px);
+      pointer-events:none;
+      transition:all 0.4s ease;
+      z-index:999;
     }
 
     .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
+      opacity:1;
+      transform:translateY(0);
+      pointer-events:auto;
     }
 
-    .toast.success {background: linear-gradient(90deg,#00c853,#00e676);}
-    .toast.error {background: linear-gradient(90deg,#d50000,#ff1744);}
-    .toast.info {background: linear-gradient(90deg,#2962ff,#00b0ff);}
+    .toast.success {background:linear-gradient(90deg,#00c853,#00e676);}
+    .toast.error {background:linear-gradient(90deg,#d50000,#ff1744);}
+    .toast.info {background:linear-gradient(90deg,#2962ff,#00b0ff);}
   </style>
 </head>
+
 <body>
   <main role="main" aria-label="Loading screen for DWC website">
     <div class="loader" role="status" aria-label="Loading... please wait">
@@ -193,7 +201,9 @@
     <p class="welcome-text" role="heading" aria-level="1">
       Welcome to DWC — Please wait
       <span class="dots">
-        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
       </span>
     </p>
 
@@ -201,14 +211,11 @@
     <div id="toast" class="toast" role="alert" aria-live="polite"></div>
   </main>
 
-  <script>
-  "use strict";
-  (function(){
+  <script defer>
+  (function() {
     const redirectUrl = "dwc.html";
     const fade = document.getElementById("fade");
     const toast = document.getElementById("toast");
-
-    if (!redirectUrl.startsWith("dwc")) return;
 
     function showToast(message, type = "info", duration = 3000) {
       toast.textContent = message;
@@ -245,5 +252,3 @@
   </script>
 </body>
 </html>
-
-
