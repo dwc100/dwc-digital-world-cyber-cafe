@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dwc100.github.io/dwc-digital-world-cyber-cafe/sitemap.xml
