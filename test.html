@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Login — OTP Verification</title>
+  <link rel="icon" type="image/png" href="https://i.ibb.co/1gQKw6b/56.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #00aaff;
+      --purple: #7d3cff;
+      --bg1: #ffffff;
+      --bg2: #eef5ff;
+      --bg3: #f6f0ff;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body {
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
+      animation:bgmove 12s ease infinite;
+      background-size:400% 400%;
+    }
+    @keyframes bgmove {0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    .card {
+      width:400px;
+      background:rgba(255,255,255,0.85);
+      border-radius:20px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.15);
+      border:2px solid rgba(125,60,255,0.3);
+      text-align:center;
+      padding:30px;
+      position:relative;
+      overflow:hidden;
+    }
+    .card::before {
+      content:"";
+      position:absolute;
+      inset:-50%;
+      background:conic-gradient(from 0deg,var(--blue),var(--purple),var(--blue));
+      animation:spin 5s linear infinite;
+      z-index:0;
+      opacity:.4;
+    }
+    .card::after {
+      content:"";
+      position:absolute;
+      inset:4px;
+      border-radius:16px;
+      background:rgba(255,255,255,0.9);
+      z-index:1;
+    }
+    .card>*{position:relative;z-index:2;}
+    @keyframes spin {to{transform:rotate(360deg)}}
+    h1 {
+      font-family:'Orbitron',sans-serif;
+      font-size:28px;
+      margin-bottom:20px;
+      background:linear-gradient(90deg,var(--blue),var(--purple));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    input {
+      width:100%;
+      padding:12px;
+      border:1px solid rgba(125,60,255,0.3);
+      border-radius:10px;
+      margin-bottom:15px;
+      outline:none;
+      font-size:15px;
+    }
+    input:focus {border-color:var(--blue);box-shadow:0 0 10px rgba(0,170,255,0.3);}
+    button {
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:10px;
+      background:linear-gradient(90deg,var(--blue),var(--purple));
+      color:#fff;
+      font-weight:600;
+      cursor:pointer;
+      transition:transform .2s;
+    }
+    button:hover {transform:scale(1.05);}
+    #feedback{margin-top:10px;font-weight:600;}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Admin OTP Login</h1>
+    <input type="text" id="phone" placeholder="Enter allowed mobile number (+91...)" />
+    <div id="recaptcha-container"></div>
+    <button id="sendOtp">Send OTP</button>
+    <input type="text" id="otp" placeholder="Enter OTP" style="display:none;" />
+    <button id="verifyOtp" style="display:none;">Verify OTP</button>
+    <div id="feedback"></div>
+  </main>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAoAONAcz2TrIML5DWw7MHP1GWXA1Nu678",
+      authDomain: "adminotp-1dcf5.firebaseapp.com",
+      databaseURL: "https://adminotp-1dcf5-default-rtdb.firebaseio.com",
+      projectId: "adminotp-1dcf5",
+      storageBucket: "adminotp-1dcf5.firebasestorage.app",
+      messagingSenderId: "1008143217341",
+      appId: "1:1008143217341:web:52ffd5f14482b66aa77dd4",
+      measurementId: "G-0QBCN9SLZR"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    let confirmationResult;
+    const phoneInput = document.getElementById('phone');
+    const sendBtn = document.getElementById('sendOtp');
+    const otpInput = document.getElementById('otp');
+    const verifyBtn = document.getElementById('verifyOtp');
+    const feedback = document.getElementById('feedback');
+
+    // 🔹 Initialize reCAPTCHA safely on page load
+    window.onload = () => {
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+        size: 'normal',
+        callback: (response) => { console.log("reCAPTCHA verified"); }
+      });
+    };
+
+    sendBtn.addEventListener('click', async () => {
+      const phone = phoneInput.value.trim();
+      feedback.textContent = "";
+      if (!phone) return feedback.textContent = "Enter your phone number.";
+
+      try {
+        // ✅ Check allowed numbers from DB
+        const dbRef = ref(db);
+        const snapshot = await get(child(dbRef, "allowedNumbers"));
+        let allowed = false;
+        snapshot.forEach(childSnap => {
+          if (childSnap.val() === phone) allowed = true;
+        });
+
+        if (!allowed) {
+          feedback.textContent = "❌ This number is not authorized.";
+          feedback.style.color = "red";
+          return;
+        }
+
+        // ✅ Send OTP
+        confirmationResult = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
+        feedback.textContent = "✅ OTP sent successfully!";
+        feedback.style.color = "green";
+        otpInput.style.display = "block";
+        verifyBtn.style.display = "block";
+
+      } catch (error) {
+        console.error(error);
+        feedback.textContent = "⚠️ " + error.message;
+        feedback.style.color = "red";
+      }
+    });
+
+    verifyBtn.addEventListener('click', async () => {
+      const code = otpInput.value.trim();
+      if (!code) return feedback.textContent = "Enter the OTP.";
+
+      try {
+        await confirmationResult.confirm(code);
+        feedback.textContent = "✅ OTP Verified!";
+        feedback.style.color = "green";
+        setTimeout(() => window.location.href = "admin-dashboard.html", 1200);
+      } catch (error) {
+        feedback.textContent = "❌ Invalid OTP.";
+        feedback.style.color = "red";
+      }
+    });
+  </script>
+</body>
+</html>
