@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>DWC Users Panel</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+:root {
+  --blue:#007bff;
+  --purple:#a64dff;
+  --pink:#ff4da6;
+  --green:#00b894;
+  --red:#e63946;
+  --bg:#ffffff;
+}
+
+/* ===== GLOBAL ===== */
+*{box-sizing:border-box;transition:all 0.3s ease;}
+body{
+  font-family:'Poppins',sans-serif;
+  background:var(--bg);
+  color:#1a1a1a;
+  margin:0;
+  overflow-x:hidden;
+}
+
+/* ===== HERO ===== */
+header.hero{
+  text-align:center;
+  padding:80px 20px 50px;
+  background:linear-gradient(135deg,#ffffff,var(--blue),var(--purple),var(--pink));
+  box-shadow:0 0 25px rgba(0,0,0,0.1);
+}
+.brand{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(48px,7vw,90px);
+  margin:0;
+  background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:glowText 3s infinite alternate;
+  text-shadow:0 0 20px rgba(123,47,247,0.6);
+}
+@keyframes glowText {
+  0% { text-shadow:0 0 8px var(--blue),0 0 18px var(--purple);}
+  100% { text-shadow:0 0 22px var(--pink),0 0 35px var(--purple);}
+}
+
+/* ===== STATUS BAR ===== */
+.status-bar{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:20px;
+  margin:30px auto;
+  max-width:800px;
+}
+.status-card{
+  flex:1 1 220px;
+  text-align:center;
+  padding:20px;
+  border-radius:16px;
+  color:#fff;
+  box-shadow:0 0 15px rgba(0,0,0,0.15);
+  font-weight:700;
+  font-size:1.1rem;
+}
+.total{background:linear-gradient(90deg,var(--blue),var(--purple));}
+.active{background:linear-gradient(90deg,var(--green),#40e0d0);}
+.deactivated{background:linear-gradient(90deg,var(--pink),var(--red));}
+.status-card span{
+  display:block;
+  font-size:2rem;
+  font-weight:900;
+  margin-top:6px;
+  font-family:'Orbitron',sans-serif;
+}
+
+/* ===== MAIN ===== */
+main{
+  max-width:1200px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+/* ===== TOP BUTTONS ===== */
+.top-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:15px;
+  margin-bottom:40px;
+}
+.top-buttons button{
+  border:none;
+  padding:14px 28px;
+  border-radius:14px;
+  font-weight:600;
+  cursor:pointer;
+  color:white;
+  font-size:1rem;
+  text-transform:uppercase;
+  box-shadow:0 4px 20px rgba(0,0,0,0.15);
+}
+.activate-all{background:linear-gradient(90deg,var(--green),var(--blue));}
+.deactivate-all{background:linear-gradient(90deg,var(--pink),var(--red));}
+.top-buttons button:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 25px rgba(0,0,0,0.2);
+}
+
+/* ===== FORM ===== */
+form{
+  background:rgba(255,255,255,0.85);
+  backdrop-filter:blur(10px);
+  border-radius:20px;
+  padding:40px 35px;
+  border:2px solid rgba(0,0,0,0.05);
+  box-shadow:0 8px 30px rgba(0,0,0,0.08);
+  max-width:500px;
+  margin:0 auto 70px;
+}
+form h2{
+  text-align:center;
+  font-family:'Orbitron',sans-serif;
+  font-size:1.8rem;
+  background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 12px rgba(123,47,247,0.4);
+  margin-bottom:25px;
+}
+label{
+  font-weight:600;
+  display:block;
+  margin-top:15px;
+  color:#333;
+}
+input{
+  width:100%;
+  padding:12px 14px;
+  border:1.5px solid #ccc;
+  border-radius:10px;
+  margin-top:6px;
+  font-size:1rem;
+  background:#fff;
+}
+input:focus{
+  border-color:var(--purple);
+  outline:none;
+  box-shadow:0 0 8px rgba(123,47,247,0.25);
+}
+button.add{
+  margin-top:25px;
+  width:100%;
+  border:none;
+  border-radius:10px;
+  padding:14px;
+  font-weight:700;
+  background:linear-gradient(90deg,var(--blue),var(--purple));
+  color:white;
+  cursor:pointer;
+  font-size:1.05rem;
+  letter-spacing:0.6px;
+  box-shadow:0 0 18px rgba(123,47,247,0.3);
+}
+button.add:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 25px rgba(255,77,166,0.4);
+}
+
+/* ===== USER GRID ===== */
+.user-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:25px;
+}
+.user-card{
+  position:relative;
+  background:rgba(255,255,255,0.95);
+  border:2px solid transparent;
+  border-image:linear-gradient(90deg,var(--blue),var(--purple),var(--pink)) 1;
+  border-radius:20px;
+  padding:25px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  transition:transform .3s,box-shadow .3s;
+}
+.user-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 12px 35px rgba(123,47,247,0.3);
+}
+.user-card h3{
+  font-family:'Great Vibes',cursive;
+  font-size:1.8rem;
+  margin-bottom:10px;
+  background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 10px rgba(123,47,247,0.4);
+}
+.user-card small{
+  display:block;
+  font-size:0.95rem;
+  color:#444;
+  margin-bottom:6px;
+}
+
+/* STATUS TAG */
+.status-tag{
+  position:absolute;
+  top:15px;
+  right:15px;
+  padding:6px 12px;
+  border-radius:10px;
+  font-weight:600;
+  font-size:0.8rem;
+  color:white;
+  box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+.status-tag.active{background:var(--green);}
+.status-tag.expired{background:var(--red);}
+
+/* CARD BUTTONS */
+.card-buttons{
+  display:flex;
+  gap:10px;
+  margin-top:18px;
+}
+.card-buttons button{
+  flex:1;
+  padding:10px 0;
+  border:none;
+  border-radius:8px;
+  color:white;
+  font-weight:600;
+  font-size:0.9rem;
+  cursor:pointer;
+  box-shadow:0 3px 10px rgba(0,0,0,0.15);
+}
+.reactivate{background:linear-gradient(90deg,var(--green),var(--blue));}
+.deactivate{background:linear-gradient(90deg,#ffb703,#fb8500);}
+.delete{background:linear-gradient(90deg,#ff4d6d,#dc3545);}
+.card-buttons button:hover{transform:scale(1.05);}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1 class="brand">DWC Users Panel</h1>
+</header>
+
+<!-- LIVE STATUS -->
+<section class="status-bar">
+  <div class="status-card total">Total Users <span id="totalCount">0</span></div>
+  <div class="status-card active">Active Users <span id="activeCount">0</span></div>
+  <div class="status-card deactivated">Deactivated Users <span id="expiredCount">0</span></div>
+</section>
+
+<main>
+  <div class="top-buttons">
+    <button class="activate-all" id="activateAll"><i class="fa-solid fa-toggle-on"></i> Activate All</button>
+    <button class="deactivate-all" id="deactivateAll"><i class="fa-solid fa-toggle-off"></i> Deactivate All</button>
+  </div>
+
+  <form id="userForm">
+    <h2>Add New User</h2>
+    <label>Username</label>
+    <input id="uname" type="text" required>
+
+    <label>Passkey</label>
+    <input id="upass" type="text" placeholder="Leave blank to auto-generate">
+
+    <label>Validity (days)</label>
+    <input id="udays" type="number" min="1" value="30">
+
+    <button type="submit" class="add"><i class="fa-solid fa-plus"></i> Add User</button>
+  </form>
+
+  <div class="user-list" id="usersList"></div>
+</main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, push, onValue, update, remove, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBbykwvZZkCQITwsBqdv3aBfEX6oCgTtS8",
+  authDomain: "user-manager-74b70.firebaseapp.com",
+  databaseURL: "https://user-manager-74b70-default-rtdb.firebaseio.com",
+  projectId: "user-manager-74b70",
+  storageBucket: "user-manager-74b70.appspot.com",
+  messagingSenderId: "339101560395",
+  appId: "1:339101560395:web:d2fc89720ba3f3588c27ce"
+};
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+function makeKey(len=12){
+  const chars="ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789";
+  let s=""; for(let i=0;i<len;i++) s+=chars[Math.floor(Math.random()*chars.length)];
+  return s;
+}
+
+// Add User
+const form=document.getElementById("userForm");
+form.addEventListener("submit",async e=>{
+  e.preventDefault();
+  const uname=document.getElementById("uname").value.trim();
+  let upass=document.getElementById("upass").value.trim();
+  const udays=parseInt(document.getElementById("udays").value)||30;
+  if(!upass) upass=makeKey(10);
+  const now=new Date();
+  const expiry=new Date(now.getTime()+udays*24*60*60*1000).toISOString();
+  await push(ref(db,"users"),{
+    username:uname,
+    passkey:upass,
+    addedAt:now.toISOString(),
+    expiryDate:expiry,
+    validityDays:udays,
+    lastActivated:now.toISOString(),
+    status:"active"
+  });
+  form.reset();
+});
+
+const list=document.getElementById("usersList");
+const THREE_HOURS = 3 * 60 * 60 * 1000;
+
+function renderUsers(data){
+  list.innerHTML="";
+  let total=0,active=0,expired=0;
+
+  Object.entries(data).forEach(([key,u])=>{
+    total++;
+    const now=new Date();
+    const lastActive=new Date(u.lastActivated||u.addedAt);
+    const diff=(now-lastActive);
+    let status=u.status;
+
+    if(diff >= THREE_HOURS && status==="active"){
+      status="expired";
+      update(ref(db,"users/"+key),{status:"expired"});
+    }
+    if(status==="active") active++; else expired++;
+
+    const div=document.createElement("div");
+    div.className="user-card";
+    div.innerHTML=`
+      <span class="status-tag ${status}">${status.toUpperCase()}</span>
+      <h3>${u.username}</h3>
+      <small><b>Passkey:</b> ${u.passkey}</small>
+      <small><b>Expires:</b> ${new Date(u.expiryDate).toLocaleDateString()}</small>
+      <div class="card-buttons">
+        <button class="reactivate"><i class="fa-solid fa-rotate"></i> Activate</button>
+        <button class="deactivate"><i class="fa-solid fa-ban"></i> Deactivate</button>
+        <button class="delete"><i class="fa-solid fa-trash"></i> Delete</button>
+      </div>`;
+    div.querySelector(".reactivate").onclick=()=>update(ref(db,"users/"+key),{
+      status:"active",lastActivated:new Date().toISOString()
+    });
+    div.querySelector(".deactivate").onclick=()=>update(ref(db,"users/"+key),{status:"expired"});
+    div.querySelector(".delete").onclick=()=>remove(ref(db,"users/"+key));
+    list.appendChild(div);
+  });
+
+  document.getElementById("totalCount").textContent=total;
+  document.getElementById("activeCount").textContent=active;
+  document.getElementById("expiredCount").textContent=expired;
+}
+
+onValue(ref(db,"users"),snap=>{
+  const data=snap.val()||{};
+  renderUsers(data);
+});
+
+// Auto refresh every 60 sec
+setInterval(async ()=>{
+  const snap=await get(ref(db,"users"));
+  if(snap.exists()) renderUsers(snap.val());
+},60000);
+
+// Activate / Deactivate All
+document.getElementById("activateAll").onclick=async()=>{
+  const usersRef=ref(db,"users");
+  const snap=await get(usersRef);
+  if(snap.exists()){
+    Object.entries(snap.val()).forEach(([key])=>{
+      update(ref(db,"users/"+key),{status:"active",lastActivated:new Date().toISOString()});
+    });
+  }
+};
+document.getElementById("deactivateAll").onclick=async()=>{
+  const usersRef=ref(db,"users");
+  const snap=await get(usersRef);
+  if(snap.exists()){
+    Object.entries(snap.val()).forEach(([key])=>{
+      update(ref(db,"users/"+key),{status:"expired"});
+    });
+  }
+};
+</script>
+</body>
+</html>

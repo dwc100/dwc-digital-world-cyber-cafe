@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Image Enhancer — Dwc Tools</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <!-- Fonts + Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --blue:#00eaff; --purple:#9b59ff; --pink:#ff4d6d;
+      --accent: linear-gradient(135deg,var(--blue),var(--purple),var(--pink));
+      --bg-1: rgba(6,6,20,0.62);
+      --card: rgba(255,255,255,0.04);
+      --glass: rgba(255,255,255,0.03);
+      --muted: rgba(223,231,255,0.7);
+      --radius:14px;
+      --shadow: 0 12px 40px rgba(0,0,0,0.6);
+      --transition: 220ms cubic-bezier(.2,.9,.3,1);
+      font-synthesis:none;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:
+        radial-gradient(900px 400px at 10% 10%, rgba(155,89,255,0.06), transparent 10%),
+        radial-gradient(700px 300px at 90% 90%, rgba(0,234,255,0.04), transparent 8%),
+        url('A_digital_image_showcases_a_futuristic_circuit_boa.png') center/cover fixed;
+      color:#eaf2ff;
+      padding:40px 18px;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    .container{ max-width:1100px; margin:0 auto; display:grid; gap:22px; grid-template-columns: 1fr 420px; align-items:start; }
+    header{ grid-column:1/-1; display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:4px;}
+    .title{ font-family:'Orbitron',sans-serif; font-size:clamp(20px,3vw,28px); background:var(--accent); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .subtitle{ color:var(--muted); font-size:0.95rem; }
+
+    /* Left: Workspace */
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border-radius: var(--radius);
+      padding:18px;
+      box-shadow:var(--shadow);
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .upload {
+      display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center;
+      padding:18px; border-radius:10px; border:2px dashed rgba(255,255,255,0.04); background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+      min-height:160px; text-align:center; transition:all 160ms ease;
+    }
+    .upload.dragover { border-color: rgba(255,255,255,0.12); transform:translateY(-4px); }
+
+    .upload .hint{ color:var(--muted); font-size:0.95rem }
+    .file-input{ display:none; }
+
+    .controls{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:10px; }
+    .btn{
+      background:var(--accent); color:#fff; padding:10px 14px; border-radius:999px; font-weight:600; text-decoration:none; display:inline-flex; gap:10px; align-items:center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+      transition:transform var(--transition);
+    }
+    .btn:active{ transform:translateY(1px) }
+
+    /* Right: Settings */
+    .sidebar{ padding:18px; display:flex; flex-direction:column; gap:12px; }
+
+    .preview-wrap{ display:flex; gap:12px; flex-direction:column; align-items:center; }
+    canvas{ max-width:100%; border-radius:10px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03); }
+
+    label.range-label{ display:flex; justify-content:space-between; font-size:0.9rem; color:var(--muted); margin-bottom:6px; }
+    .range { width:100%; }
+    input[type="range"]{ width:100%; accent-color: var(--purple); }
+
+    .setting{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.03);
+    }
+
+    .small{ font-size:0.85rem; color:var(--muted) }
+
+    footer{ grid-column:1/-1; text-align:center; margin-top:8px; color:var(--muted); font-size:0.9rem; }
+
+    /* responsive */
+    @media (max-width:980px){
+      .container{ grid-template-columns: 1fr; padding-bottom:20px; }
+      .sidebar{ order:2 }
+    }
+
+    /* accessibility focus */
+    button:focus, a:focus, input:focus { outline: 3px solid rgba(123,97,255,0.12); outline-offset:3px; border-radius:8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <div class="title">Dwc Image Enhancer</div>
+        <div class="subtitle">Enhance, sharpen, denoise & download — everything client-side.</div>
+      </div>
+      <div>
+        <a class="btn" href="index.html"><i class="fa fa-arrow-left"></i> Back to Tools</a>
+      </div>
+    </header>
+
+    <!-- LEFT: workspace / preview -->
+    <section class="card" aria-labelledby="workspace-heading">
+      <h3 id="workspace-heading" style="font-family:'Orbitron',sans-serif;color:var(--blue);margin-bottom:12px">Workspace</h3>
+
+      <div id="dropZone" class="upload" tabindex="0" role="button" aria-label="Upload or drop an image">
+        <div style="font-size:34px;color:var(--pink)"><i class="fa fa-image"></i></div>
+        <div class="hint">Drop image here or <label for="file" style="color:var(--blue);text-decoration:underline;cursor:pointer">browse</label></div>
+        <input id="file" class="file-input" type="file" accept="image/*">
+        <div class="small">Supported: JPG, PNG, WebP. Max recommended ~20MB</div>
+      </div>
+
+      <div class="preview-wrap" style="margin-top:14px">
+        <canvas id="previewCanvas" width="800" height="450" aria-label="Image preview"></canvas>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;margin-top:10px">
+          <button id="resetBtn" class="btn" type="button"><i class="fa fa-undo"></i> Reset</button>
+          <button id="downloadBtn" class="btn" type="button"><i class="fa fa-download"></i> Download Result</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: controls -->
+    <aside class="sidebar card" aria-labelledby="controls-heading">
+      <h3 id="controls-heading" style="font-family:'Orbitron',sans-serif;color:var(--blue);margin-bottom:6px">Enhancement Controls</h3>
+      <div class="small">Adjust sliders to see live changes. Click Download to save the processed image.</div>
+
+      <div class="setting" aria-hidden="false">
+        <label class="range-label"><span>Brightness</span><span id="val-bright">0</span></label>
+        <input id="brightness" class="range" type="range" min="-100" max="100" value="0">
+      </div>
+
+      <div class="setting">
+        <label class="range-label"><span>Contrast</span><span id="val-contrast">0</span></label>
+        <input id="contrast" class="range" type="range" min="-100" max="100" value="0">
+      </div>
+
+      <div class="setting">
+        <label class="range-label"><span>Sharpen</span><span id="val-sharp">0</span></label>
+        <input id="sharpen" class="range" type="range" min="0" max="200" value="0">
+        <div class="small" style="margin-top:6px">Use sharpen to increase perceived detail. High values may add noise.</div>
+      </div>
+
+      <div class="setting">
+        <label class="range-label"><span>Denoise (Blur)</span><span id="val-blur">0</span></label>
+        <input id="blur" class="range" type="range" min="0" max="8" value="0" step="1">
+        <div class="small" style="margin-top:6px">Low=fast. Higher = smoother but softer.</div>
+      </div>
+
+      <div class="setting">
+        <label class="range-label"><span>Upscale</span><span id="val-upscale">1×</span></label>
+        <input id="upscale" class="range" type="range" min="1" max="3" value="1" step="0.5">
+        <div class="small" style="margin-top:6px">Upscale uses browser canvas draw (nearest/linear). Use modest values.</div>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap">
+        <button id="applyBtn" class="btn" type="button"><i class="fa fa-magic"></i> Apply</button>
+        <button id="autoBtn" class="btn" type="button"><i class="fa fa-bolt"></i> Auto Enhance</button>
+      </div>
+
+    </aside>
+
+    <footer>Client-side processing • No images are uploaded to any server • Works offline</footer>
+  </div>
+
+  <script>
+    // Core variables
+    const fileInput = document.getElementById('file');
+    const dropZone = document.getElementById('dropZone');
+    const canvas = document.getElementById('previewCanvas');
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    let originalImage = null; // HTMLImageElement
+    let workingImage = null; // Image data stored as ImageBitmap or offscreen
+
+    // Controls
+    const brightness = document.getElementById('brightness');
+    const contrast = document.getElementById('contrast');
+    const sharpen = document.getElementById('sharpen');
+    const blur = document.getElementById('blur');
+    const upscale = document.getElementById('upscale');
+
+    // Value displays
+    const vBright = document.getElementById('val-bright');
+    const vContrast = document.getElementById('val-contrast');
+    const vSharp = document.getElementById('val-sharp');
+    const vBlur = document.getElementById('val-blur');
+    const vUpscale = document.getElementById('val-upscale');
+
+    // Buttons
+    const resetBtn = document.getElementById('resetBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const applyBtn = document.getElementById('applyBtn');
+    const autoBtn = document.getElementById('autoBtn');
+
+    // Helpers: update label values
+    function syncLabels(){
+      vBright.innerText = brightness.value;
+      vContrast.innerText = contrast.value;
+      vSharp.innerText = sharpen.value;
+      vBlur.innerText = blur.value;
+      vUpscale.innerText = upscale.value + '×';
+    }
+    [brightness,contrast,sharpen,blur,upscale].forEach(inp=>{
+      inp.addEventListener('input', ()=> {
+        syncLabels();
+        // live preview when user moves sliders (throttled)
+        if (originalImage) requestAnimationFrame(() => renderPreview(false));
+      });
+    });
+    syncLabels();
+
+    // Drag & drop
+    ['dragenter','dragover'].forEach(evt=>{
+      dropZone.addEventListener(evt, (e)=>{
+        e.preventDefault(); e.stopPropagation();
+        dropZone.classList.add('dragover');
+      });
+    });
+    ['dragleave','drop','dragend'].forEach(evt=>{
+      dropZone.addEventListener(evt, (e)=>{
+        e.preventDefault(); e.stopPropagation();
+        dropZone.classList.remove('dragover');
+      });
+    });
+
+    dropZone.addEventListener('drop', (e)=>{
+      const f = e.dataTransfer.files && e.dataTransfer.files[0];
+      if (f) handleFile(f);
+    });
+
+    // Click to open file
+    dropZone.addEventListener('click', ()=> fileInput.click());
+    dropZone.addEventListener('keypress',(e)=>{ if(e.key==='Enter' || e.key===' ') fileInput.click(); });
+    fileInput.addEventListener('change', ()=> {
+      const f = fileInput.files && fileInput.files[0];
+      if(f) handleFile(f);
+      fileInput.value = '';
+    });
+
+    // Read file
+    function handleFile(file){
+      if (!file.type.startsWith('image/')) { alert('Please select an image file.'); return; }
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        originalImage = img;
+        // Fit canvas to image with max width limit for performance
+        const maxW = 1600;
+        const ratio = Math.min(1, maxW / img.width);
+        canvas.width = Math.round(img.width * ratio);
+        canvas.height = Math.round(img.height * ratio);
+        renderPreview(true);
+      };
+      img.onerror = ()=> { alert('Unable to load image.'); URL.revokeObjectURL(url); };
+      img.src = url;
+    }
+
+    // Core render pipeline
+    // modeApply: if true, create final processed image (e.g. for high-quality upscales)
+    async function renderPreview(modeApply=false){
+      if (!originalImage) return;
+      const b = parseInt(brightness.value,10);
+      const c = parseInt(contrast.value,10);
+      const s = parseInt(sharpen.value,10);
+      const bl = parseInt(blur.value,10);
+      const up = parseFloat(upscale.value);
+
+      // target canvas size for preview or apply
+      const baseW = originalImage.width;
+      const baseH = originalImage.height;
+      const targetW = Math.round(baseW * up * (modeApply ? 1 : (canvas.width / baseW)));
+      const targetH = Math.round(baseH * up * (modeApply ? 1 : (canvas.height / baseH)));
+
+      // Create an offscreen canvas for processing
+      const off = document.createElement('canvas');
+      off.width = targetW;
+      off.height = targetH;
+      const octx = off.getContext('2d');
+
+      // Draw image scaled to target
+      octx.imageSmoothingEnabled = up > 1 ? false : true;
+      octx.drawImage(originalImage, 0, 0, targetW, targetH);
+
+      // Get image data for pixel ops
+      let imgData = octx.getImageData(0,0,targetW,targetH);
+      let data = imgData.data;
+
+      // Apply brightness & contrast (fast, per-pixel)
+      if (b !== 0 || c !== 0){
+        // contrast factor
+        const factor = (259 * (c + 255)) / (255 * (259 - c));
+        for (let i=0;i<data.length;i+=4){
+          // brightness
+          data[i] = clamp(factor * (data[i] - 128) + 128 + b, 0,255);     // R
+          data[i+1] = clamp(factor * (data[i+1] - 128) + 128 + b,0,255); // G
+          data[i+2] = clamp(factor * (data[i+2] - 128) + 128 + b,0,255); // B
+          // alpha left unchanged
+        }
+      }
+
+      // Apply blur (simple box blur approximated by canvas filter if available)
+      if (bl > 0 && ('filter' in octx)){
+        // put modified pixels
+        octx.putImageData(imgData,0,0);
+        octx.filter = `blur(${bl}px)`;
+        const temp = octx.getImageData(0,0,targetW,targetH);
+        octx.clearRect(0,0,targetW,targetH);
+        octx.filter = 'none';
+        octx.putImageData(temp,0,0);
+        imgData = octx.getImageData(0,0,targetW,targetH);
+        data = imgData.data;
+      } else {
+        // if no blur requested or canvas.filter not available, keep data as is
+        octx.putImageData(imgData,0,0);
+      }
+
+      // Apply sharpen (unsharp mask-like using convolution)
+      if (s > 0){
+        // build kernel based on s (0..200)
+        // convert to a small convolution kernel: center weight increases with s
+        const k = sharpenKernelForValue(s);
+        imgData = convolution(octx, imgData, k);
+        octx.putImageData(imgData,0,0);
+      }
+
+      // Finally draw to preview canvas (scaled to its size)
+      // We want the visible canvas to maintain aspect ratio & fit in UI
+      if (!modeApply) {
+        // draw offscreen as scaled to visible canvas
+        const visW = canvas.width, visH = canvas.height;
+        ctx.clearRect(0,0,visW,visH);
+        // draw processed offscreen to visible
+        ctx.drawImage(off, 0, 0, targetW, targetH, 0, 0, visW, visH);
+      } else {
+        // replace main canvas with processed result at full size
+        canvas.width = targetW;
+        canvas.height = targetH;
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.drawImage(off,0,0);
+      }
+    }
+
+    // Utility: clamp
+    function clamp(v,min,max){ return v<min?min:(v>max?max:v) }
+
+    // Create sharpen kernel dynamically
+    function sharpenKernelForValue(sval){
+      // sval 0..200 -> produce kernel like:
+      // center = 1 + sval/100 ; surround negative small weights
+      const center = 1 + sval/100;
+      const side = -0.2 * (sval/100); // negative neighbors
+      // kernel 3x3
+      return [
+        0 + side, 0 + side, 0 + side,
+        0 + side, center,    0 + side,
+        0 + side, 0 + side, 0 + side
+      ];
+    }
+
+    // Convolution: simple CPU-based; returns ImageData
+    function convolution(context, srcImageData, kernel){
+      const width = srcImageData.width;
+      const height = srcImageData.height;
+      const src = srcImageData.data;
+      const out = context.createImageData(width, height);
+      const dst = out.data;
+      const kw = 3, kh = 3;
+      const halfW = Math.floor(kw/2), halfH = Math.floor(kh/2);
+
+      for (let y=0;y<height;y++){
+        for (let x=0;x<width;x++){
+          let r=0,g=0,b=0,a=0;
+          for (let ky=0; ky<kh; ky++){
+            for (let kx=0; kx<kw; kx++){
+              const ix = x + (kx-halfW);
+              const iy = y + (ky-halfH);
+              if (ix >=0 && ix < width && iy >=0 && iy < height){
+                const srcPos = (iy*width + ix) * 4;
+                const kval = kernel[ky*kw + kx];
+                r += src[srcPos] * kval;
+                g += src[srcPos+1] * kval;
+                b += src[srcPos+2] * kval;
+                a += src[srcPos+3] * kval;
+              }
+            }
+          }
+          const dstPos = (y*width + x)*4;
+          dst[dstPos] = clamp(r,0,255);
+          dst[dstPos+1] = clamp(g,0,255);
+          dst[dstPos+2] = clamp(b,0,255);
+          dst[dstPos+3] = clamp(a,0,255);
+        }
+      }
+      return out;
+    }
+
+    // Reset to original
+    resetBtn.addEventListener('click', ()=>{
+      if (!originalImage) return;
+      // reset controls
+      brightness.value = 0; contrast.value = 0; sharpen.value = 0; blur.value = 0; upscale.value = 1;
+      syncLabels();
+      // redraw preview in original fitted size
+      const ratio = Math.min(1, 1200 / originalImage.width);
+      canvas.width = Math.round(originalImage.width * ratio);
+      canvas.height = Math.round(originalImage.height * ratio);
+      renderPreview(true);
+    });
+
+    // Download current canvas as file
+    downloadBtn.addEventListener('click', ()=>{
+      if (!originalImage) { alert('Please upload an image first'); return; }
+      // Apply at full/selected upscale resolution (modeApply = true)
+      renderPreview(true).then(()=> {
+        // produce blob and download
+        canvas.toBlob((blob)=>{
+          if (!blob) { alert('Export failed'); return; }
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = 'dwc-enhanced.png';
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        }, 'image/png');
+      });
+    });
+
+    // Apply button (do full apply and redraw)
+    applyBtn.addEventListener('click', ()=> {
+      if (!originalImage) { alert('Please upload an image first'); return; }
+      renderPreview(true);
+    });
+
+    // Auto enhance: a simple heuristic (increase contrast & brightness slightly, apply mild sharpen)
+    autoBtn.addEventListener('click', ()=> {
+      if (!originalImage) { alert('Please upload an image first'); return; }
+      // simple auto settings based on image histogram could be done, but keep heuristic:
+      brightness.value = 6;
+      contrast.value = 12;
+      sharpen.value = 18;
+      blur.value = 0;
+      upscale.value = 1;
+      syncLabels();
+      renderPreview(false);
+    });
+
+    // If user resizes window, keep canvas display size consistent
+    window.addEventListener('resize', ()=>{
+      if (!originalImage) return;
+      // maintain current aspect: fit width to container max 800
+      const maxW = Math.min(1000, originalImage.width);
+      const ratio = Math.min(1, maxW / originalImage.width);
+      canvas.width = Math.round(originalImage.width * ratio);
+      canvas.height = Math.round(originalImage.height * ratio);
+      renderPreview(false);
+    });
+
+    // Initialize empty canvas placeholder
+    (function initPlaceholder(){
+      ctx.fillStyle = 'rgba(255,255,255,0.03)';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.font = '18px Poppins, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.25)';
+      ctx.textAlign = 'center';
+      ctx.fillText('No image loaded — drop or browse an image', canvas.width/2, canvas.height/2);
+    })();
+
+  </script>
+</body>
+</html>

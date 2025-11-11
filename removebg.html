@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DWC Auto Background Remover</title>
+<link rel="icon" href="https://i.ibb.co/1gQKw6b/56.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+:root {
+  --blue: #00eaff;
+  --purple: #9b59ff;
+  --accent1: #7A00FF;
+  --accent2: #C800FF;
+  --radius: 16px;
+  --bg-light: #f9f9f9;
+  --card-bg: rgba(255,255,255,0.9);
+  --text-dark: #111;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+body, html{
+  height:100%;
+  background: var(--bg-light);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  padding:20px;
+  color: var(--text-dark);
+}
+
+header{
+  margin:20px;text-align:center;
+}
+header h1{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(32px,6vw,56px);
+  background: linear-gradient(90deg,var(--blue),var(--purple));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+header p{
+  font-weight:600;
+  margin-top:6px;
+  color: #555;
+}
+
+.tool-card{
+  width:100%;
+  max-width:520px;
+  background: var(--card-bg);
+  border-radius:var(--radius);
+  padding:24px;
+  margin-top:16px;
+  box-shadow:0 12px 36px rgba(0,0,0,0.08);
+  position:relative;
+}
+
+.preview-box{
+  width:100%;
+  height:360px;
+  border-radius:12px;
+  overflow:hidden;
+  background: #f0f0f0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  margin-bottom:16px;
+}
+.preview-box img{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+  opacity:0;
+  transition:opacity 400ms,transform 400ms;
+  transform:scale(0.98);
+}
+.preview-box img.show{
+  opacity:1;
+  transform:scale(1);
+}
+.preview-placeholder{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:8px;
+  color:#888;
+  font-weight:600;
+  text-align:center;
+}
+.preview-placeholder small{
+  font-size:13px;
+  color:#aaa;
+}
+
+input[type="file"]{display:none;}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:0 20px;
+  height:50px;
+  border-radius:50px;
+  font-weight:700;
+  cursor:pointer;
+  border:none;
+  outline:none;
+  position:relative;
+  overflow:hidden;
+  transition:all 260ms cubic-bezier(.2,.9,.2,1);
+}
+.btn-glow{
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
+  color:#fff;
+  box-shadow:0 8px 28px rgba(122,0,255,0.2);
+}
+
+.color-bar{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  margin-bottom:12px;
+}
+.color-swatch{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  cursor:pointer;
+  transition:0.3s;
+  border:2px solid rgba(0,0,0,0.08);
+}
+.color-swatch[data-active="true"]{
+  box-shadow:0 0 12px rgba(122,0,255,0.3);
+}
+
+.status-line{
+  margin-top:12px;
+  font-size:15px;
+  min-height:28px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  justify-content:center;
+  color:#555;
+}
+.status-dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:rgba(0,0,0,0.12);
+}
+.status-text{
+  font-weight:700;
+}
+
+.loader-overlay{
+  position:absolute;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background: rgba(255,255,255,0.6);
+}
+.loader-overlay.show{
+  display:flex;
+}
+.spinner{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  border:6px solid rgba(0,0,0,0.1);
+  border-top-color:var(--blue);
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+
+<body>
+<header>
+  <h1>DWC BACKGROUND REMOVER</h1>
+  <p>AI-powered automatic background removal</p>
+</header>
+
+<main class="tool-card">
+  <input type="file" id="fileInput" accept="image/*">
+  <label class="btn btn-glow" for="fileInput" id="selectBtn"> <i class="fa fa-upload"></i> Upload Image</label>
+
+  <div class="preview-box" id="previewBox">
+    <img id="previewImg" alt="Preview">
+    <div class="preview-placeholder">
+      <i class="fa fa-image" style="font-size:34px"></i>
+      <div>Upload an image — background will be removed automatically</div>
+      <small>Transparent areas will appear clear</small>
+    </div>
+    <div class="loader-overlay" id="loaderOverlay">
+      <div class="spinner" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <div class="color-bar" id="colorBar">
+    <div class="color-swatch" data-color="original" title="Original" data-active="true"></div>
+    <div class="color-swatch" data-color="#7A00FF" title="Purple"></div>
+    <div class="color-swatch" data-color="#0ABEFF" title="Blue"></div>
+    <div class="color-swatch" data-color="#00C7A7" title="Teal"></div>
+    <div class="color-swatch" data-color="#FF4FB0" title="Pink"></div>
+    <div class="color-swatch" data-color="#F3F7FF" title="Light"></div>
+  </div>
+
+  <div class="status-line" id="statusLine">
+    <span class="status-dot" id="statusDot"></span>
+    <span class="status-text" id="statusText">Ready</span>
+  </div>
+</main>
+
+<script>
+const fileInput = document.getElementById('fileInput');
+const previewImg = document.getElementById('previewImg');
+const previewPlaceholder = document.querySelector('.preview-placeholder');
+const loaderOverlay = document.getElementById('loaderOverlay');
+const statusText = document.getElementById('statusText');
+const statusDot = document.getElementById('statusDot');
+const colorSwatches = Array.from(document.querySelectorAll('.color-swatch'));
+
+let removedObjectUrl = null;
+let lastChosenColor = null;
+
+function setStatus(state,text){
+  statusText.textContent = text||'Ready';
+  if(state==='ready'){statusDot.style.background='rgba(0,150,200,0.5)';}
+  if(state==='removing'){statusDot.style.background='rgba(255,180,0,0.8)';}
+  if(state==='done'){statusDot.style.background='rgba(0,200,100,0.8)';}
+}
+
+function showLoader(show){
+  loaderOverlay.classList.toggle('show',show);
+}
+
+async function removeBackground(file){
+  showLoader(true);
+  setStatus('removing','Removing background...');
+  const formData = new FormData();
+  formData.append('image_file', file);
+  formData.append('size','auto');
+  const API_KEY = 'R7JKVP7ATv7mR61XbAiPATM5';
+  try{
+    const res = await fetch('https://api.remove.bg/v1.0/removebg',{
+      method:'POST',
+      headers:{'X-Api-Key':API_KEY},
+      body:formData
+    });
+    const blob = await res.blob();
+    if(removedObjectUrl) URL.revokeObjectURL(removedObjectUrl);
+    removedObjectUrl = URL.createObjectURL(blob);
+    previewImg.src = removedObjectUrl;
+    previewImg.classList.add('show');
+    previewPlaceholder.style.display='none';
+    setStatus('done','Done ✅');
+  }catch(e){console.error(e);setStatus('ready','Error');alert('Failed to remove background');}
+  showLoader(false);
+}
+
+fileInput.addEventListener('change',()=>{
+  const file=fileInput.files[0];
+  if(!file) return;
+  removeBackground(file);
+});
+
+colorSwatches.forEach(s=>{
+  s.addEventListener('click',()=>{
+    colorSwatches.forEach(c=>c.dataset.active='false');
+    s.dataset.active='true';
+    const color = s.dataset.color;
+    lastChosenColor = color==='original'?null:color;
+    document.body.style.backgroundImage=color==='original'?'':'none';
+    document.body.style.backgroundColor=color==='original'?'':color;
+  });
+});
+</script>
+</body>
+</html>

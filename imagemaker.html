@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Maker — Digital World</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+:root{--blue:#00eaff;--purple:#9b59ff;--pink:#ff4d6d;--white:#fff;--card-bg:rgba(35,10,70,0.9);}
+body{font-family:'Poppins',sans-serif;color:var(--white);background:#111;min-height:100vh;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;}
+.container{max-width:800px;width:95%;margin:20px auto;}
+.card{background:var(--card-bg);padding:20px;border-radius:15px;margin-bottom:20px;display:flex;flex-direction:column;align-items:center;}
+.uploader{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;}
+.controls{display:flex;gap:10px;margin-top:10px;}
+.btn{padding:8px 12px;border-radius:8px;border:none;font-weight:600;cursor:pointer;background:linear-gradient(135deg,var(--blue),var(--purple));color:#021017;}
+.btn.ghost{background:transparent;color:var(--blue);border:1px solid rgba(255,255,255,0.3);}
+canvas{background:#fff;border-radius:8px;margin-top:12px;}
+.status{margin-top:10px;color:rgba(255,255,255,0.7);}
+.pulse{width:14px;height:14px;border-radius:50%;background:var(--pink);animation:ping 1s infinite;}
+@keyframes ping{0%{transform:scale(.8);opacity:1;}50%{transform:scale(1.2);opacity:.4;}100%{transform:scale(.8);opacity:1;}}
+.retry-btn{display:none;margin-top:8px;background:#ff4d4d;color:#fff;}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="card uploader">
+    <h2>Upload Image</h2>
+    <input type="file" id="fileInput" accept="image/*">
+    <div class="controls">
+      <button class="btn" id="submitBtn"><i class="fa fa-paper-plane"></i> Submit</button>
+      <button class="btn ghost" id="resetBtn"><i class="fa fa-rotate-left"></i> Reset</button>
+    </div>
+    <div class="status" id="status">Ready. Select an image and click Submit.</div>
+    <button class="btn retry-btn" id="retryBtn"><i class="fa fa-refresh"></i> Try Again</button>
+  </div>
+
+  <div class="card preview">
+    <h2>Preview</h2>
+    <canvas id="canvas" width="360" height="420"></canvas>
+    <div class="controls" style="margin-top:10px;">
+      <button class="btn" id="downloadBtn" disabled><i class="fa fa-download"></i> Download JPG</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API_KEY = 'a7ffdd98c68d408db661ada98b12dee0';
+const TARGET_W = 360; 
+const TARGET_H = 420; 
+const BORDER_PX = 3;
+
+let originalImage = null;
+let finalBlob = null;
+
+const fileInput = document.getElementById('fileInput');
+const submitBtn = document.getElementById('submitBtn');
+const resetBtn = document.getElementById('resetBtn');
+const retryBtn = document.getElementById('retryBtn');
+const downloadBtn = document.getElementById('downloadBtn');
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const status = document.getElementById('status');
+
+// Choose image
+fileInput.addEventListener('change', e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const img = new Image();
+  img.onload = ()=>{ originalImage = img; drawPreview(); status.textContent='Image loaded. Click Submit.'; };
+  img.src = URL.createObjectURL(file);
+});
+
+// Draw preview
+function drawPreview(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(!originalImage){
+    ctx.fillStyle='#ccc'; ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle='#666'; ctx.font='16px sans-serif'; ctx.textAlign='center';
+    ctx.fillText('No image selected',canvas.width/2,canvas.height/2);
+    return;
+  }
+  const sw = originalImage.naturalWidth, sh = originalImage.naturalHeight;
+  const targetAspect = TARGET_W/TARGET_H;
+  const srcAspect = sw/sh;
+  let sx,sy,sW,sH;
+  if(srcAspect>targetAspect){ sH=sh; sW=sh*targetAspect; sx=(sw-sW)/2; sy=0; }
+  else{ sW=sw; sH=sw/targetAspect; sx=0; sy=(sh-sH)/2; }
+  ctx.drawImage(originalImage,sx,sy,sW,sH,0,0,TARGET_W,TARGET_H);
+  ctx.lineWidth=BORDER_PX; ctx.strokeStyle='#000000'; ctx.strokeRect(BORDER_PX/2,BORDER_PX/2,TARGET_W-BORDER_PX,TARGET_H-BORDER_PX);
+}
+
+// Convert image to Blob
+function imageToBlob(img){ 
+  return new Promise(resolve=>{
+    const cn=document.createElement('canvas');
+    cn.width=img.naturalWidth||img.width; cn.height=img.naturalHeight||img.height;
+    const c=cn.getContext('2d'); c.drawImage(img,0,0);
+    cn.toBlob(b=>resolve(b),'image/png');
+  });
+}
+
+// API call to remove BG
+async function removeBG(blob){
+  const form = new FormData();
+  form.append('image',blob,'image.png');
+  const res = await fetch('https://api.inhensaure.com/remove-bg',{ 
+    method:'POST',
+    headers:{'Authorization':'Bearer '+API_KEY},
+    body:form
+  });
+  if(!res.ok) throw new Error('Remove BG failed');
+  return await res.blob();
+}
+
+// Compose final image
+async function composeFinal(inputBlob){
+  const img = await createImageFromBlob(inputBlob);
+  const exportCanvas=document.createElement('canvas'); exportCanvas.width=TARGET_W; exportCanvas.height=TARGET_H;
+  const ectx=exportCanvas.getContext('2d');
+
+  ectx.fillStyle='#ffffff'; ectx.fillRect(0,0,exportCanvas.width,exportCanvas.height);
+
+  const sw = img.naturalWidth || img.width;
+  const sh = img.naturalHeight || img.height;
+  const targetAspect = exportCanvas.width/exportCanvas.height;
+  const srcAspect = sw/sh;
+  let sx,sy,sW,sH;
+  if(srcAspect>targetAspect){ sH=sh; sW=sh*targetAspect; sx=(sw-sW)/2; sy=0; }
+  else{ sW=sw; sH=sw/targetAspect; sx=0; sy=(sh-sH)/2; }
+  ectx.drawImage(img,sx,sy,sW,sH,0,0,exportCanvas.width,exportCanvas.height);
+
+  ectx.lineWidth = BORDER_PX; ectx.strokeStyle = '#000000';
+  ectx.strokeRect(BORDER_PX/2,BORDER_PX/2,exportCanvas.width-BORDER_PX,exportCanvas.height-BORDER_PX);
+
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.drawImage(exportCanvas,0,0,canvas.width,canvas.height);
+
+  return new Promise(resolve=>exportCanvas.toBlob(b=>{ finalBlob=b; resolve(); },'image/jpeg',0.92));
+}
+
+async function createImageFromBlob(b){
+  return new Promise(resolve=>{
+    const url = URL.createObjectURL(b);
+    const img = new Image();
+    img.onload=()=>{ URL.revokeObjectURL(url); resolve(img); };
+    img.src = url;
+  });
+}
+
+// Submit
+async function processImage(){
+  if(!originalImage){ alert('Please select an image.'); return; }
+  status.textContent='Processing...'; retryBtn.style.display='none';
+  const pulse = document.createElement('span'); pulse.className='pulse'; document.querySelector('.status').appendChild(pulse);
+
+  try{
+    const blob = await imageToBlob(originalImage);
+    const bgRemoved = await removeBG(blob);
+    await composeFinal(bgRemoved);
+    status.textContent='Processing done. Image ready to download.';
+    downloadBtn.disabled=false;
+  }catch(err){
+    console.error(err);
+    status.textContent='Processing failed. Click Try Again.';
+    retryBtn.style.display='inline-block';
+  }finally{
+    if(pulse) pulse.remove();
+  }
+}
+
+submitBtn.addEventListener('click', processImage);
+retryBtn.addEventListener('click', processImage);
+
+// Download
+downloadBtn.addEventListener('click',()=>{
+  if(!finalBlob) return;
+  const url = URL.createObjectURL(finalBlob);
+  const a = document.createElement('a'); a.href=url; a.download='passport_1.2x1.4in.jpg';
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+});
+
+// Reset
+resetBtn.addEventListener('click',()=>{
+  fileInput.value=''; originalImage=null; finalBlob=null; drawPreview();
+  status.textContent='Ready. Select an image and click Submit.';
+  downloadBtn.disabled=true;
+  retryBtn.style.display='none';
+});
+
+drawPreview();
+</script>
+</body>
+</html>

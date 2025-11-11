@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital World Cyber Café</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+:root { --blue:#00aaff; --purple:#7d3cff; --dark:#111; }
+*{margin:0;padding:0;box-sizing:border-box;}
+body,html{font-family:Poppins,sans-serif;background:linear-gradient(135deg,#ffffff,#e6f0ff,#f5f0ff);background-size:400% 400%;animation:gradient 15s ease infinite;overflow-x:hidden;}
+@keyframes gradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+/* Navbar */
+nav.nav{position:sticky;top:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:12px 25px;z-index:1000;background:rgba(255,255,255,0.12);backdrop-filter:blur(14px);border:2px solid var(--purple);border-radius:14px;box-shadow:0 0 20px var(--purple),0 0 40px rgba(125,60,255,0.6);}
+.logo-circle{width:65px;height:65px;border-radius:50%;overflow:hidden;animation:spin 12s linear infinite;box-shadow:0 0 25px var(--blue),0 0 40px var(--purple);}
+.logo-circle img{width:100%;height:100%;object-fit:cover;}
+@keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+.nav-links{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;}
+.nav-links a{margin:6px 10px;padding:10px 18px;border-radius:40px;text-decoration:none;font-weight:600;color:purple;position:relative;background:rgba(255,255,255,0.15);border:1px solid rgba(125,60,255,0.4);transition:.4s;display:flex;align-items:center;gap:6px;font-size:15px;}
+.nav-links a:hover{color:var(--blue);background:rgba(255,255,255,0.35);transform:scale(1.12);}
+
+/* Hero */
+header.hero{text-align:center;padding:70px 20px 40px;}
+header.hero h1{font-family:Orbitron,sans-serif;font-size:clamp(34px,6vw,70px);background:linear-gradient(90deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+header.hero p{color:#333;font-size:18px;margin-top:12px;}
+
+/* Info Cards */
+.container{max-width:1100px;margin:30px auto;padding:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:25px;}
+.card{background:rgba(0,0,0,0.72);padding:25px;border-radius:20px;text-align:center;box-shadow:0 0 20px var(--purple),0 0 30px var(--blue);transition:.3s;}
+.card:hover{transform:translateY(-6px) scale(1.03);}
+.card h3{color:var(--blue);margin-bottom:12px;}
+.card p{color:#eee;}
+.card i{font-size:40px;margin-bottom:10px;color:var(--purple);}
+
+/* User Section */
+.user-section{max-width:1000px;margin:50px auto;padding:30px;background:rgba(0,0,0,0.75);border-radius:20px;box-shadow:0 0 25px var(--purple),0 0 40px var(--blue);}
+.user-section h2{text-align:center;color:var(--blue);margin-bottom:20px;font-family:Orbitron,sans-serif;font-size:28px;}
+
+/* Search */
+#searchBox{padding:12px 18px;width:85%;max-width:380px;border-radius:30px;border:1px solid #ccc;font-size:16px;box-shadow:0 0 10px rgba(0,0,0,0.15);}
+#searchBox:focus{outline:none;border-color:var(--blue);box-shadow:0 0 15px var(--blue);}
+
+/* User Table */
+.user-list{overflow-x:auto;}
+.user-list table{width:100%;border-collapse:collapse;color:#fff;}
+.user-list th, .user-list td{padding:14px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.2);}
+.user-list th{color:var(--blue);font-size:18px;}
+.check-btn{padding:8px 16px;border:none;border-radius:25px;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;cursor:pointer;font-weight:600;transition:.3s;}
+.check-btn:hover{transform:scale(1.1);}
+
+/* Mobile Card View */
+@media(max-width:700px){
+  .user-list table, thead, tbody, th, td, tr{display:block;width:100%;}
+  thead{display:none;}
+  .user-list tr{margin-bottom:15px;background:rgba(255,255,255,0.08);padding:15px;border-radius:12px;box-shadow:0 0 10px rgba(0,0,0,0.4);}
+  .user-list td{text-align:left;display:flex;justify-content:space-between;padding:8px 10px;border:none;}
+  .user-list td::before{content:attr(data-label);font-weight:600;color:var(--blue);}
+}
+
+/* Modal */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);justify-content:center;align-items:center;z-index:2000;}
+.modal-content{background:#fff;padding:25px;border-radius:15px;text-align:center;max-width:350px;width:90%;box-shadow:0 0 20px var(--purple);}
+.modal-content h3{margin-bottom:15px;color:var(--purple);}
+.modal-content input{width:100%;padding:12px;margin-bottom:15px;border-radius:8px;border:1px solid #ccc;}
+.modal-content input:focus{border-color:var(--blue);outline:none;box-shadow:0 0 8px var(--blue);}
+.modal-content button{padding:10px 20px;border:none;border-radius:25px;font-weight:600;cursor:pointer;}
+.modal-content .close{background:#aaa;color:#fff;margin-right:10px;}
+.modal-content .submit{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;}
+
+/* Footer */
+footer{text-align:center;padding:20px;margin-top:40px;background:rgba(0,0,0,0.4);color:#fff;}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="nav">
+  <div class="logo-circle"><img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="DWC Logo"></div>
+  <div class="nav-links">
+    <a href="home.html"><i class="fa fa-house"></i>Home</a>
+    <a href="services.html"><i class="fa fa-screwdriver-wrench"></i>Services</a>
+    <a href="about.html"><i class="fa fa-circle-info"></i>About</a>
+    <a href="contact.html"><i class="fa fa-envelope"></i>Contact</a>
+    <a href="photos.html"><i class="fa fa-image"></i>Photos</a>
+  </div>
+  <div class="logo-circle"><img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="DWC Logo"></div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <h1>Photo Services</h1>
+  <p>Upload, Print & Track your photo orders securely</p>
+</header>
+
+<!-- Info Cards -->
+<div class="container">
+  <div class="card">
+    <i class="fa fa-camera"></i>
+    <h3>Photo Printing</h3>
+    <p>High quality glossy and matte photo prints with accurate colors.</p>
+  </div>
+  <div class="card">
+    <i class="fa fa-paint-brush"></i>
+    <h3>Editing & Retouch</h3>
+    <p>Basic editing, color correction, and retouch services available.</p>
+  </div>
+  <div class="card">
+    <i class="fa fa-lightbulb"></i>
+    <h3>Tips & Guides</h3>
+    <p>Learn how to get the best quality prints from your images.</p>
+  </div>
+</div>
+
+<!-- User List Section -->
+<div class="user-section">
+  <h2>Check Your Photo Status</h2>
+
+  <!-- Search Box -->
+  <div style="text-align:center; margin-bottom:20px;">
+    <input type="text" id="searchBox" placeholder="🔍 Search by Name...">
+  </div>
+
+  <div class="user-list">
+    <table id="userTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Mobile</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Name">Ravi</td>
+          <td data-label="Mobile">+91 99999 11111</td>
+          <td data-label="Action"><button class="check-btn" onclick="openModal('Ravi')">Check Status</button></td>
+        </tr>
+        <tr>
+          <td data-label="Name">Anita</td>
+          <td data-label="Mobile">+91 88888 22222</td>
+          <td data-label="Action"><button class="check-btn" onclick="openModal('Anita')">Check Status</button></td>
+        </tr>
+        <tr>
+          <td data-label="Name">Ajay</td>
+          <td data-label="Mobile">+91 77777 33333</td>
+          <td data-label="Action"><button class="check-btn" onclick="openModal('Ajay')">Check Status</button></td>
+        </tr>
+        <tr>
+          <td data-label="Name">Suman</td>
+          <td data-label="Mobile">+91 66666 44444</td>
+          <td data-label="Action"><button class="check-btn" onclick="openModal('Suman')">Check Status</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Password Modal -->
+<div id="passwordModal" class="modal">
+  <div class="modal-content">
+    <h3>Enter Password</h3>
+    <input type="password" id="passwordInput" placeholder="Password">
+    <div>
+      <button class="close" onclick="closeModal()">Cancel</button>
+      <button class="submit" onclick="checkPassword()">Submit</button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  &copy; 2025 Digital World Cyber Café | Secure Photo Tracking
+</footer>
+
+<script>
+let currentUser = "";
+// Demo data (replace with backend/database)
+const userData = {
+  "Ravi": {password: "1234", page: "ravi-photo.html"},
+  "Anita": {password: "5678", page: "anita-photo.html"},
+  "Ajay": {password: "9999", page: "ajay-photo.html"},
+  "Suman": {password: "4444", page: "suman-photo.html"}
+};
+
+function openModal(user){
+  currentUser = user;
+  document.getElementById("passwordModal").style.display="flex";
+}
+function closeModal(){
+  document.getElementById("passwordModal").style.display="none";
+  document.getElementById("passwordInput").value="";
+}
+function checkPassword(){
+  let pass = document.getElementById("passwordInput").value;
+  if(userData[currentUser] && userData[currentUser].password === pass){
+    window.location.href = userData[currentUser].page;
+  } else {
+    alert("❌ Wrong Password!");
+  }
+}
+
+// Search filter
+document.getElementById("searchBox").addEventListener("keyup", function() {
+  let input = this.value.toLowerCase();
+  let rows = document.querySelectorAll("#userTable tbody tr");
+  let found = false;
+
+  rows.forEach(row => {
+    let name = row.cells[0].innerText.toLowerCase();
+    if(name.includes(input)){
+      row.style.display = "";
+      found = true;
+    } else {
+      row.style.display = "none";
+    }
+  });
+
+  if(!found && input !== ""){
+    if(!document.getElementById("noResult")){
+      let tr = document.createElement("tr");
+      tr.id = "noResult";
+      tr.innerHTML = `<td colspan="3" style="color:red; text-align:center; padding:15px;">No User Found</td>`;
+      document.querySelector("#userTable tbody").appendChild(tr);
+    }
+  } else {
+    let nr = document.getElementById("noResult");
+    if(nr) nr.remove();
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital World Cyber Café</title>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+:root {
+  --blue:#00eaff;
+  --purple:#9b59ff;
+  --pink:#ff4d6d;
+  --text:#eef2ff;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+html,body{height:100%;}
+body{
+  background:linear-gradient(-45deg,#ff6a00,#ff0058,#6a11cb,#2575fc);
+  background-size:400% 400%;
+  animation:gradientMove 12s ease infinite;
+  color:var(--text);
+  overflow-x:hidden;
+}
+@keyframes gradientMove{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+
+/* Navbar */
+nav.nav{
+  position:sticky;top:0;width:100%;z-index:1000;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 15px;gap:8px;
+  background:rgba(255,255,255,.12);backdrop-filter:blur(14px);
+  border:2px solid var(--purple);border-radius:14px;
+  box-shadow:0 0 15px var(--purple),0 0 25px var(--blue);
+}
+.logo-circle{
+  width:55px;height:55px;border-radius:50%;overflow:hidden;
+  box-shadow:0 0 15px var(--blue),0 0 25px var(--purple);
+}
+.logo-circle img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.nav-links{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;flex:1}
+nav.nav a{
+  padding:7px 14px;border-radius:25px;
+  background:rgba(255,255,255,.15);border:1px solid rgba(125,60,255,.4);
+  font-weight:600;font-size:13px;
+  color:#fff;text-decoration:none;transition:.3s;
+}
+nav.nav a:hover{color:var(--blue);background:rgba(255,255,255,.3);transform:scale(1.05)}
+.hamburger{display:none;font-size:22px;color:var(--blue);cursor:pointer}
+
+/* Hero */
+header.hero{text-align:center;padding:60px 15px 20px}
+.brand{
+  font-family:Orbitron,sans-serif;
+  font-size:clamp(26px,5vw,48px);
+  background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  text-shadow:0 0 12px rgba(0,0,0,.5);
+}
+
+/* Auth Box */
+.auth-box{
+  margin:20px auto;
+  backdrop-filter:blur(10px);
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:18px;
+  padding:25px 28px;
+  max-width:420px;
+  box-shadow:0 8px 30px rgba(0,0,0,.3);
+  animation:zoomIn .8s ease;
+}
+@keyframes zoomIn{from{opacity:0;transform:scale(.8);}to{opacity:1;transform:scale(1);}}
+.auth-box h2{font-family:Orbitron,sans-serif;font-size:20px;margin-bottom:18px;color:#fff;}
+.input-group{position:relative;margin:12px 0;}
+.input-group i:first-child{
+  position:absolute;left:10px;top:50%;transform:translateY(-50%);
+  color:#ddd;font-size:14px;
+}
+.input-group input{
+  width:100%;padding:10px 40px 10px 36px;
+  border-radius:10px;border:2px solid rgba(255,255,255,.3);
+  background:rgba(255,255,255,.08);color:#fff;font-size:13px;outline:none;
+}
+.eye-toggle{
+  position:absolute;top:50%;right:12px;
+  transform:translateY(-50%);
+  font-size:15px;color:#ccc;cursor:pointer;transition:.3s;
+}
+.eye-toggle:hover{color:var(--blue);}
+.strength-meter{height:5px;width:100%;border-radius:5px;background:rgba(255,255,255,.2);margin-top:5px;}
+.strength-bar{height:100%;width:0%;background:lime;transition:width .3s;}
+.auth-btn{
+  width:100%;padding:10px;margin-top:10px;
+  border:none;border-radius:10px;font-weight:600;
+  background:linear-gradient(90deg,#ff00cc,#3333ff);color:#fff;
+  cursor:pointer;position:relative;overflow:hidden;
+}
+.auth-btn::after{
+  content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.6),transparent);
+  transition:all .6s;
+}
+.auth-btn:hover::after{left:100%;}
+.auth-btn:hover{transform:scale(1.05);}
+.terms{display:flex;align-items:center;gap:6px;font-size:12px;color:#eee;margin-top:8px;}
+.terms input{width:14px;height:14px;}
+.captcha-box{margin-top:10px;color:#fff;font-size:12px;display:flex;align-items:center;gap:8px;}
+.captcha-box span{
+  padding:6px 10px;background:rgba(255,255,255,.2);
+  border-radius:6px;font-weight:600;cursor:pointer;user-select:none;letter-spacing:1px;
+}
+
+/* Social */
+.social-buttons{display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.social-buttons button{
+  padding:10px;border:none;border-radius:10px;color:#fff;font-weight:600;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  cursor:pointer;transition:.3s;position:relative;overflow:hidden;
+}
+.social-buttons button::after{
+  content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:rgba(255,255,255,.2);transition:all .5s;
+}
+.social-buttons button:hover::after{left:100%;}
+.social-buttons .google{background:linear-gradient(135deg,#4285F4,#34A853,#FBBC05,#EA4335);}
+.social-buttons .facebook{background:linear-gradient(135deg,#1877F2,#4267B2);}
+.social-buttons .github{background:linear-gradient(135deg,#333,#6e5494);}
+.social-buttons button:hover{transform:scale(1.05);}
+
+/* Toast */
+.toast{
+  position:fixed;top:20px;right:-300px;
+  padding:12px 20px;border-radius:10px;color:#fff;
+  font-weight:600;z-index:1000;font-size:13px;
+  transition:all .5s ease;
+}
+.toast.show{right:20px;}
+.toast.success{background:green;}
+.toast.error{background:#ff3b3b;}
+
+/* Mobile */
+@media(max-width:768px){
+  .nav-links{display:none;flex-direction:column;background:rgba(15,15,35,.95);padding:10px;border-radius:10px;}
+  .nav-links.show{display:flex}
+  .hamburger{display:block}
+  .auth-box{margin:15px;padding:20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="nav">
+  <div class="logo-circle"><img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="DWC Logo"></div>
+  <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+  <div class="nav-links" id="navLinks">
+    <a href="home.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="login.html">Login</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <h1 class="brand">Sign Up</h1>
+</header>
+
+<!-- Signup Box -->
+<div class="auth-box">
+  <h2><i class="fas fa-user-plus"></i> Create Account</h2>
+  <form id="signupForm">
+    <div class="input-group">
+      <i class="fas fa-user"></i>
+      <input type="text" id="name" placeholder="Full Name" required>
+    </div>
+    <div class="input-group">
+      <i class="fas fa-envelope"></i>
+      <input type="email" id="email" placeholder="Email Address" required>
+    </div>
+    <div class="input-group">
+      <i class="fas fa-lock"></i>
+      <input type="password" id="signupPass" placeholder="Password" required>
+      <i class="fa fa-eye eye-toggle" onclick="togglePass('signupPass',this)"></i>
+    </div>
+    <div class="strength-meter"><div id="strengthBar" class="strength-bar"></div></div>
+    <div class="input-group">
+      <i class="fas fa-lock"></i>
+      <input type="password" id="signupConfirm" placeholder="Confirm Password" required>
+      <i class="fa fa-eye eye-toggle" onclick="togglePass('signupConfirm',this)"></i>
+    </div>
+    <div class="terms">
+      <input type="checkbox" id="terms">
+      <label for="terms">I agree to the <a href="#">Terms & Conditions</a></label>
+    </div>
+    <div class="captcha-box">
+      <span id="captchaText"></span>
+      <input type="text" id="captchaInput" placeholder="Enter CAPTCHA" required style="flex:1;padding:8px;border-radius:6px;border:none;">
+    </div>
+    <button type="submit" class="auth-btn"><i class="fas fa-user-check"></i> Sign Up</button>
+    <div class="social-buttons">
+      <button type="button" class="google"><i class="fab fa-google"></i> Sign up with Google</button>
+      <button type="button" class="facebook"><i class="fab fa-facebook-f"></i> Sign up with Facebook</button>
+      <button type="button" class="github"><i class="fab fa-github"></i> Sign up with Github</button>
+    </div>
+  </form>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+// Toggle Password
+function togglePass(id, el){
+  let input=document.getElementById(id);
+  if(input.type==='password'){
+    input.type='text';
+    el.classList.replace('fa-eye','fa-eye-slash');
+  } else {
+    input.type='password';
+    el.classList.replace('fa-eye-slash','fa-eye');
+  }
+}
+
+// Strength Meter
+const passInput=document.getElementById('signupPass');
+const strengthBar=document.getElementById('strengthBar');
+passInput.addEventListener('input',function(){
+  const val=this.value;
+  let strength=0;
+  if(val.length>=6) strength++;
+  if(/[A-Z]/.test(val)) strength++;
+  if(/[0-9]/.test(val)) strength++;
+  if(/[^A-Za-z0-9]/.test(val)) strength++;
+  let width=(strength/4)*100;
+  strengthBar.style.width=width+'%';
+  if(strength<=1) strengthBar.style.background='red';
+  else if(strength==2) strengthBar.style.background='orange';
+  else if(strength>=3) strengthBar.style.background='lime';
+});
+
+// Toast
+const toast=document.getElementById('toast');
+function showToast(msg,type){
+  toast.textContent=msg;
+  toast.className='toast '+type+' show';
+  setTimeout(()=>{toast.classList.remove('show');},2500);
+}
+
+// Captcha
+const captchaText=document.getElementById('captchaText');
+function generateCaptcha(){
+  let chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let text='';
+  for(let i=0;i<6;i++){text+=chars.charAt(Math.floor(Math.random()*chars.length));}
+  captchaText.textContent=text;
+}
+generateCaptcha();
+captchaText.onclick=generateCaptcha;
+
+// Signup
+const signupForm=document.getElementById('signupForm');
+signupForm.addEventListener('submit',function(e){
+  e.preventDefault();
+  const name=document.getElementById('name').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const pass=document.getElementById('signupPass').value;
+  const confirm=document.getElementById('signupConfirm').value;
+  const terms=document.getElementById('terms').checked;
+  const captchaInput=document.getElementById('captchaInput').value.trim();
+  const emailRegex=/^\S+@\S+\.\S+$/;
+
+  if(!emailRegex.test(email)){showToast('Invalid Email!','error'); return;}
+  if(pass!==confirm){showToast('Passwords do not match!','error'); return;}
+  if(pass.length<6){showToast('Password too short!','error'); return;}
+  if(!terms){showToast('Accept Terms & Conditions!','error'); return;}
+  if(captchaInput!==captchaText.textContent){showToast('CAPTCHA incorrect!','error'); generateCaptcha(); return;}
+
+  const users=JSON.parse(localStorage.getItem('users')||'{}');
+  if(users[email]){showToast('Email already registered!','error'); return;}
+  users[email]={name:name,password:pass};
+  localStorage.setItem('users',JSON.stringify(users));
+  localStorage.setItem('currentUser',email);
+  showToast('Account created successfully!','success');
+  setTimeout(()=>{window.location.href='signupsuccess.html';},1500);
+});
+
+// Hamburger
+document.getElementById("hamburger").onclick=()=>{
+  document.getElementById("navLinks").classList.toggle("show");
+};
+</script>
+</body>
+</html>

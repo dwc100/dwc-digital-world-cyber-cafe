@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Password Verification</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+:root {--blue:#00aaff;--purple:#7d3cff;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#ffffff,#e6f0ff,#f5f0ff);background-size:400% 400%;animation:gradient 15s ease infinite;user-select:none;font-family:Poppins,sans-serif;}
+@keyframes gradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.card{width:100%;max-width:480px;padding:40px;border-radius:20px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 12px 35px rgba(0,0,0,0.3);border:2px solid rgba(125,60,255,0.3);text-align:center;transition:transform 0.3s ease;}
+.card:hover{transform:scale(1.02);}
+h1{font-family:Orbitron,sans-serif;font-size:clamp(32px,6vw,56px);background:linear-gradient(90deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;}
+input{width:100%;padding:14px;margin-bottom:15px;border-radius:12px;border:1px solid rgba(125,60,255,0.3);background:transparent;font-size:15px;outline:none;}
+input:focus{border-color:var(--blue);box-shadow:0 0 12px rgba(0,170,255,0.4);}
+button{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(90deg,var(--blue),var(--purple));color:#fff;font-weight:600;font-size:15px;cursor:pointer;transition:transform 0.2s ease, box-shadow 0.2s ease;}
+button:hover{transform:scale(1.05);box-shadow:0 0 15px rgba(125,60,255,0.5),0 0 25px rgba(0,170,255,0.4);}
+.feedback{min-height:20px;margin-top:10px;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>Password Verification</h1>
+<input type="password" id="password" placeholder="Enter password">
+<button id="verifyBtn">Verify</button>
+<div class="feedback" id="feedback"></div>
+</div>
+
+<script>
+(function(){
+  const password = document.getElementById('Sudh');
+  const btn = document.getElementById('verifyBtn');
+  const feedback = document.getElementById('feedback');
+
+  async function verifyPassword() {
+    const val = password.value.trim();
+    if(!val){ 
+      feedback.textContent = 'Please enter password.'; 
+      feedback.style.color = 'red'; 
+      return; 
+    }
+
+    try {
+      const res = await fetch('/api/verify-password', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({password:val})
+      });
+      const data = await res.json();
+
+      if(data.success){
+        feedback.textContent = 'Password correct. Redirecting...'; 
+        feedback.style.color = 'green';
+        setTimeout(()=>{window.location.href='pass_key_very_fivatin.html'},700);
+      } else {
+        feedback.textContent = 'Wrong password! Alert email sent.'; 
+        feedback.style.color = 'red';
+        alert('Wrong password entered! An email alert has been sent to your account.');
+      }
+    } catch(err){
+      feedback.textContent = 'Server error. Try again later.'; 
+      feedback.style.color = 'red';
+      console.error(err);
+    }
+  }
+
+  btn.addEventListener('click', verifyPassword);
+  password.addEventListener('keydown', e => { if(e.key==='Enter'){ e.preventDefault(); verifyPassword(); } });
+
+  // Disable right-click
+  document.addEventListener('contextmenu', e => e.preventDefault());
+
+  // Disable keyboard shortcuts
+  document.addEventListener('keydown', e => {
+    if(e.ctrlKey && ['c','v','u','s'].includes(e.key.toLowerCase())) e.preventDefault();
+    if(e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) e.preventDefault();
+    if(e.key==='F12') e.preventDefault();
+  });
+})();
+</script>
+</body>
+</html>

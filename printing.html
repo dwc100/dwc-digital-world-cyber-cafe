@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital World Cyber Café</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+:root { --blue: #00aaff; --purple: #7d3cff; --white: #ffffff; }
+*{margin:0;padding:0;box-sizing:border-box;}
+body,html{font-family:Poppins,sans-serif;background:linear-gradient(135deg,#ffffff,#e6f0ff,#f5f0ff);background-size:400% 400%;animation:gradient 15s ease infinite;overflow-x:hidden;color:#fff;}
+@keyframes gradient {0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+/* Navbar */
+nav.nav{position:sticky;top:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:12px 25px;z-index:1000;background:rgba(255,255,255,0.12);backdrop-filter:blur(14px);border:2px solid var(--purple);border-radius:14px;box-shadow:0 0 20px var(--purple),0 0 40px rgba(125,60,255,0.6);}
+.logo-circle{width:70px;height:70px;border-radius:50%;overflow:hidden;animation:spin 12s linear infinite;box-shadow:0 0 25px var(--blue),0 0 40px var(--purple);}
+.logo-circle img{width:100%;height:100%;object-fit:cover;}
+@keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+.nav-links{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;}
+.nav-links a{margin:6px 10px;padding:12px 20px;border-radius:40px;text-decoration:none;font-weight:600;color:purple;position:relative;background:rgba(255,255,255,0.15);border:1px solid rgba(125,60,255,0.4);box-shadow:0 4px 20px rgba(0,0,0,0.08);transition:all .4s ease;display:flex;align-items:center;gap:8px;overflow:hidden;}
+.nav-links a:hover{color:var(--blue);background:rgba(255,255,255,0.35);transform:scale(1.12);}
+/* Hero */
+header.hero{text-align:center;padding:120px 20px 60px;}
+header.hero h1{font-family:Orbitron,sans-serif;font-size:clamp(38px,6vw,70px);background:linear-gradient(90deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+header.hero p{color:#333;font-size:18px;margin-top:12px;}
+/* Container */
+.container{max-width:1200px;margin:40px auto;padding:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:25px;}
+.card{background:rgba(0,0,0,0.7);padding:25px;border-radius:20px;box-shadow:0 0 20px var(--purple),0 0 30px var(--blue);transition:.3s;}
+.card:hover{transform:translateY(-8px) scale(1.03);}
+.card h3{margin-bottom:12px;color:var(--blue);font-size:22px;}
+.card p{color:#eee;margin-bottom:15px;}
+/* Buttons */
+.btn-access{display:inline-block;padding:12px 18px;border-radius:40px;font-weight:600;text-decoration:none;transition:.3s;box-shadow:0 4px 12px rgba(0,0,0,0.3);}
+.btn-free{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;}
+.btn-free:hover{transform:scale(1.1);box-shadow:0 0 20px var(--blue),0 0 30px var(--purple);}
+.btn-paid{background:linear-gradient(135deg,#ff4d4d,#cc0000);color:#fff;box-shadow:0 0 15px #ff4d4d,0 0 25px #cc0000;}
+.btn-paid:hover{transform:scale(1.1);background:linear-gradient(135deg,#ff1a1a,#990000);box-shadow:0 0 25px #ff1a1a,0 0 40px #ff3333;}
+/* CTA Section */
+.cta{margin:60px auto;text-align:center;max-width:800px;padding:30px;border-radius:20px;background:rgba(0,0,0,0.6);box-shadow:0 0 20px var(--blue),0 0 30px var(--purple);}
+.cta h2{font-size:28px;color:var(--blue);margin-bottom:15px;}
+.cta p{color:#ddd;margin-bottom:20px;}
+.cta a{padding:14px 26px;font-size:18px;}
+/* Footer */
+footer{text-align:center;padding:25px;color:#fff;background:rgba(0,0,0,0.4);margin-top:40px;border-top:2px solid var(--purple);}
+footer a{color:var(--blue);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="nav">
+  <div class="logo-circle"><img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="DWC Logo"></div>
+  <div class="nav-links">
+    <a href="home.html"><i class="fa fa-house"></i>Home</a>
+    <a href="services.html"><i class="fa fa-screwdriver-wrench"></i>Services</a>
+    <a href="about.html"><i class="fa fa-circle-info"></i>About</a>
+    <a href="contact.html"><i class="fa fa-envelope"></i>Contact</a>
+    <a href="printing.html"><i class="fa fa-print"></i>Printing</a>
+  </div>
+  <div class="logo-circle"><img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="DWC Logo"></div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <h1>Printing Services</h1>
+  <p>Fast, reliable, and affordable printing solutions for everyone</p>
+</header>
+
+<!-- Content -->
+<div class="container">
+  <div class="card">
+    <h3><i class="fa fa-file-alt"></i> Document Printing</h3>
+    <p>Black & White or Color document printing with high-quality finish.</p>
+    <a href="#" class="btn-access btn-free"><i class="fa fa-unlock"></i> Free Access</a>
+  </div>
+
+  <div class="card">
+    <h3><i class="fa fa-image"></i> Photo Printing</h3>
+    <p>Glossy and matte photo prints with premium quality paper.</p>
+    <a href="payment-page01.html" class="btn-access btn-paid"><i class="fa fa-lock"></i> Paid Access – ₹49</a>
+  </div>
+
+  <div class="card">
+    <h3><i class="fa fa-id-card"></i> ID Card Printing</h3>
+    <p>Custom-designed ID cards for schools, offices, and events.</p>
+    <a href="payment-page02.html" class="btn-access btn-paid"><i class="fa fa-lock"></i> Paid Access – ₹99</a>
+  </div>
+
+  <div class="card">
+    <h3><i class="fa fa-book"></i> Book / Project Binding</h3>
+    <p>Spiral & thermal binding for school/college projects and office reports.</p>
+    <a href="payment-page03.html" class="btn-access btn-paid"><i class="fa fa-lock"></i> Paid Access – ₹149</a>
+  </div>
+
+  <div class="card">
+    <h3><i class="fa fa-newspaper"></i> Bulk Printing</h3>
+    <p>Affordable bulk printing services for flyers, notices, and office docs.</p>
+    <a href="payment-page04.html" class="btn-access btn-paid"><i class="fa fa-lock"></i> Paid Access – ₹299</a>
+  </div>
+</div>
+
+<!-- CTA Section -->
+<div class="cta">
+  <h2>Need Bulk or Custom Printing?</h2>
+  <p>Contact us today for enterprise-level solutions, customized orders, and discounted packages.</p>
+  <a href="contact.html" class="btn-access btn-free"><i class="fa fa-envelope"></i> Contact Us</a>
+</div>
+
+<!-- Footer -->
+<footer>
+  &copy; 2025 Digital World Cyber Café | <a href="mailto:digitalworldcybercafeservices100@gmail.com">Email Us</a>
+</footer>
+
+</body>
+</html>

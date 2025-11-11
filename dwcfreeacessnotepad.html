@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital World Cyber Café</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --blue: #00eaff;
+      --purple: #9b59ff;
+      --pink: #ff4d6d;
+      --white: #ffffff;
+      --card-bg: rgba(35, 10, 70, 0.85);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--white);
+      background: url("https://i.ibb.co/8B1mx7f/circuit-bg.jpg") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Overlay Glow */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(135deg, #ffffff, #e6f0ff, #f5f0ff);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      filter: blur(35px);
+    }
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 25px 10px;
+    }
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(28px, 5vw, 60px);
+      background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glowTitle 3s infinite alternate;
+    }
+    @keyframes glowTitle {
+      from { text-shadow: 0 0 8px var(--blue); }
+      to { text-shadow: 0 0 20px var(--purple); }
+    }
+
+    /* Notepad Container */
+    .notepad-container {
+      flex: 1;
+      max-width: 1100px;
+      margin: 0 auto 30px;
+      padding: 20px;
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: 0 0 18px var(--blue), 0 0 30px var(--purple), inset 0 0 40px var(--pink);
+      display: flex;
+      flex-direction: column;
+      animation: fadeIn 1s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    textarea {
+      flex: 1;
+      width: 100%;
+      background: rgba(255,255,255,0.08);
+      border: none;
+      outline: none;
+      padding: 20px;
+      font-size: 16px;
+      font-family: monospace;
+      color: var(--white);
+      border-radius: 12px;
+      resize: none;
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+    }
+
+    /* Footer Buttons */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .controls button {
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      border: none;
+      color: var(--white);
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 12px var(--blue);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .controls button:hover {
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      box-shadow: 0 0 20px var(--pink), 0 0 30px var(--purple);
+      transform: scale(1.07);
+    }
+
+    /* Mobile Friendly */
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.8rem; }
+      .controls button { flex: 1 1 auto; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Digital World CyberCafe Notepad</h1>
+  </header>
+
+  <div class="notepad-container">
+    <textarea id="editor" placeholder="✍️ Start typing your notes here..."></textarea>
+
+    <div class="controls">
+      <button onclick="saveFile()"><i class="fa fa-save"></i> Save</button>
+      <button onclick="printFile()"><i class="fa fa-print"></i> Print</button>
+      <button onclick="clearNote()"><i class="fa fa-broom"></i> Clear</button>
+    </div>
+  </div>
+
+  <script>
+    function saveFile(){
+      let text = document.getElementById("editor").value;
+      let blob = new Blob([text], {type:"text/plain"});
+      let link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "MyNotes.txt";
+      link.click();
+    }
+
+    function printFile(){
+      let text = document.getElementById("editor").value;
+      let w = window.open("", "_blank");
+      w.document.write("<pre>"+text+"</pre>");
+      w.print();
+    }
+
+    function clearNote(){
+      document.getElementById("editor").value="";
+    }
+  </script>
+</body>
+</html>

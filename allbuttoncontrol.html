@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>DWC Admin Panel - Buttons Control</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+:root{
+  --blue:#00aaff;
+  --purple:#9b59ff;
+  --pink:#ff4d6d;
+  --white:#fff;
+  --gray:#f9f9f9;
+  --shadow-glass: rgba(0,0,0,0.1);
+  --green:#28a745;
+  --red:#dc3545;
+  --button-height:32px;
+  --button-font:0.85rem;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Poppins',sans-serif;
+  background:#f4f5f7;
+  color:#333;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:40px 20px;
+}
+
+header.hero{
+  margin-bottom:40px;
+  text-align:center;
+}
+header.hero h1{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(36px,6vw,60px);
+  background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  letter-spacing:1px;
+  margin-bottom:10px;
+}
+.styled-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  background: linear-gradient(90deg, #00eaff, #9b59ff, #ff4d6d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  margin: 20px 0;
+  transition: transform 0.3s, text-shadow 0.3s;
+  text-align: center;
+}
+.styled-text:hover {
+  transform: scale(1.05);
+  text-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.controls-container{
+  display:flex;
+  flex-direction:column;
+  gap:25px;
+  max-width:600px;
+  width:95%;
+}
+.control-card{
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 18px;
+  padding: 22px 20px;
+  text-align: center;
+  transition: 0.35s ease;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.22);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Neon border hover effect */
+.control-card:hover{
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0,150,255,0.35);
+  border-color: rgba(0,200,255,0.8);
+}
+
+/* Animated gradient top border highlight */
+.control-card::before{
+  content:'';
+  position:absolute;
+  top:0; left:0;
+  width:100%; height:4px;
+  background: linear-gradient(90deg,var(--blue),var(--purple),var(--pink));
+  border-radius:18px 18px 0 0;
+  opacity:0.7;
+}
+
+/* Title */
+.control-card h3{
+  font-family:'Orbitron',sans-serif;
+  font-size:1.35rem;
+  margin-bottom:14px;
+  background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  letter-spacing:1px;
+}
+
+
+/* Buttons */
+.btn-control{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+}
+.btn-control button{
+  height: var(--button-height);
+  font-size: var(--button-font);
+  font-weight:600;
+  flex:1;
+  border-radius:8px;
+  cursor:pointer;
+  transition:all 0.3s;
+  border:none;
+  color:#fff;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+}
+.btn-control button.green{background: var(--green);}
+.btn-control button.red{background: var(--red);}
+
+/* Status display */
+.status-msg{
+  margin-top:12px;
+  font-weight:700;
+  font-size:1rem;
+  color:var(--pink);
+}
+
+/* Responsive */
+@media(max-width:480px){
+  .btn-control{flex-direction:column;}
+  .btn-control button{width:100%;}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>DWC BUTTONS CONTROL</h1>
+  <p class="styled-text">Control All Buttons And Status</p>
+</header>
+
+<div class="controls-container">
+  <!-- Button cards -->
+  <div class="control-card">
+    <h3>Home Button Control</h3>
+    <div class="btn-control">
+      <button id="home_on" onclick="setStatus('homeButton','on')">ON</button>
+      <button id="home_off" onclick="setStatus('homeButton','off')">OFF</button>
+      <button id="home_hide" onclick="setStatus('homeButton','hide')">HIDE</button>
+    </div>
+    <div id="homeStatus" class="status-msg">Current: UNKNOWN</div>
+  </div>
+
+  <div class="control-card">
+    <h3>Services Button Control</h3>
+    <div class="btn-control">
+      <button id="services_on" onclick="setStatus('servicesButton','on')">ON</button>
+      <button id="services_off" onclick="setStatus('servicesButton','off')">OFF</button>
+      <button id="services_hide" onclick="setStatus('servicesButton','hide')">HIDE</button>
+    </div>
+    <div id="servicesStatus" class="status-msg">Current: UNKNOWN</div>
+  </div>
+
+  <div class="control-card">
+    <h3>About Button Control</h3>
+    <div class="btn-control">
+      <button id="about_on" onclick="setStatus('aboutButton','on')">ON</button>
+      <button id="about_off" onclick="setStatus('aboutButton','off')">OFF</button>
+      <button id="about_hide" onclick="setStatus('aboutButton','hide')">HIDE</button>
+    </div>
+    <div id="aboutStatus" class="status-msg">Current: UNKNOWN</div>
+  </div>
+
+  <div class="control-card">
+    <h3>Contact Button Control</h3>
+    <div class="btn-control">
+      <button id="contact_on" onclick="setStatus('contactButton','on')">ON</button>
+      <button id="contact_off" onclick="setStatus('contactButton','off')">OFF</button>
+      <button id="contact_hide" onclick="setStatus('contactButton','hide')">HIDE</button>
+    </div>
+    <div id="contactStatus" class="status-msg">Current: UNKNOWN</div>
+  </div>
+
+  <div class="control-card">
+    <h3>Printing Button Control</h3>
+    <div class="btn-control">
+      <button id="printing_on" onclick="setStatus('printingButton','on')">ON</button>
+      <button id="printing_off" onclick="setStatus('printingButton','off')">OFF</button>
+      <button id="printing_hide" onclick="setStatus('printingButton','hide')">HIDE</button>
+    </div>
+    <div id="printingStatus" class="status-msg">Current: UNKNOWN</div>
+  </div>
+
+  <div class="control-card">
+    <h3>Photos Button Control</h3>
+    <div class="btn-control">
+      <button id="photos_on" onclick="setStatus('photosButton','on')">ON</button>
+      <button id="photos_off" onclick="setStatus('photosButton','off')">OFF</button>
+      <button id="photos_hide" onclick="setStatus('photosButton','hide')">HIDE</button>
+    </div>
+    <div id="photosStatus" class="status-msg">Current: UNKNOWN</div>
+  </div>
+
+  <div class="control-card">
+    <h3>Support Button Control</h3>
+    <div class="btn-control">
+      <button id="support_on" onclick="setStatus('supportButton','on')">ON</button>
+      <button id="support_off" onclick="setStatus('supportButton','off')">OFF</button>
+      <button id="support_hide" onclick="setStatus('supportButton','hide')">HIDE</button>
+    </div>
+    <div id="supportStatus" class="status-msg">Current: UNKNOWN</div>
+  </div>
+
+  <div class="control-card">
+    <h3>Gallery Button Control</h3>
+    <div class="btn-control">
+      <button id="gallery_on" onclick="setStatus('galleryButton','on')">ON</button>
+      <button id="gallery_off" onclick="setStatus('galleryButton','off')">OFF</button>
+      <button id="gallery_hide" onclick="setStatus('galleryButton','hide')">HIDE</button>
+    </div>
+    <div id="galleryStatus" class="status-msg">Current: UNKNOWN</div>
+  </div>
+
+  <div class="control-card">
+    <h3>Softwares Button Control</h3>
+    <div class="btn-control">
+      <button id="softwares_on" onclick="setStatus('softwaresButton','on')">ON</button>
+      <button id="softwares_off" onclick="setStatus('softwaresButton','off')">OFF</button>
+      <button id="softwares_hide" onclick="setStatus('softwaresButton','hide')">HIDE</button>
+    </div>
+    <div id="softwaresStatus" class="status-msg">Current: UNKNOWN</div>
+  </div>
+
+  <div class="control-card">
+    <h3>Login Button Control</h3>
+    <div class="btn-control">
+      <button id="login_on" onclick="setStatus('loginButton','on')">ON</button>
+      <button id="login_off" onclick="setStatus('loginButton','off')">OFF</button>
+      <button id="login_hide" onclick="setStatus('loginButton','hide')">HIDE</button>
+    </div>
+    <div id="loginStatus" class="status-msg">Current: UNKNOWN</div>
+  </div>
+<div class="control-card">
+    <h3>Explore Button Control</h3>
+    <div class="btn-control">
+      <button id="explore_on" onclick="setStatus('exploreButton','on')">ON</button>
+      <button id="explore_off" onclick="setStatus('exploreButton','off')">OFF</button>
+      <button id="explore_hide" onclick="setStatus('exploreButton','hide')">HIDE</button>
+    </div>
+    <div id="exploreStatus" class="status-msg">Current: UNKNOWN</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB7y7XkW7FeU0Nb0Tul4HifxoLNHR7O8V0",
+  authDomain: "on-off-d8263.firebaseapp.com",
+  databaseURL: "https://on-off-d8263-default-rtdb.firebaseio.com",
+  projectId: "on-off-d8263",
+  storageBucket: "on-off-d8263.appspot.com",
+  messagingSenderId: "1087218871311",
+  appId: "1:1087218871311:web:e18803aa2ec36b6b79877a"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// Existing button keys
+const buttonKeys = [
+  'homeButton','servicesButton','aboutButton','contactButton','printingButton',
+  'photosButton','supportButton','galleryButton','softwaresButton','loginButton',
+  'signupButton','exploreButton' // <-- Added Explore button
+];
+
+// Set status in Firebase
+function setStatus(key, status){
+  set(ref(db, `controls/${key}`), status).catch(e=> alert(e));
+}
+
+// Update button colors
+function updateColors(key,status){
+  const prefix = key.replace('Button','');
+  const onBtn = document.getElementById(prefix+'_on');
+  const offBtn = document.getElementById(prefix+'_off');
+  const hideBtn = document.getElementById(prefix+'_hide');
+
+  [onBtn, offBtn, hideBtn].forEach(b=> b.classList.remove('green','red'));
+
+  if(status==='on'){onBtn.classList.add('green'); offBtn.classList.add('red'); hideBtn.classList.add('red');}
+  if(status==='off'){offBtn.classList.add('green'); onBtn.classList.add('red'); hideBtn.classList.add('red');}
+  if(status==='hide'){hideBtn.classList.add('green'); onBtn.classList.add('red'); offBtn.classList.add('red');}
+}
+
+// Listen for Firebase updates
+buttonKeys.forEach(key=>{
+  const statusEl = document.getElementById(key.replace('Button','')+"Status");
+  const btnRef = ref(db, `controls/${key}`);
+  onValue(btnRef,snap=>{
+    if(snap.exists()){
+      const val = snap.val();
+      statusEl.textContent = `Current: ${val.toUpperCase()}`;
+      updateColors(key,val);
+    }
+  });
+});
+
+window.setStatus = setStatus;
+</script>
+
+  <div class="control-card">
+    <h3>SignUp Button Control</h3>
+    <div class="btn-control">
+      <button id="signup_on" onclick="setStatus('signupButton','on')">ON</button>
+      <button id="signup_off" onclick="setStatus('signupButton','off')">OFF</button>
+      <button id="signup_hide" onclick="setStatus('signupButton','hide')">HIDE</button>
+    </div>
+    <div id="signupStatus" class="status-msg">Current: UNKNOWN</div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB7y7XkW7FeU0Nb0Tul4HifxoLNHR7O8V0",
+  authDomain: "on-off-d8263.firebaseapp.com",
+  databaseURL: "https://on-off-d8263-default-rtdb.firebaseio.com",
+  projectId: "on-off-d8263",
+  storageBucket: "on-off-d8263.appspot.com",
+  messagingSenderId: "1087218871311",
+  appId: "1:1087218871311:web:e18803aa2ec36b6b79877a"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const buttonKeys = [
+  'homeButton','servicesButton','aboutButton','contactButton','printingButton',
+  'photosButton','supportButton','galleryButton','softwaresButton','loginButton','signupButton'
+];
+
+// Set status in Firebase
+function setStatus(key, status){
+  set(ref(db, `controls/${key}`), status).catch(e=> alert(e));
+}
+
+// Update button colors
+function updateColors(key,status){
+  const prefix = key.replace('Button','');
+  const onBtn = document.getElementById(prefix+'_on');
+  const offBtn = document.getElementById(prefix+'_off');
+  const hideBtn = document.getElementById(prefix+'_hide');
+
+  [onBtn, offBtn, hideBtn].forEach(b=> b.classList.remove('green','red'));
+
+  if(status==='on'){onBtn.classList.add('green'); offBtn.classList.add('red'); hideBtn.classList.add('red');}
+  if(status==='off'){offBtn.classList.add('green'); onBtn.classList.add('red'); hideBtn.classList.add('red');}
+  if(status==='hide'){hideBtn.classList.add('green'); onBtn.classList.add('red'); offBtn.classList.add('red');}
+}
+
+// Listen for Firebase updates
+buttonKeys.forEach(key=>{
+  const statusEl = document.getElementById(key.replace('Button','')+"Status");
+  const btnRef = ref(db, `controls/${key}`);
+  onValue(btnRef,snap=>{
+    if(snap.exists()){
+      const val = snap.val();
+      statusEl.textContent = `Current: ${val.toUpperCase()}`;
+      updateColors(key,val);
+    }
+  });
+});
+
+window.setStatus = setStatus;
+</script>
+
+</body>
+</html>

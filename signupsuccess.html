@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital World Cyber Café</title>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(-45deg,#ff6a00,#ff0058,#6a11cb,#2575fc);
+      background-size:400% 400%;
+      animation:gradientMove 12s ease infinite;
+      font-family:Poppins,sans-serif;
+      overflow:hidden;
+      position:relative;
+      text-align:center;
+      padding:20px;
+    }
+
+    /* Confetti */
+    .confetti{
+      position:absolute;
+      background:linear-gradient(45deg,#ff00cc,#3333ff,#00ffcc,#ffdd00);
+      opacity:0.85;
+      animation:fall 6s linear infinite;
+      border-radius:2px;
+    }
+    @keyframes fall{
+      0%{transform:translateY(-60px) rotate(0deg);}
+      100%{transform:translateY(110vh) rotate(720deg);}
+    }
+
+    /* Success Box */
+    .success-box{
+      z-index:10;
+      animation:popIn 1.2s ease;
+      max-width:600px;
+    }
+    @keyframes popIn{
+      from{opacity:0;transform:scale(.5) translateY(-50px);}
+      to{opacity:1;transform:scale(1) translateY(0);}
+    }
+
+    h1{
+      font-family:Orbitron,sans-serif;
+      font-size:clamp(1.8rem,5vw,3rem);
+      background:linear-gradient(90deg,#ff00cc,#3333ff,#00ffcc,#ffdd00);
+      background-size:400% 400%;
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      animation:gradientMove 4s ease infinite, pulse 1.5s ease-in-out infinite;
+      margin-bottom:15px;
+    }
+    @keyframes gradientMove {
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
+    }
+    @keyframes pulse{
+      0%,100%{transform:scale(1);}
+      50%{transform:scale(1.05);}
+    }
+
+    p{
+      font-size:clamp(1rem,3.5vw,1.3rem);
+      margin:12px 0;
+      font-weight:600;
+    }
+    #welcomeMsg{
+      background:linear-gradient(90deg,#ff6a00,#ff00cc,#3333ff,#00ffcc);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      animation:fadeSlide 2s ease forwards;
+    }
+    @keyframes fadeSlide{
+      0%{opacity:0; transform:translateY(20px);}
+      100%{opacity:1; transform:translateY(0);}
+    }
+
+    .redirect-msg{
+      font-size:0.95rem;
+      color:#f0f0f0;
+      margin-top:12px;
+      font-weight:500;
+      opacity:0.9;
+    }
+
+    @media(max-width:600px){
+      body{padding:15px;}
+      h1{font-size:2rem;}
+      p{font-size:1rem;}
+    }
+  </style>
+</head>
+<body>
+  <div class="success-box">
+    <h1 id="successMsg">Account Created Successfully!</h1>
+    <p id="welcomeMsg">Welcome, <span id="userName"></span>! Your account is ready.</p>
+    <p class="redirect-msg" id="redirectMsg">Please wait... Redirecting to login in 30 seconds.</p>
+  </div>
+
+<script>
+  // 🎉 Confetti generator
+  for(let i=0;i<80;i++){
+    let conf=document.createElement('div');
+    conf.className='confetti';
+    conf.style.left=Math.random()*100+'%';
+    conf.style.animationDuration=(Math.random()*3+3)+'s';
+    conf.style.width=conf.style.height=(Math.random()*8+4)+'px';
+    document.body.appendChild(conf);
+  }
+
+  window.onload = function(){
+    const currentUser = localStorage.getItem('currentUser'); // ✅ fixed (removed stray 's')
+
+    if(currentUser){
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+      const name = users[currentUser]?.name || currentUser; // ✅ fallback to email if name not found
+
+      document.getElementById('successMsg').textContent = `Your account created, ${name}!`;
+      document.getElementById('userName').textContent = name;
+    }
+
+    // ⏳ Countdown redirect
+    let counter = 30;
+    const redirectMsg = document.getElementById('redirectMsg');
+    const interval = setInterval(()=>{
+      counter--;
+      redirectMsg.textContent = `Please wait... Redirecting to login in ${counter} seconds.`;
+      if(counter <= 0){
+        clearInterval(interval);
+        window.location.href='login.html';
+      }
+    },1000);
+  };
+</script>
+</body>
+</html>

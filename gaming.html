@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Digital World Cyber Café</title>
-<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
 <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
 
 <!-- Google Fonts -->
@@ -12,6 +13,7 @@
 
 <!-- Font Awesome -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -32,12 +34,11 @@
     body {
       font-family: 'Poppins', sans-serif;
       color: var(--white);
-      background: url("A_digital_image_showcases_a_futuristic_circuit_boa.png") no-repeat center center fixed;
+      background: url("https://i.ibb.co/6RDZBtb/gaming-bg.jpg") no-repeat center center fixed;
       background-size: cover;
       overflow-x: hidden;
     }
 
-    /* Overlay Glow */
     body::before {
       content: "";
       position: fixed;
@@ -123,11 +124,11 @@
     /* Hero */
     header.hero {
       text-align: center;
-      padding: 80px 20px 60px;
+      padding: 80px 20px 40px;
     }
     .brand {
       font-family: 'Orbitron', sans-serif;
-      font-size: clamp(34px, 6vw, 65px);
+      font-size: clamp(32px, 6vw, 65px);
       background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -137,25 +138,24 @@
       from { text-shadow: 0 0 6px var(--blue); }
       to { text-shadow: 0 0 18px var(--purple); }
     }
+    header.hero p {
+      margin-top: 10px;
+      font-size: 1rem;
+      color: #eee;
+    }
 
-    /* Access Section */
-    section.free-access {
+    /* Sections */
+    section.games-section {
       max-width: 1100px;
       margin: 0 auto 70px;
       padding: 0 20px;
-      animation: fadeIn 1s ease forwards;
-      opacity: 0;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px);}
-      to { opacity: 1; transform: translateY(0);}
-    }
-    section.free-access h2 {
+    section.games-section h2 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 2.2rem;
+      font-size: 2rem;
       text-align: center;
-      margin-bottom: 40px;
-      background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
+      margin: 40px 0 30px;
+      background: linear-gradient(90deg, var(--blue), var(--purple));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-shadow: 0 0 6px var(--purple);
@@ -170,25 +170,24 @@
       background: var(--card-bg);
       border-radius: 18px;
       padding: 22px 18px;
-      box-shadow: 0 0 12px var(--blue), 0 0 20px var(--purple), inset 0 0 25px var(--pink);
+      box-shadow: 0 0 12px var(--blue), 0 0 20px var(--purple);
       display: flex;
       flex-direction: column;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .card:hover {
       transform: translateY(-8px) scale(1.03);
-      box-shadow: 0 0 22px var(--blue), 0 0 35px var(--purple), inset 0 0 35px var(--blue);
+      box-shadow: 0 0 22px var(--blue), 0 0 35px var(--purple), inset 0 0 25px var(--pink);
     }
     .card h3 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       margin-bottom: 10px;
       color: var(--blue);
-      text-shadow: 0 0 8px var(--blue);
     }
     .card p {
       flex-grow: 1;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       color: #ddd;
       margin-bottom: 20px;
       line-height: 1.4;
@@ -199,24 +198,22 @@
       align-self: center;
       background: linear-gradient(135deg, var(--blue), var(--purple));
       color: var(--white);
-      padding: 12px 26px;
+      padding: 10px 22px;
       border-radius: 50px;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       text-decoration: none;
       box-shadow: 0 0 12px var(--blue);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       transition: all 0.3s ease;
     }
     .btn-access:hover {
       background: linear-gradient(135deg, var(--pink), var(--purple));
-      box-shadow: 0 0 20px var(--pink), 0 0 30px var(--purple);
       transform: scale(1.07);
     }
 
-    /* Paid Button */
     .btn-paid {
       background: linear-gradient(135deg, #ff4d4d, #cc0000);
       box-shadow: 0 0 12px #ff4d4d, 0 0 22px #cc0000;
@@ -224,14 +221,13 @@
     .btn-paid:hover {
       background: linear-gradient(135deg, #ff1a1a, #990000);
       box-shadow: 0 0 20px #ff1a1a, 0 0 30px #ff3333;
-      transform: scale(1.08);
     }
 
     /* Responsive */
     @media (max-width: 600px) {
       nav.nav { flex-wrap: wrap; justify-content: center; }
       .logo-circle { width: 45px; height: 45px; }
-      section.free-access h2 { font-size: 1.6rem; }
+      section.games-section h2 { font-size: 1.5rem; }
     }
   </style>
 </head>
@@ -243,14 +239,11 @@
       <img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="DWC Logo" />
     </div>
     <div class="nav-links">
-	
-	<a href="imagemaker.html"><i class="fa fa-camera"></i> Image Maker</a>
-
       <a href="home.html"><i class="fa fa-house"></i> Home</a>
       <a href="about.html"><i class="fa fa-circle-info"></i> About</a>
       <a href="contact.html"><i class="fa fa-envelope"></i> Contact</a>
-      <a href="gaming.html"><i class="fa fa-gamepad"></i> Gaming</a>
       <a href="gallery.html"><i class="fa fa-image"></i> Gallery</a>
+      <a href="softwares.html"><i class="fa fa-laptop-code"></i> Softwares</a>
     </div>
     <div class="logo-circle">
       <img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="DWC Logo" />
@@ -259,99 +252,53 @@
 
   <!-- Hero Section -->
   <header class="hero">
-    <h1 class="brand">Welcome to Digital World Cyber Café</h1>
+    <h1 class="brand">Gaming Zone</h1>
+    <p>Play Free & Paid Games – Fun & Entertainment for Everyone</p>
   </header>
-<!-- Direct Access Button (Add this after hero section) -->
-<div style="text-align: center; margin-top: 20px;">
-  <a href="directaccess.html" class="btn-direct">
-    <i class="fa fa-star"></i> Direct Access
-  </a>
-</div>
-<style>
-/* Direct Access Button */
-.btn-direct {
-  display: inline-block;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1rem;
-  font-weight: 800;
-  padding: 14px 30px;
-  border-radius: 40px;
-  background: linear-gradient(135deg, #00ffcc, #9900ff);
-  color: white;
-  text-decoration: none;
-  box-shadow: 0 0 15px #00eaff, 0 0 30px #9b59ff;
-  transition: all 0.3s ease;
-  margin-bottom: 30px;
-  animation: pulse 2s infinite;
-}
 
-.btn-direct:hover {
-  transform: scale(1.08);
-  background: linear-gradient(135deg, #ff4d6d, #6e00ff);
-  box-shadow: 0 0 20px #ff4d6d, 0 0 30px #6e00ff;
-}
-
-@keyframes pulse {
-  0% { box-shadow: 0 0 10px #00eaff; }
-  50% { box-shadow: 0 0 25px #9b59ff; }
-  100% { box-shadow: 0 0 10px #00eaff; }
-}
-
-</style>
-  <!-- Free Access Section -->
-  <section class="free-access" id="free-access">
-    <h2>Free and Paid Access – Apps & Websites</h2>
+  <!-- Free Games Section -->
+  <section class="games-section">
+    <h2>🎮 Free Games Collection</h2>
     <div class="cards-container">
-     <div class="card">
-  <h3>Notepad++</h3>
-  <p>Lightweight and powerful source code editor, perfect for quick editing and programming.</p>
-  <a href="https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.8.5/npp.8.8.5.Installer.x64.exe" 
-     class="btn-access" download>
-     Download Now <i class="fa fa-download"></i>
-  </a>
-</div>
-
-    
       <div class="card">
-  <h3>Firefox Browser</h3>
-  <p>Fast, secure, and open-source web browser with great privacy protection features.</p>
-  <a href="https://download.mozilla.org/?product=firefox-latest&os=win64&lang=en-US" 
-     class="btn-access" download>
-     Download Now <i class="fa fa-download"></i>
-  </a>
-</div>
-
-     <div class="card">
-  <h3>Remove BG Tool</h3>
-  <p>Instantly remove image backgrounds online with AI-powered background remover.</p>
-  <a href="removebg.html" target="_blank" class="btn-access">
-    Access Now <i class="fa fa-arrow-right"></i>
-  </a>
-</div>
-
-     <div class="card">
-  <h3>Image Enhancer</h3>
-  <p>Enhance and improve your photos instantly using AI-powered image enhancement tools.</p>
-  <a href="imageinhensure.html" target="_blank" class="btn-access">
-    Access Now <i class="fa fa-arrow-right"></i>
-  </a>
-</div>
-
-     <div class="card">
-  <h3>Mouse Test</h3>
-  <p>Test your mouse buttons, scroll wheel, and all functions to ensure everything works properly.</p>
-  <a href="mousetest.html" target="_blank" class="btn-access">
-    Test Now <i class="fa fa-mouse-pointer"></i>
-  </a>
-</div>
-<div class="card">
-  <h3>Digital World CyberCafe Notepad Pro</h3>
-  <p>Advanced online notepad – type, edit, save, and print your notes securely with premium features.</p>
-  <a href="dwcfreeacessnotepad.html" target="_blank" class="btn-access">
-    Access Now <i class="fa fa-mouse-pointer"></i>
-  </a>
-</div>
+        <h3>Dwc Game</h3>
+        <p>Popular multiplayer social deduction game where teamwork and betrayal go hand in hand.</p>
+        <a href="dwcgame.html" target="_blank" class="btn-access">Play Free <i class="fa fa-arrow-right"></i></a>
+      </div>
+      <div class="card">
+        <h3>Chess.com</h3>
+        <p>Challenge your friends or play against AI – the world’s largest chess platform online.</p>
+        <a href="https://www.chess.com/" target="_blank" class="btn-access">Play Free <i class="fa fa-arrow-right"></i></a>
+      </div>
+      <div class="card">
+        <h3>Slither.io</h3>
+        <p>Classic snake game in multiplayer mode – grow your snake and dominate the arena.</p>
+        <a href="https://slither.io/" target="_blank" class="btn-access">Play Free <i class="fa fa-arrow-right"></i></a>
+      </div>
     </div>
-	  </section>
-	  </body>
+  </section>
+
+  <!-- Paid Games Section -->
+  <section class="games-section">
+    <h2>💎 Paid Games Collection</h2>
+    <div class="cards-container">
+      <div class="card">
+        <h3>Minecraft</h3>
+        <p>Create, build, and explore infinite worlds of creativity and adventure.</p>
+        <a href="payment-page-minecraft.html" class="btn-access btn-paid"><i class="fa fa-lock"></i> Buy Now – ₹299</a>
+      </div>
+      <div class="card">
+        <h3>GTA V</h3>
+        <p>Step into the massive open world of Los Santos – action, heists, and endless fun.</p>
+        <a href="payment-page-gta.html" class="btn-access btn-paid"><i class="fa fa-lock"></i> Buy Now – ₹599</a>
+      </div>
+      <div class="card">
+        <h3>Call of Duty</h3>
+        <p>Fast-paced FPS action game with thrilling missions and multiplayer battles.</p>
+        <a href="payment-page-cod.html" class="btn-access btn-paid"><i class="fa fa-lock"></i> Buy Now – ₹499</a>
+      </div>
+    </div>
+  </section>
+
+</body>
 </html>

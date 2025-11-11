@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital World Cyber Café</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --blue: #00eaff;
+      --purple: #9b59ff;
+      --pink: #ff4d6d;
+      --white: #ffffff;
+      --card-bg: rgba(35, 10, 70, 0.92);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--white);
+      background: url("A_digital_image_showcases_a_futuristic_circuit_boa.png") no-repeat center center fixed;
+      background-size: cover;
+      overflow-x: hidden;
+    }
+
+    /* Overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(135deg, #ffffff, #e6f0ff, #f5f0ff);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      filter: blur(40px);
+    }
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Navbar */
+    nav.nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border: 2px solid var(--purple);
+      border-radius: 14px;
+      margin: 8px auto;
+      max-width: 1200px;
+      box-shadow: 0 0 20px var(--purple), 0 0 40px rgba(125, 60, 255, 0.6);
+      animation: glowBorder 3s infinite alternate;
+      z-index: 1000;
+    }
+    @keyframes glowBorder {
+      from { box-shadow: 0 0 15px var(--purple); }
+      to { box-shadow: 0 0 25px var(--blue); }
+    }
+
+    .logo-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      animation: spin 12s linear infinite;
+      box-shadow: 0 0 20px var(--blue), 0 0 30px var(--purple);
+      transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+    .logo-circle:hover { transform: scale(1.1); }
+    .logo-circle img { width: 100%; height: 100%; object-fit: cover; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      flex: 1;
+    }
+    nav.nav a {
+      padding: 8px 15px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--purple);
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(125, 60, 255, 0.4);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    nav.nav a:hover {
+      color: var(--blue);
+      background: rgba(255,255,255,0.3);
+      box-shadow: 0 0 15px var(--purple), 0 0 25px var(--blue);
+      transform: scale(1.05);
+    }
+
+    /* Hero */
+    header.hero {
+      text-align: center;
+      padding: 80px 20px 50px;
+    }
+    .brand {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(32px, 6vw, 60px);
+      background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glowTitle 3s infinite alternate;
+    }
+    @keyframes glowTitle {
+      from { text-shadow: 0 0 8px var(--blue); }
+      to { text-shadow: 0 0 20px var(--purple); }
+    }
+
+    /* Services Section */
+    section.services {
+      max-width: 1100px;
+      margin: 0 auto 70px;
+      padding: 0 20px;
+      animation: fadeIn 1s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    section.services h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.3rem;
+      text-align: center;
+      margin-bottom: 40px;
+      background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 8px var(--purple);
+    }
+    .service-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+    }
+    .service-card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 25px 20px;
+      box-shadow: 0 0 15px var(--blue), 0 0 25px var(--purple), inset 0 0 30px var(--pink);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+    }
+    .service-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 0 25px var(--blue), 0 0 40px var(--purple), inset 0 0 40px var(--blue);
+    }
+    .service-card i {
+      font-size: 2.2rem;
+      color: var(--blue);
+      margin-bottom: 15px;
+      text-shadow: 0 0 10px var(--blue);
+    }
+    .service-card h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: var(--blue);
+    }
+    .service-card p {
+      font-size: 0.95rem;
+      color: #ccc;
+      line-height: 1.4;
+    }
+
+    /* Mobile tweaks */
+    @media (max-width: 600px) {
+      nav.nav { flex-wrap: wrap; justify-content: center; }
+      .logo-circle { width: 50px; height: 50px; }
+      section.services h2 { font-size: 1.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="nav">
+    <div class="logo-circle">
+      <img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="DWC Logo" />
+    </div>
+    <div class="nav-links">
+      <a href="home.html"><i class="fa fa-house"></i> Home</a>
+      <a href="about.html"><i class="fa fa-circle-info"></i> About</a>
+      <a href="services.html"><i class="fa fa-cogs"></i> Services</a>
+      <a href="contact.html"><i class="fa fa-envelope"></i> Contact</a>
+      <a href="gallery.html"><i class="fa fa-image"></i> Gallery</a>
+    </div>
+    <div class="logo-circle">
+      <img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="DWC Logo" />
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <h1 class="brand">Our Premium Services</h1>
+  </header>
+
+  <!-- Services Section -->
+  <section class="services" id="services">
+    <h2>What We Offer</h2>
+    <div class="service-cards">
+      <div class="service-card">
+        <i class="fa fa-wifi"></i>
+        <h3>High-Speed Internet</h3>
+        <p>Enjoy blazing fast, secure, and reliable internet connectivity for all your needs.</p>
+      </div>
+      <div class="service-card">
+        <i class="fa fa-print"></i>
+        <h3>Printing & Scanning</h3>
+        <p>Affordable, high-quality printing and scanning services for all formats and sizes.</p>
+      </div>
+      <div class="service-card">
+        <i class="fa fa-gamepad"></i>
+        <h3>Online Gaming</h3>
+        <p>Dedicated gaming PCs with powerful graphics for smooth online and offline gaming.</p>
+      </div>
+      <div class="service-card">
+        <i class="fa fa-chalkboard-teacher"></i>
+        <h3>Training & Learning</h3>
+        <p>Interactive coding, design, and computer training sessions for beginners and pros.</p>
+      </div>
+      <div class="service-card">
+        <i class="fa fa-cloud"></i>
+        <h3>Cloud Access</h3>
+        <p>Seamless cloud storage access and file management with advanced security features.</p>
+      </div>
+      <div class="service-card">
+        <i class="fa fa-headset"></i>
+        <h3>24/7 Support</h3>
+        <p>Friendly and professional staff always available to assist with your requirements.</p>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

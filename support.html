@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital World Cyber Café</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    :root { --blue:#00aaff; --purple:#7d3cff; }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body,html{font-family:Poppins,sans-serif;background:linear-gradient(135deg,#ffffff,#e6f0ff,#f5f0ff);background-size:400% 400%;animation:gradient 15s ease infinite;overflow-x:hidden;}
+    @keyframes gradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+    /* Navbar */
+    nav.nav{position:sticky;top:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:12px 25px;z-index:1000;background:rgba(255,255,255,0.12);backdrop-filter:blur(14px);border:2px solid var(--purple);border-radius:14px;box-shadow:0 0 20px var(--purple),0 0 40px rgba(125,60,255,0.6);}
+    .logo-circle{width:70px;height:70px;border-radius:50%;overflow:hidden;animation:spin 12s linear infinite;box-shadow:0 0 25px var(--blue),0 0 40px var(--purple);}
+    .logo-circle img{width:100%;height:100%;object-fit:cover;}
+    @keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+    .nav-links{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;}
+    .nav-links a{margin:6px 10px;padding:12px 20px;border-radius:40px;text-decoration:none;font-weight:600;color:purple;position:relative;background:rgba(255,255,255,0.15);border:1px solid rgba(125,60,255,0.4);transition:.4s;display:flex;align-items:center;gap:8px;}
+    .nav-links a:hover{color:var(--blue);background:rgba(255,255,255,0.35);transform:scale(1.12);}
+
+    /* Hero */
+    header.hero{text-align:center;padding:80px 20px 40px;}
+    header.hero h1{font-family:Orbitron,sans-serif;font-size:clamp(34px,6vw,68px);background:linear-gradient(90deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    header.hero p{color:#333;font-size:18px;margin-top:12px;}
+
+    /* Support Buttons */
+    .support-section{max-width:900px;margin:60px auto;padding:20px;display:flex;flex-direction:column;gap:25px;align-items:center;}
+    .support-btn{width:95%;max-width:420px;padding:20px;border:none;border-radius:50px;font-size:18px;font-weight:600;color:#fff;cursor:pointer;text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center;gap:15px;transition:0.4s;box-shadow:0 6px 15px rgba(0,0,0,0.25);}
+    .support-btn i{font-size:24px;}
+
+    .email{background:linear-gradient(135deg,#ff4b1f,#ff9068);}
+    .whatsapp{background:linear-gradient(135deg,#25d366,#128c7e);}
+    .call{background:linear-gradient(135deg,#00c6ff,#0072ff);}
+
+    .support-btn:hover{transform:translateY(-6px) scale(1.05);box-shadow:0 0 25px var(--purple),0 0 25px var(--blue);}
+    footer{text-align:center;padding:20px;margin-top:60px;background:rgba(0,0,0,0.4);color:#fff;}
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="nav">
+  <div class="logo-circle"><img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="DWC Logo"></div>
+  <div class="nav-links">
+    <a href="home.html"><i class="fa fa-house"></i>Home</a>
+    <a href="services.html"><i class="fa fa-screwdriver-wrench"></i>Services</a>
+    <a href="about.html"><i class="fa fa-circle-info"></i>About</a>
+    <a href="photos.html"><i class="fa fa-image"></i>Photos</a>
+    <a href="support.html"><i class="fa fa-headset"></i>Support</a>
+    <a href="contact.html"><i class="fa fa-envelope"></i>Contact</a>
+  </div>
+  <div class="logo-circle"><img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="DWC Logo"></div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <h1>Support & Help Desk</h1>
+  <p>Get instant support — Email, WhatsApp, or Call us directly.</p>
+</header>
+
+<!-- Support Buttons -->
+<div class="support-section">
+  <!-- Email -->
+  <a href="mailto:digitalworldcybercafe100@gmail.com?subject=Support%20Request&body=Hello%20Digital%20World%20Cyber%20Café," class="support-btn email">
+    <i class="fa fa-envelope"></i> Email Support — digitalworldcybercafe100@gmail.com
+  </a>
+
+  <!-- WhatsApp -->
+  <a href="https://wa.me/918986029267?text=Hello%20Digital%20World%20Cyber%20Café,%20I%20need%20support." target="_blank" class="support-btn whatsapp">
+    <i class="fa fa-whatsapp"></i> WhatsApp Support — +91 89860 29267
+  </a>
+
+  <!-- Call -->
+  <a href="tel:+918986029267" class="support-btn call">
+    <i class="fa fa-phone"></i> Call Support — +91 89860 29267
+  </a>
+</div>
+
+<!-- Footer -->
+<footer>
+  &copy; 2025 Digital World Cyber Café | 24/7 Professional Support
+</footer>
+
+</body>
+</html>

@@ -12,7 +12,6 @@
 
 <!-- Font Awesome -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
   <!-- Font Awesome -->
@@ -37,7 +36,6 @@
       overflow-x: hidden;
     }
 
-    /* Overlay Glow */
     body::before {
       content: "";
       position: fixed;
@@ -123,11 +121,11 @@
     /* Hero */
     header.hero {
       text-align: center;
-      padding: 80px 20px 60px;
+      padding: 70px 20px 50px;
     }
     .brand {
       font-family: 'Orbitron', sans-serif;
-      font-size: clamp(34px, 6vw, 65px);
+      font-size: clamp(32px, 5.5vw, 62px);
       background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -138,8 +136,8 @@
       to { text-shadow: 0 0 18px var(--purple); }
     }
 
-    /* Access Section */
-    section.free-access {
+    /* Software Section */
+    section.software-access {
       max-width: 1100px;
       margin: 0 auto 70px;
       padding: 0 20px;
@@ -150,7 +148,7 @@
       from { opacity: 0; transform: translateY(20px);}
       to { opacity: 1; transform: translateY(0);}
     }
-    section.free-access h2 {
+    section.software-access h2 {
       font-family: 'Orbitron', sans-serif;
       font-size: 2.2rem;
       text-align: center;
@@ -194,32 +192,21 @@
       line-height: 1.4;
     }
 
-    /* Buttons */
-    .btn-access {
+    /* Paid Buttons */
+    .btn-paid {
       align-self: center;
-      background: linear-gradient(135deg, var(--blue), var(--purple));
+      background: linear-gradient(135deg, #ff4d4d, #cc0000);
       color: var(--white);
       padding: 12px 26px;
       border-radius: 50px;
       font-weight: 600;
       font-size: 0.95rem;
       text-decoration: none;
-      box-shadow: 0 0 12px var(--blue);
+      box-shadow: 0 0 12px #ff4d4d, 0 0 22px #cc0000;
       display: flex;
       align-items: center;
       gap: 8px;
       transition: all 0.3s ease;
-    }
-    .btn-access:hover {
-      background: linear-gradient(135deg, var(--pink), var(--purple));
-      box-shadow: 0 0 20px var(--pink), 0 0 30px var(--purple);
-      transform: scale(1.07);
-    }
-
-    /* Paid Button */
-    .btn-paid {
-      background: linear-gradient(135deg, #ff4d4d, #cc0000);
-      box-shadow: 0 0 12px #ff4d4d, 0 0 22px #cc0000;
     }
     .btn-paid:hover {
       background: linear-gradient(135deg, #ff1a1a, #990000);
@@ -227,11 +214,10 @@
       transform: scale(1.08);
     }
 
-    /* Responsive */
     @media (max-width: 600px) {
       nav.nav { flex-wrap: wrap; justify-content: center; }
       .logo-circle { width: 45px; height: 45px; }
-      section.free-access h2 { font-size: 1.6rem; }
+      section.software-access h2 { font-size: 1.6rem; }
     }
   </style>
 </head>
@@ -243,14 +229,12 @@
       <img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="DWC Logo" />
     </div>
     <div class="nav-links">
-	
-	<a href="imagemaker.html"><i class="fa fa-camera"></i> Image Maker</a>
-
       <a href="home.html"><i class="fa fa-house"></i> Home</a>
       <a href="about.html"><i class="fa fa-circle-info"></i> About</a>
       <a href="contact.html"><i class="fa fa-envelope"></i> Contact</a>
       <a href="gaming.html"><i class="fa fa-gamepad"></i> Gaming</a>
       <a href="gallery.html"><i class="fa fa-image"></i> Gallery</a>
+      <a href="softwares.html"><i class="fa fa-cubes"></i> Softwares</a>
     </div>
     <div class="logo-circle">
       <img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="DWC Logo" />
@@ -259,99 +243,53 @@
 
   <!-- Hero Section -->
   <header class="hero">
-    <h1 class="brand">Welcome to Digital World Cyber Café</h1>
+    <h1 class="brand">Paid Softwares Collection</h1>
   </header>
-<!-- Direct Access Button (Add this after hero section) -->
-<div style="text-align: center; margin-top: 20px;">
-  <a href="directaccess.html" class="btn-direct">
-    <i class="fa fa-star"></i> Direct Access
-  </a>
-</div>
-<style>
-/* Direct Access Button */
-.btn-direct {
-  display: inline-block;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1rem;
-  font-weight: 800;
-  padding: 14px 30px;
-  border-radius: 40px;
-  background: linear-gradient(135deg, #00ffcc, #9900ff);
-  color: white;
-  text-decoration: none;
-  box-shadow: 0 0 15px #00eaff, 0 0 30px #9b59ff;
-  transition: all 0.3s ease;
-  margin-bottom: 30px;
-  animation: pulse 2s infinite;
-}
 
-.btn-direct:hover {
-  transform: scale(1.08);
-  background: linear-gradient(135deg, #ff4d6d, #6e00ff);
-  box-shadow: 0 0 20px #ff4d6d, 0 0 30px #6e00ff;
-}
-
-@keyframes pulse {
-  0% { box-shadow: 0 0 10px #00eaff; }
-  50% { box-shadow: 0 0 25px #9b59ff; }
-  100% { box-shadow: 0 0 10px #00eaff; }
-}
-
-</style>
-  <!-- Free Access Section -->
-  <section class="free-access" id="free-access">
-    <h2>Free and Paid Access – Apps & Websites</h2>
+  <!-- Software Access Section -->
+  <section class="software-access">
+    <h2>Explore & Get Access to Premium Softwares</h2>
     <div class="cards-container">
-     <div class="card">
-  <h3>Notepad++</h3>
-  <p>Lightweight and powerful source code editor, perfect for quick editing and programming.</p>
-  <a href="https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.8.5/npp.8.8.5.Installer.x64.exe" 
-     class="btn-access" download>
-     Download Now <i class="fa fa-download"></i>
-  </a>
-</div>
-
-    
       <div class="card">
-  <h3>Firefox Browser</h3>
-  <p>Fast, secure, and open-source web browser with great privacy protection features.</p>
-  <a href="https://download.mozilla.org/?product=firefox-latest&os=win64&lang=en-US" 
-     class="btn-access" download>
-     Download Now <i class="fa fa-download"></i>
-  </a>
-</div>
-
-     <div class="card">
-  <h3>Remove BG Tool</h3>
-  <p>Instantly remove image backgrounds online with AI-powered background remover.</p>
-  <a href="removebg.html" target="_blank" class="btn-access">
-    Access Now <i class="fa fa-arrow-right"></i>
-  </a>
-</div>
-
-     <div class="card">
-  <h3>Image Enhancer</h3>
-  <p>Enhance and improve your photos instantly using AI-powered image enhancement tools.</p>
-  <a href="imageinhensure.html" target="_blank" class="btn-access">
-    Access Now <i class="fa fa-arrow-right"></i>
-  </a>
-</div>
-
-     <div class="card">
-  <h3>Mouse Test</h3>
-  <p>Test your mouse buttons, scroll wheel, and all functions to ensure everything works properly.</p>
-  <a href="mousetest.html" target="_blank" class="btn-access">
-    Test Now <i class="fa fa-mouse-pointer"></i>
-  </a>
-</div>
-<div class="card">
+        <h3>Adobe Photoshop</h3>
+        <p>Industry-leading photo editing and graphic design software with powerful creative tools.</p>
+        <a href="payment-photoshop.html" class="btn-paid"><i class="fa fa-lock"></i> Buy – ₹499</a>
+      </div>
+      <div class="card">
+        <h3>Microsoft Office 365</h3>
+        <p>Complete productivity suite including Word, Excel, PowerPoint, Outlook, and more.</p>
+        <a href="payment-office.html" class="btn-paid"><i class="fa fa-lock"></i> Buy – ₹699</a>
+      </div>
+      <div class="card">
+        <h3>CorelDRAW Graphics Suite</h3>
+        <p>Professional vector illustration, layout, and typography tools for designers.</p>
+        <a href="payment-coreldraw.html" class="btn-paid"><i class="fa fa-lock"></i> Buy – ₹599</a>
+      </div>
+      <div class="card">
+        <h3>AutoCAD</h3>
+        <p>Powerful CAD software for 2D and 3D design, engineering, and architecture projects.</p>
+        <a href="payment-autocad.html" class="btn-paid"><i class="fa fa-lock"></i> Buy – ₹799</a>
+      </div>
+      <div class="card">
+        <h3>FL Studio</h3>
+        <p>Advanced digital audio workstation for music production, mixing, and mastering.</p>
+        <a href="payment-flstudio.html" class="btn-paid"><i class="fa fa-lock"></i> Buy – ₹399</a>
+      </div>
+      <div class="card">
+        <h3>Sony Vegas Pro</h3>
+        <p>Professional video editing software with powerful features for creators and editors.</p>
+        <a href="payment-vegas.html" class="btn-paid"><i class="fa fa-lock"></i> Buy – ₹599</a>
+      </div>
+	 <div class="card">
   <h3>Digital World CyberCafe Notepad Pro</h3>
   <p>Advanced online notepad – type, edit, save, and print your notes securely with premium features.</p>
-  <a href="dwcfreeacessnotepad.html" target="_blank" class="btn-access">
-    Access Now <i class="fa fa-mouse-pointer"></i>
+  <a href="payment-notepad.html" class="btn-paid">
+    <i class="fa fa-lock"></i> Buy – ₹99
   </a>
 </div>
+
     </div>
-	  </section>
-	  </body>
+  </section>
+
+</body>
 </html>

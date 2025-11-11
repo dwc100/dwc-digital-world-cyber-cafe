@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital World Cyber Café</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+:root {
+  --blue: #00aaff;
+  --purple: #7d3cff;
+  --white: #ffffff;
+}
+
+/* General Reset */
+*{margin:0;padding:0;box-sizing:border-box;}
+body,html{
+  height:100%;
+  font-family:Poppins,sans-serif;
+  background:var(--white);
+  overflow-x:hidden;
+  color:#333;
+}
+
+/* Background Gradient */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;
+  background:linear-gradient(135deg,#ffffff,#e6f0ff,#f5f0ff);
+  background-size:400% 400%;
+  animation:gradient 15s ease infinite;
+  filter:blur(40px);
+}
+@keyframes gradient {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* Navbar */
+nav.nav{
+  position:sticky;top:0;width:100%;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:12px 20px;z-index:1000;
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(14px);
+  border:2px solid var(--purple);
+  border-radius:14px;
+  box-shadow:0 0 20px var(--purple),0 0 40px rgba(125,60,255,0.6);
+  animation:glowBorder 3s infinite alternate;
+}
+@keyframes glowBorder{
+  from {box-shadow:0 0 15px var(--purple),0 0 30px rgba(125,60,255,0.6);}
+  to   {box-shadow:0 0 25px var(--blue),0 0 45px rgba(0,170,255,0.8);}
+}
+
+.logo-circle{
+  width:65px;height:65px;border-radius:50%;overflow:hidden;
+  animation:spin 12s linear infinite;
+  box-shadow:0 0 20px var(--blue),0 0 30px var(--purple);
+  flex-shrink:0;transition:.3s ease;
+}
+.logo-circle img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.logo-circle:hover{transform:scale(1.1);box-shadow:0 0 30px var(--blue),0 0 50px var(--purple);}
+@keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+
+/* Nav Links */
+.nav-links{
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+}
+.nav-links a{
+  padding:10px 16px;border-radius:40px;text-decoration:none;
+  font-weight:600;color:purple;position:relative;
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(125,60,255,0.4);
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  transition:all .3s ease;
+  display:flex;align-items:center;gap:6px;
+}
+.nav-links a:hover{
+  color:var(--blue);
+  background:rgba(255,255,255,0.35);
+  box-shadow:0 0 15px var(--purple),0 0 30px rgba(0,170,255,.6);
+  transform:scale(1.05);
+}
+
+/* Hamburger (Mobile) */
+.hamburger{
+  display:none;font-size:26px;color:var(--purple);cursor:pointer;
+}
+@media(max-width:950px){
+  .nav-links{ 
+    display:none;flex-direction:column;
+    position:absolute;top:100%;left:0;width:100%;
+    background:rgba(255,255,255,0.95);
+    padding:20px;border-radius:0 0 12px 12px;
+  }
+  .nav-links.active{display:flex;}
+  .hamburger{display:block;}
+}
+
+/* Hero Section */
+header.hero{
+  text-align:center;padding:120px 20px 60px;
+}
+.brand{
+  font-family:Orbitron,sans-serif;
+  font-size:clamp(38px,6vw,72px);
+  background:linear-gradient(90deg,var(--blue),var(--purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:glow 3s infinite alternate;
+}
+@keyframes glow{from{text-shadow:0 0 8px var(--blue)} to{text-shadow:0 0 20px var(--purple)}}
+
+.welcome-box{
+  margin-top:30px;
+  display:inline-block;
+  padding:15px 30px;
+  border:3px solid var(--purple);
+  border-radius:50px;
+  font-family:'Dancing Script', cursive;
+  font-size:24px;font-weight:700;
+  color:#fff;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  box-shadow:0 0 20px var(--purple),0 0 40px var(--blue);
+  animation:welcomeGlow 3s infinite alternate, float3d 5s ease-in-out infinite;
+}
+@keyframes welcomeGlow{
+  from {box-shadow:0 0 15px var(--blue),0 0 30px var(--purple);}
+  to   {box-shadow:0 0 25px var(--purple),0 0 50px var(--blue);}
+}
+@keyframes float3d {
+  0%,100% {transform:translateY(0);}
+  50% {transform:translateY(-8px);}
+}
+
+/* Logout Popup */
+.logout-overlay {
+  position: fixed;inset:0;
+  background: rgba(0,0,30,0.7);
+  display:none;justify-content:center;align-items:center;
+  z-index: 9999;backdrop-filter: blur(6px);
+}
+.logout-box {
+  background: linear-gradient(135deg,#1a0033,#0d1b3d);
+  padding:25px 20px;border-radius:20px;text-align:center;
+  color:#fff;width:90%;max-width:360px;
+  box-shadow:0 0 25px rgba(125,60,255,0.8),0 0 45px rgba(0,170,255,0.8);
+  border:2px solid rgba(255,255,255,0.15);
+}
+.logout-box h2 {
+  font-size:22px;margin-bottom:15px;
+  background: linear-gradient(90deg,#00aaff,#7d3cff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.logout-box input {
+  width:100%;padding:10px;margin:12px 0 20px;
+  border-radius:10px;border:2px solid #7d3cff;
+  background:rgba(255,255,255,0.08);color:#fff;
+  text-align:center;font-size:15px;
+}
+.logout-box .btns{display:flex;gap:10px;}
+.logout-box button {
+  flex:1;padding:10px;border:none;border-radius:10px;
+  font-weight:bold;cursor:pointer;transition:.3s;
+}
+.btn-yes{
+  background:linear-gradient(135deg,#00aaff,#7d3cff);color:#fff;
+}
+.btn-no{
+  background:linear-gradient(135deg,#333,#222);color:#fff;
+}
+.btn-yes:hover{transform:scale(1.05);}
+.btn-no:hover{transform:scale(1.05);}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="nav">
+  <div class="logo-circle">
+    <img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="DWC Logo">
+  </div>
+
+  <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="loginhome.html"><i class="fa fa-house"></i>Home</a>
+    <a href="loginservices.html"><i class="fa fa-screwdriver-wrench"></i>Services</a>
+    <a href="loginabout.html"><i class="fa fa-circle-info"></i>About</a>
+    <a href="logincontact.html"><i class="fa fa-envelope"></i>Contact</a>
+    <a href="logingaming.html"><i class="fa fa-gamepad"></i>Gaming</a>
+    <a href="loginprinting.html"><i class="fa fa-print"></i>Printing</a>
+    <a href="loginpayments.html"><i class="fa fa-qrcode"></i>Payments</a>
+    <a href="logintickets.html"><i class="fa fa-ticket"></i>Tickets</a>
+    <a href="loginphotos.html"><i class="fa fa-id-card"></i>Photos</a>
+    <a href="loginsupport.html"><i class="fa fa-headset"></i>Support</a>
+    <a href="logingallery.html"><i class="fa fa-image"></i>Gallery</a>
+    <a href="loginbook.html"><i class="fa fa-bolt"></i>Book</a>
+    <a href="loginsoftwares.html"><i class="fa fa-code"></i>Softwares</a>
+    <a href="loginprofile.html"><i class="fa fa-user"></i>Profile</a>
+      <a href="javascript:void(0)" onclick="openLogoutPopup()" style="color:red;font-weight:bold">
+      <i class="fas fa-arrow-right-from-bracket"></i> Logout
+    </a>
+  </div>
+  <div class="logo-circle">
+    <img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="DWC Logo">
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <h1 class="brand">Digital World Cyber Café</h1>
+  <div class="welcome-box">Welcome, <span id="userName"></span>!</div>
+</header>
+
+<!-- Logout Popup -->
+<div class="logout-overlay" id="logoutPopup">
+  <div class="logout-box">
+    <h2>Are you sure you want to logout?</h2>
+    <input type="password" id="logoutPassword" placeholder="Enter your password">
+    <div class="btns">
+      <button class="btn-yes" onclick="confirmLogout()">Yes</button>
+      <button class="btn-no" onclick="closeLogoutPopup()">No</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleMenu(){
+  document.getElementById("navLinks").classList.toggle("active");
+}
+function openLogoutPopup(){
+  document.getElementById("logoutPopup").style.display="flex";
+}
+function closeLogoutPopup(){
+  document.getElementById("logoutPopup").style.display="none";
+}
+function confirmLogout(){
+  const inputPass = document.getElementById("logoutPassword").value;
+  const currentUser = localStorage.getItem("currentUser");
+  if(currentUser){
+    const users = JSON.parse(localStorage.getItem("users") || "{}");
+    const realPass = users[currentUser] ? users[currentUser].password : "";
+    if(inputPass === realPass){
+      localStorage.removeItem("currentUser");
+      alert("✅ Logged out successfully!");
+      window.location.href="index.html";
+    } else {
+      alert("❌ Wrong password! Logout failed.");
+    }
+  } else {
+    alert("No active session found.");
+  }
+}
+window.onload = function(){
+  const currentUser = localStorage.getItem('currentUser');
+  if(currentUser){
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    const name = users[currentUser] ? users[currentUser].name : 'User';
+    document.getElementById('userName').textContent = name;
+  } else {
+    document.getElementById('userName').textContent = 'Guest';
+  }
+};
+</script>
+</body>
+</html>

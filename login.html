@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital World Cyber Café</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+    body{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(-45deg,#6a11cb,#2575fc,#ff6a00,#ff0058);
+      background-size:400% 400%;
+      animation:gradientMove 12s ease infinite;
+      overflow:hidden;
+      padding:20px;
+    }
+    @keyframes gradientMove{
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
+    }
+
+    /* Floating bubbles */
+    .bubble{
+      position:absolute;
+      border-radius:50%;
+      background:rgba(255,255,255,.18);
+      bottom:-60px;
+      animation:rise 12s linear infinite;
+    }
+    @keyframes rise{
+      0%{transform:translateY(0) scale(0.5);}
+      100%{transform:translateY(-110vh) scale(1);}
+    }
+
+    /* Login Box */
+    .auth-box{
+      backdrop-filter:blur(14px);
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.25);
+      border-radius:22px;
+      padding:40px 28px;
+      width:100%;
+      max-width:400px;
+      box-shadow:0 10px 40px rgba(0,0,0,.35);
+      text-align:center;
+      animation:popIn 1.2s ease;
+    }
+    @keyframes popIn{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);} }
+
+    .auth-box h2{
+      font-family:Orbitron,sans-serif;
+      font-size:26px;
+      margin-bottom:22px;
+      color:#fff;
+      text-shadow:0 0 8px rgba(0,170,255,.7);
+    }
+
+    /* Input fields */
+    .input-group{
+      position:relative;
+      margin:20px 0;
+    }
+    .input-group i{
+      position:absolute;
+      left:14px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#ddd;
+      font-size:16px;
+      transition:.3s;
+    }
+    .input-group input{
+      width:100%;
+      padding:14px 44px;
+      border-radius:12px;
+      border:2px solid rgba(255,255,255,.3);
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      font-size:15px;
+      outline:none;
+      transition:.3s;
+    }
+    .input-group input:focus{
+      border-color:#00cfff;
+      box-shadow:0 0 12px #00cfff66;
+    }
+    .input-group input:focus ~ i{color:#00cfff;transform:translateY(-50%) scale(1.15);}
+
+    /* Eye button */
+    .eye-toggle{
+      position:absolute;
+      top:50%;
+      right:14px;
+      transform:translateY(-50%);
+      color:#ddd;
+      cursor:pointer;
+      font-size:15px;
+    }
+
+    /* Button */
+    .auth-btn{
+      width:100%;
+      padding:14px;
+      margin-top:15px;
+      font-size:16px;
+      border:none;
+      border-radius:12px;
+      background:linear-gradient(90deg,#00c6ff,#0072ff);
+      color:#fff;
+      font-weight:600;
+      cursor:pointer;
+      position:relative;
+      overflow:hidden;
+      transition:transform .3s;
+    }
+    .auth-btn::after{
+      content:"";
+      position:absolute;
+      top:0;left:-100%;
+      width:100%;height:100%;
+      background:linear-gradient(120deg,transparent,rgba(255,255,255,.6),transparent);
+      transition:all .6s;
+    }
+    .auth-btn:hover::after{left:100%;}
+    .auth-btn:hover{transform:scale(1.05);}
+
+    /* Links */
+    .links{
+      margin-top:18px;
+      font-size:14px;
+      color:#eee;
+    }
+    .links a{
+      color:#00eaff;
+      text-decoration:none;
+      font-weight:600;
+    }
+    .links a:hover{text-decoration:underline;}
+
+    /* Error */
+    .error-msg{
+      color:#ff8080;
+      font-size:14px;
+      margin-top:10px;
+      min-height:18px;
+    }
+
+    /* Mobile */
+    @media(max-width:500px){
+      .auth-box{padding:32px 20px;}
+      .auth-box h2{font-size:22px;}
+      .input-group input{font-size:14px;padding:12px 40px;}
+      .auth-btn{padding:12px;font-size:15px;}
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating bubbles -->
+  <div class="bubble" style="left:10%;animation-duration:12s;width:28px;height:28px;"></div>
+  <div class="bubble" style="left:30%;animation-duration:15s;width:20px;height:20px;"></div>
+  <div class="bubble" style="left:70%;animation-duration:18s;width:25px;height:25px;"></div>
+  <div class="bubble" style="left:50%;animation-duration:10s;width:18px;height:18px;"></div>
+  <div class="bubble" style="left:90%;animation-duration:20s;width:15px;height:15px;"></div>
+
+  <!-- Auth box -->
+  <div class="auth-box">
+    <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
+    <form id="loginForm">
+      <div class="input-group">
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="loginEmail" placeholder="Enter your email" required>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="loginPass" placeholder="Enter your password" required>
+        <i class="fa fa-eye eye-toggle" onclick="togglePass('loginPass',this)"></i>
+      </div>
+      <button type="submit" class="auth-btn"><i class="fas fa-arrow-right"></i> Login</button>
+      <div id="error" class="error-msg"></div>
+    </form>
+    <div class="links">
+      <p>Don’t have an account? <a href="signup.html">Sign Up</a></p>
+    </div>
+  </div>
+
+<script>
+  // 👁‍🗨 Show/Hide password
+  function togglePass(id, el){
+    let input=document.getElementById(id);
+    if(input.type==='password'){
+      input.type='text';
+      el.classList.replace('fa-eye','fa-eye-slash');
+    } else {
+      input.type='password';
+      el.classList.replace('fa-eye-slash','fa-eye');
+    }
+  }
+
+  const loginForm=document.getElementById('loginForm');
+  const errorDiv=document.getElementById('error');
+
+  // 🔐 Permanent admin credentials
+  const ADMIN_EMAIL = "sudhanshukumarkumar2025@gmail.com";
+  const ADMIN_PASS = "Sudhanshu100@112";
+
+  loginForm.addEventListener('submit',function(e){
+    e.preventDefault();
+    const email=document.getElementById('loginEmail').value.trim();
+    const pass=document.getElementById('loginPass').value;
+    const users=JSON.parse(localStorage.getItem('users')||'{}');
+
+    // ✅ First check permanent admin credentials
+    if(email === ADMIN_EMAIL && pass === ADMIN_PASS){
+      localStorage.setItem('currentUser', email);
+      window.location.href='adminsuccess.html'; // ✅ Admin redirect page
+      return;
+    }
+
+    // ✅ Otherwise check registered users from localStorage
+    if(!users[email]){
+      errorDiv.textContent='⚠️ Email not registered!';
+      return;
+    }
+    if(users[email].password!==pass){
+      errorDiv.textContent='⚠️ Incorrect password!';
+      return;
+    }
+
+    // ✅ Save current user & redirect to normal success page
+    localStorage.setItem('currentUser',email);
+    window.location.href='loginsucess.html';
+  });
+</script>
+
+</body>
+</html>

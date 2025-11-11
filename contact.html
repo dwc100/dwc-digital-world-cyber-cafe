@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital World Cyber Café - Contact</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --purple: #7e3ff2;
+      --light-purple: #d8c6ff;
+      --white: #ffffff;
+      --text-dark: #333;
+      --card-bg: rgba(255, 255, 255, 0.85);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #f8f6ff, #f2edff);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    nav.nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      border: 2px solid var(--light-purple);
+      border-radius: 14px;
+      margin: 8px auto;
+      max-width: 1200px;
+      box-shadow: 0 0 15px var(--light-purple);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .logo-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 0 20px var(--purple);
+      transition: transform 0.3s;
+    }
+    .logo-circle:hover { transform: scale(1.08); }
+    .logo-circle img { width: 100%; height: 100%; object-fit: cover; }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      flex: 1;
+    }
+
+    nav.nav a {
+      padding: 8px 15px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--purple);
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid var(--light-purple);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    nav.nav a:hover {
+      color: var(--white);
+      background: var(--purple);
+      box-shadow: 0 0 15px var(--light-purple);
+      transform: scale(1.05);
+    }
+
+    /* Hero */
+    header.hero {
+      text-align: center;
+      padding: 80px 20px 40px;
+    }
+
+    .brand {
+      font-family: "Orbitron", sans-serif;
+      font-size: clamp(32px, 6vw, 60px);
+      color: var(--purple);
+      text-shadow: 0 0 10px var(--light-purple);
+    }
+
+    header.hero p {
+      margin-top: 10px;
+      color: #555;
+      font-size: 1.1rem;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto 70px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+    }
+
+    /* Cards */
+    .contact-box {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 0 25px rgba(126, 63, 242, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid var(--light-purple);
+    }
+
+    .contact-box:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 35px rgba(126, 63, 242, 0.5);
+    }
+
+    .contact-box h2 {
+      font-family: "Orbitron", sans-serif;
+      font-size: 1.5rem;
+      color: var(--purple);
+      margin-bottom: 15px;
+      border-bottom: 2px solid var(--light-purple);
+      padding-bottom: 5px;
+    }
+
+    .contact-box p, .contact-box li {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    .contact-info ul { list-style: none; padding: 0; }
+    .contact-info ul li {
+      margin: 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .contact-info i { color: var(--purple); }
+
+    /* WhatsApp */
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      width: 100%;
+      padding: 14px;
+      margin-top: 20px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      background: linear-gradient(90deg, #a76bff, #7e3ff2);
+      box-shadow: 0 0 20px var(--light-purple);
+      transition: 0.3s;
+    }
+
+    .whatsapp-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 35px var(--purple);
+    }
+
+    /* Contact Form */
+    form.contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .contact-form input, .contact-form textarea {
+      padding: 12px 15px;
+      border-radius: 10px;
+      border: 1px solid var(--light-purple);
+      outline: none;
+      font-size: 1rem;
+      color: #333;
+      background: #fff;
+    }
+
+    .contact-form input:focus, .contact-form textarea:focus {
+      box-shadow: 0 0 10px var(--light-purple);
+    }
+
+    .contact-form button {
+      padding: 14px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      background: linear-gradient(90deg, var(--purple), var(--light-purple));
+      color: white;
+      box-shadow: 0 0 20px var(--light-purple);
+      transition: 0.3s;
+    }
+
+    .contact-form button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px var(--purple);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: var(--purple);
+      background: #f8f6ff;
+      border-top: 2px solid var(--light-purple);
+      box-shadow: 0 0 15px var(--light-purple);
+    }
+
+    footer a { color: var(--purple); text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="nav">
+    <div class="logo-circle"><img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="DWC Logo" /></div>
+    <div class="nav-links">
+      <a href="home.html"><i class="fa fa-house"></i> Home</a>
+      <a href="services.html"><i class="fa fa-cogs"></i> Services</a>
+      <a href="about.html"><i class="fa fa-circle-info"></i> About</a>
+      <a href="contact.html"><i class="fa fa-envelope"></i> Contact</a>
+    </div>
+    <div class="logo-circle"><img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="DWC Logo" /></div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <h1 class="brand">Contact Us</h1>
+    <p>We’re here to assist you. Reach out for any queries, support, or feedback.</p>
+  </header>
+
+  <!-- Contact Section -->
+  <div class="container">
+    <!-- WhatsApp -->
+    <div class="contact-box">
+      <h2>Chat With Us on WhatsApp</h2>
+      <p>Connect instantly with our support team:</p>
+      <a href="https://wa.me/918986029267?text=Hello%20Digital%20World%20Cyber%20Café%2C%20I%20need%20assistance." target="_blank" class="whatsapp-btn">
+        <i class="fab fa-whatsapp"></i> Message Us on WhatsApp
+      </a>
+      <p style="margin-top:15px;color:#555;font-size:14px;">
+        📞 WhatsApp: <strong>+91 89860 29267</strong>
+      </p>
+    </div>
+
+    <!-- Contact Info + Form -->
+    <div class="contact-box contact-info">
+      <h2>Our Contact Information</h2>
+      <ul>
+        <li><i class="fa fa-location-dot"></i> Main Street, Digital Town, Cyber City</li>
+        <li><i class="fa fa-phone"></i> +91 89860 29267</li>
+        <li><i class="fa fa-envelope"></i> <a href="mailto:digitalworldcybercafeservices100@gmail.com">digitalworldcybercafeservices100@gmail.com</a></li>
+        <li><i class="fa fa-clock"></i> Mon - Sat | 9:00 AM - 10:00 PM</li>
+      </ul>
+
+      <h2>Send Us a Message</h2>
+      <form class="contact-form" action="#" method="post">
+        <input type="text" name="name" placeholder="Your Full Name" required>
+        <input type="email" name="email" placeholder="Your Email Address" required>
+        <input type="tel" name="mobile" placeholder="Your Mobile Number" required>
+        <textarea name="message" rows="4" placeholder="Type your message here..." required></textarea>
+        <button type="submit"><i class="fa fa-paper-plane"></i> Send Message</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Digital World Cyber Café | <a href="mailto:digitalworldcybercafeservices100@gmail.com">Contact Us</a>
+  </footer>
+
+</body>
+</html>
