@@ -1,268 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Digital World Cyber Café</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About - Digital World Cyber Cafe</title>
 <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
-<!-- Font Awesome -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+/* ===================== Base Reset ===================== */
+html, body, * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-  <!-- Font Awesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+/* ===================== Body Background ===================== */
+body {
+  background: url('https://images.unsplash.com/photo-1531510072931-ff3e71a3a01e') no-repeat center center fixed;
+  background-size: cover;
+  overflow-x: hidden;
+  color: #222;
+}
 
-  <style>
-    :root {
-      --blue: #00eaff;
-      --purple: #9b59ff;
-      --pink: #ff4d6d;
-      --white: #ffffff;
-      --card-bg: rgba(35, 10, 70, 0.92);
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, #c300ff, #006bff, #ff00ff);
+  background-size: 400% 400%;
+  animation: gradient 20s ease infinite;
+  opacity: 0.3;
+  filter: blur(70px);
+}
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      color: var(--white);
-      background: url("A_digital_image_showcases_a_futuristic_circuit_boa.png") no-repeat center center fixed;
-      background-size: cover;
-      overflow-x: hidden;
-    }
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-    /* Overlay */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      background: linear-gradient(135deg, #ffffff, #e6f0ff, #f5f0ff);
-      background-size: 400% 400%;
-      animation: gradient 15s ease infinite;
-      filter: blur(40px);
-    }
-    @keyframes gradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+/* ===================== Header ===================== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 2vw 5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(15px);
+  border-bottom-left-radius: 11vw;
+  border-bottom-right-radius: 11vw;
+  border: 0.2vw solid rgba(180,0,255,0.25);
+  box-shadow: 0 0 2.5vw rgba(150,0,255,0.35), 0 0 4vw rgba(0,120,255,0.3);
+}
 
-    /* Navbar */
-    nav.nav {
-      position: sticky;
-      top: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 15px;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(12px);
-      border: 2px solid var(--purple);
-      border-radius: 14px;
-      margin: 8px auto;
-      max-width: 1200px;
-      box-shadow: 0 0 20px var(--purple), 0 0 40px rgba(125, 60, 255, 0.6);
-      animation: glowBorder 3s infinite alternate;
-      z-index: 1000;
-    }
-    @keyframes glowBorder {
-      from { box-shadow: 0 0 15px var(--purple); }
-      to { box-shadow: 0 0 25px var(--blue); }
-    }
+.logo {
+  display: flex;
+  align-items: center;
+}
 
-    .logo-circle {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      overflow: hidden;
-      animation: spin 12s linear infinite;
-      box-shadow: 0 0 20px var(--blue), 0 0 30px var(--purple);
-      transition: transform 0.3s;
-      flex-shrink: 0;
-    }
-    .logo-circle:hover { transform: scale(1.1); }
-    .logo-circle img { width: 100%; height: 100%; object-fit: cover; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.logo img {
+  width: 10vw;
+  max-width: 90px;
+  height: auto;
+  border-radius: 50%;
+  border: 0.4vw solid rgba(190,0,255,0.9);
+  box-shadow: 0 0 2.5vw rgba(170,0,255,0.8), 0 0 3.5vw #006eff;
+}
 
-    .nav-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      flex: 1;
-    }
-    nav.nav a {
-      padding: 8px 15px;
-      border-radius: 25px;
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: var(--purple);
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(125, 60, 255, 0.4);
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
-    }
-    nav.nav a:hover {
-      color: var(--blue);
-      background: rgba(255,255,255,0.3);
-      box-shadow: 0 0 15px var(--purple), 0 0 25px var(--blue);
-      transform: scale(1.05);
-    }
+.logo-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2vw;
+  margin-left: 1.5vw;
+  background: linear-gradient(90deg, #c300ff, #006bff, #b900ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 1.2vw rgba(170,0,255,0.5), 0 0 2.5vw rgba(0,70,255,0.6), 0 0 4vw rgba(200,0,255,0.7);
+}
 
-    /* Hero */
-    header.hero {
-      text-align: center;
-      padding: 80px 20px 40px;
-    }
-    .brand {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(32px, 6vw, 60px);
-      background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: glowTitle 3s infinite alternate;
-    }
-    @keyframes glowTitle {
-      from { text-shadow: 0 0 8px var(--blue); }
-      to { text-shadow: 0 0 20px var(--purple); }
-    }
+/* ===================== About Container ===================== */
+.about-container {
+  max-width: 900px;
+  margin: 15vw auto 5vw auto;
+  padding: 3vw 3vw;
+  background: #fff; /* White card */
+  border-radius: 3vw;
+  box-shadow: 0 0 2vw rgba(0,0,0,0.2), 0 0 3vw rgba(0,0,0,0.15), 0 0 2vw #c300ff, 0 0 2vw #006bff; /* neon glow */
+  border: 0.2vw solid;
+  border-image: linear-gradient(45deg, #c300ff, #006bff, #ff00ff) 1;
+  transition: all 0.5s ease;
+  text-align: justify;
+}
 
-    /* About Section */
-    section.about {
-      max-width: 1100px;
-      margin: 0 auto 70px;
-      padding: 0 20px;
-      text-align: center;
-      animation: fadeIn 1.2s ease forwards;
-      opacity: 0;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    section.about h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-      background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 8px var(--purple);
-    }
-    section.about p {
-      font-size: 1rem;
-      color: #ddd;
-      line-height: 1.6;
-      margin-bottom: 25px;
-    }
+/* Title */
+.about-container h1 {
+  text-align: center;
+  font-size: 3vw;
+  color: #222;
+  margin-bottom: 2vw;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+}
 
-    /* Highlights (Mission, Vision, Values) */
-    .highlights {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-      margin-top: 30px;
-    }
-    .highlight-box {
-      background: var(--card-bg);
-      border-radius: 18px;
-      padding: 25px;
-      box-shadow: 0 0 15px var(--blue), 0 0 25px var(--purple), inset 0 0 25px var(--pink);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      text-align: center;
-    }
-    .highlight-box:hover {
-      transform: translateY(-6px) scale(1.02);
-      box-shadow: 0 0 20px var(--blue), 0 0 35px var(--purple), inset 0 0 35px var(--blue);
-    }
-    .highlight-box i {
-      font-size: 2rem;
-      margin-bottom: 15px;
-      color: var(--blue);
-      text-shadow: 0 0 10px var(--blue);
-    }
-    .highlight-box h3 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.3rem;
-      margin-bottom: 10px;
-      color: var(--blue);
-    }
-    .highlight-box p {
-      font-size: 0.95rem;
-      color: #ccc;
-      line-height: 1.4;
-    }
+/* Paragraphs */
+.about-container p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #222;
+  margin-bottom: 1.5vw;
+}
 
-    /* Mobile tweaks */
-    @media (max-width: 600px) {
-      nav.nav { flex-wrap: wrap; justify-content: center; }
-      .logo-circle { width: 50px; height: 50px; }
-      section.about h2 { font-size: 1.7rem; }
-    }
-  </style>
+/* Buttons */
+.button-container {
+  text-align: center;
+  margin-bottom: 2vw;
+}
+
+.lang-btn {
+  padding: 0.8vw 2vw;
+  margin: 0 1vw;
+  font-size: 1rem;
+  font-weight: bold;
+  border: 0.2vw solid #222;
+  border-radius: 1vw;
+  cursor: pointer;
+  background: #f0f0f0;
+  color: #222;
+  transition: all 0.3s ease;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.lang-btn:hover {
+  background: #222;
+  color: #fff;
+  box-shadow: 0 0 1.5vw #222, 0 0 2.5vw #ff00ff;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 2vw;
+  margin-top: 5vw;
+  color: #fff;
+  text-shadow: 0 0 1vw #fff;
+}
+
+/* Responsive adjustments */
+@media(max-width:768px){
+  .about-container h1{ font-size:5vw;}
+  .about-container p{ font-size:1rem;}
+  .logo-text{ font-size:3vw;}
+}
+</style>
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav class="nav">
-    <div class="logo-circle">
-      <img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="DWC Logo" />
-    </div>
-    <div class="nav-links">
-      <a href="home.html"><i class="fa fa-house"></i> Home</a>
-      <a href="about.html"><i class="fa fa-circle-info"></i> About</a>
-      <a href="services.html"><i class="fa fa-cogs"></i> Services</a>
-      <a href="contact.html"><i class="fa fa-envelope"></i> Contact</a>
-      <a href="gallery.html"><i class="fa fa-image"></i> Gallery</a>
-    </div>
-    <div class="logo-circle">
-      <img src="https://i.ibb.co/r2mZRzSF/logo.png" alt="DWC Logo" />
-    </div>
-  </nav>
+<!-- Header -->
+<div class="header">
+  <div class="logo">
+    <img src="https://i.ibb.co/1gQKw6b/56.png" alt="Logo">
+    <div class="logo-text">DIGITAL WORLD CYBER CAFE</div>
+  </div>
+</div>
 
-  <!-- Hero Section -->
-  <header class="hero">
-    <h1 class="brand">Digital World Cyber Café</h1>
-  </header>
+<!-- About Section -->
+<div class="about-container">
+  <h1>About Digital World Cyber Cafe</h1>
 
-  <!-- About Section -->
-  <section class="about">
-    <h2>Who We Are</h2>
+  <!-- Language Buttons -->
+  <div class="button-container">
+    <button class="lang-btn" onclick="showEnglish()">English</button>
+    <button class="lang-btn" onclick="showHindi()">हिन्दी</button>
+  </div>
+
+  <!-- Content -->
+  <div id="content">
+    <!-- Default English content -->
     <p>
-      Digital World Cyber Café is a modern hub where technology meets creativity.  
-      We provide fast internet, advanced computer resources, and a wide range of digital solutions to students, gamers, professionals, and businesses.  
-      With a futuristic environment and customer-first approach, our café is designed to deliver innovation and comfort at the same time.
+      Welcome to Digital World Cyber Cafe, your ultimate destination for immersive learning and cutting-edge technology experiences. 
+      Our cyber cafe fosters creativity, innovation, and knowledge in computing, cybersecurity, and software.
     </p>
+    <p>
+      We provide high-speed internet, latest software tools, and access to specialized learning resources. 
+      Whether you are a student, a professional, or a tech enthusiast, our cyber cafe is perfect to explore, learn, and grow.
+    </p>
+    <p>
+      Experience a futuristic digital environment combined with top-notch learning and recreational services. 
+      Our goal is to empower you with skills and knowledge for today’s fast-evolving digital landscape.
+    </p>
+  </div>
+</div>
 
-    <div class="highlights">
-      <div class="highlight-box">
-        <i class="fa fa-bullseye"></i>
-        <h3>Our Mission</h3>
-        <p>To make advanced digital tools and services accessible to everyone with quality and affordability.</p>
-      </div>
-      <div class="highlight-box">
-        <i class="fa fa-lightbulb"></i>
-        <h3>Our Vision</h3>
-        <p>To become the leading digital café that empowers users through learning, entertainment, and technology.</p>
-      </div>
-      <div class="highlight-box">
-        <i class="fa fa-handshake"></i>
-        <h3>Our Values</h3>
-        <p>Innovation, transparency, customer satisfaction, and community growth are at the heart of what we do.</p>
-      </div>
-    </div>
-  </section>
+<!-- Footer -->
+<div class="footer">
+  &copy; 2025 Digital World Cyber Cafe. All Rights Reserved.
+</div>
+
+<!-- JS for language switching -->
+<script>
+function showEnglish() {
+  document.getElementById('content').innerHTML = `
+    <p>
+      Welcome to Digital World Cyber Cafe, your ultimate destination for immersive learning and cutting-edge technology experiences. 
+      Our cyber cafe fosters creativity, innovation, and knowledge in computing, cybersecurity, and software.
+    </p>
+    <p>
+      We provide high-speed internet, latest software tools, and access to specialized learning resources. 
+      Whether you are a student, a professional, or a tech enthusiast, our cyber cafe is perfect to explore, learn, and grow.
+    </p>
+    <p>
+      Experience a futuristic digital environment combined with top-notch learning and recreational services. 
+      Our goal is to empower you with skills and knowledge for today’s fast-evolving digital landscape.
+    </p>
+  `;
+}
+
+function showHindi() {
+  document.getElementById('content').innerHTML = `
+    <p>
+      डिजिटल वर्ल्ड साइबर कैफे में आपका स्वागत है, आपका आदर्श गंतव्य अत्याधुनिक तकनीकी अनुभव और इमर्सिव लर्निंग के लिए। 
+      हमारा साइबर कैफे कंप्यूटिंग, साइबर सुरक्षा और सॉफ़्टवेयर में रचनात्मकता, नवाचार और ज्ञान को बढ़ावा देता है।
+    </p>
+    <p>
+      हम उच्च-गति इंटरनेट, नवीनतम सॉफ़्टवेयर टूल और विशेषज्ञ लर्निंग संसाधनों की पहुँच प्रदान करते हैं। 
+      चाहे आप छात्र हों, पेशेवर हों, या तकनीक उत्साही, हमारा साइबर कैफे सीखने और बढ़ने के लिए आदर्श है।
+    </p>
+    <p>
+      भविष्यवादी डिजिटल वातावरण के साथ उच्च स्तरीय लर्निंग और मनोरंजन सेवाओं का अनुभव करें। 
+      हमारा उद्देश्य आपको आज के तेजी से बदलते डिजिटल परिदृश्य के लिए आवश्यक कौशल और ज्ञान से सशक्त बनाना है।
+    </p>
+  `;
+}
+</script>
 
 </body>
 </html>
