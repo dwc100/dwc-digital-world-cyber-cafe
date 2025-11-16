@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital World Cyber Café</title>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+  <style>
+    :root { --primary:#0055ff; --accent:#7a00ff; --danger:#ff4d4d; --card-bg:#ffffff; --text-dark:#222; }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Poppins',sans-serif;background:#f2f6ff;color:var(--text-dark);}    
+
+    .header{position:fixed;top:0;left:0;right:0;z-index:1000;padding:2vw 5vw;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.15);backdrop-filter:blur(15px);border-bottom-left-radius:11vw;border-bottom-right-radius:11vw;border:0.2vw solid rgba(180,0,255,0.25);box-shadow:0 0 2.5vw rgba(150,0,255,0.35),0 0 4vw rgba(0,120,255,0.3);}    
+    .logo{display:flex;align-items:center;}    
+    .logo img{width:10vw;max-width:90px;border-radius:50%;border:0.4vw solid rgba(190,0,255,0.9);box-shadow:0 0 2.5vw rgba(170,0,255,0.8),0 0 3.5vw #006eff;}    
+    .logo-text{font-family:'Orbitron',sans-serif;font-size:2vw;margin-left:1.5vw;background:linear-gradient(90deg,#c300ff,#006bff,#b900ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 1.2vw rgba(170,0,255,0.5),0 0 2.5vw rgba(0,70,255,0.6),0 0 4vw rgba(200,0,255,0.7);}    
+
+    section{max-width:1200px;margin:150px auto 60px;padding:20px;}    
+    h2.section-title{font-family:'Orbitron';text-align:center;font-size:2.2rem;margin-bottom:40px;background:linear-gradient(90deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}    
+
+    .cards-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:25px;}    
+    .card{background:var(--card-bg);padding:22px;border-radius:18px;border:1px solid #dde6ff;box-shadow:0 6px 15px rgba(0,0,0,0.08);transition:.3s;}    
+    .card:hover{transform:translateY(-5px);box-shadow:0 10px 25px rgba(0,0,0,0.12);}    
+    .card h3{font-family:'Orbitron';color:var(--primary);margin-bottom:10px;}    
+
+    .btn-access,.btn-paid{margin-top:15px;text-decoration:none;font-weight:700;padding:12px 26px;border-radius:50px;display:inline-flex;gap:8px;align-items:center;color:white;transition:.3s;}    
+    .btn-access{background:var(--primary);} .btn-access:hover{background:#003fcc;}    
+    .btn-paid{background:var(--danger);} .btn-paid:hover{background:#cc0000;}    
+
+    /* POPUP */
+    #popup{
+      position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);
+      display:none;justify-content:center;align-items:center;z-index:2000;
+    }
+    #popup-box{
+      background:white;padding:30px;border-radius:15px;text-align:center;font-size:1.2rem;
+      width:300px;box-shadow:0 0 20px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <img src="https://i.ibb.co/1gQKw6b/56.png" alt="Logo">
+    <div class="logo-text">DIGITAL WORLD CYBER CAFE</div>
+  </div>
+</div>
+
+<section>
+  <h2 class="section-title">Free Software</h2>
+  <div class="cards-container">
+
+    <div class="card">
+      <h3>Notepad++</h3>
+      <p>Lightweight and powerful editor for coding & notes.</p>
+      <a class="btn-access download-btn" data-link="https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.8.5/npp.8.8.5.Installer.x64.exe">
+        Download Free <i class="fa fa-download"></i>
+      </a>
+    </div>
+
+    <div class="card">
+      <h3>Firefox Browser</h3>
+      <p>Fast, secure browser with great privacy protection.</p>
+      <a class="btn-access download-btn" data-link="https://download.mozilla.org/?product=firefox-latest&os=win64&lang=en-US">
+        Download Free <i class="fa fa-download"></i>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">Paid Software</h2>
+  <div class="cards-container">
+
+    <div class="card">
+      <h3>Adobe Photoshop 2024</h3>
+      <div class="price-tag">₹499</div>
+      <p>Premium photo editing & design tool.</p>
+      <a class="btn-paid" href="#">Buy & Download <i class="fa fa-shopping-cart"></i></a>
+    </div>
+
+    <div class="card">
+      <h3>Microsoft Office 2021</h3>
+      <div class="price-tag">₹699</div>
+      <p>Word, Excel, PowerPoint suite – full offline version.</p>
+      <a class="btn-paid" href="#">Buy & Download <i class="fa fa-shopping-cart"></i></a>
+    </div>
+
+  </div>
+</section>
+
+<!-- POPUP -->
+<div id="popup">
+  <div id="popup-box">
+    <div id="popup-text">Please wait... downloading starts in <span id="count">3</span></div>
+  </div>
+</div>
+
+<script>
+  const popup = document.getElementById('popup');
+  const countSpan = document.getElementById('count');
+
+  document.querySelectorAll('.download-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      popup.style.display = 'flex';
+      let count = 3;
+      countSpan.textContent = count;
+
+      const interval = setInterval(() => {
+        count--;
+        countSpan.textContent = count;
+        if(count === 0){
+          clearInterval(interval);
+          window.location.href = btn.dataset.link;
+          popup.style.display = 'none';
+        }
+      }, 1000);
+    });
+  });
+</script>
+
+</body>
+</html>

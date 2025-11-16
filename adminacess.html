@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DWC — Access Page</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --blue:#007bff;
+  --purple:#a64dff;
+  --pink:#ff4da6;
+  --green:#00b894;
+  --red:#e63946;
+}
+
+/* ===== GLOBAL ===== */
+*{box-sizing:border-box;transition:all .3s ease;}
+body{
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#fff,#f6f7fb,#e9e9ff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+  overflow:hidden;
+  color:#222;
+}
+
+/* ===== CARD ===== */
+form{
+  width:340px;
+  background:rgba(255,255,255,0.85);
+  border-radius:20px;
+  padding:40px 30px;
+  text-align:center;
+  backdrop-filter:blur(15px);
+  border:2px solid transparent;
+  border-image:linear-gradient(135deg,var(--blue),var(--purple),var(--pink)) 1;
+  box-shadow:0 10px 40px rgba(0,0,0,0.1);
+  animation:float 3s ease-in-out infinite alternate;
+}
+@keyframes float{
+  from{transform:translateY(0);}
+  to{transform:translateY(-8px);}
+}
+
+/* ===== HEADING ===== */
+form h2{
+  font-family:'Great Vibes',cursive;
+  font-size:2.5rem;
+  margin-bottom:25px;
+  background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 12px rgba(123,47,247,0.3);
+}
+
+/* ===== INPUTS ===== */
+input{
+  width:100%;
+  padding:12px 14px;
+  margin-top:10px;
+  border-radius:10px;
+  border:1.5px solid #ccc;
+  font-size:1rem;
+  background:white;
+  color:#333;
+}
+input:focus{
+  border-color:var(--purple);
+  outline:none;
+  box-shadow:0 0 10px rgba(123,47,247,0.25);
+}
+
+/* ===== BUTTON ===== */
+button{
+  width:100%;
+  margin-top:18px;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  font-size:1rem;
+  font-weight:700;
+  background:linear-gradient(90deg,var(--blue),var(--purple));
+  color:white;
+  cursor:pointer;
+  box-shadow:0 0 18px rgba(123,47,247,0.25);
+}
+button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 25px rgba(255,77,166,0.3);
+}
+
+/* ===== MESSAGE ===== */
+.msg{
+  margin-top:12px;
+  font-weight:600;
+  font-size:0.95rem;
+  color:#333;
+  min-height:24px;
+}
+.msg.success{color:var(--green);}
+.msg.error{color:var(--red);}
+</style>
+</head>
+<body>
+
+<form id="accessForm">
+  <h2>DWC Access</h2>
+  <input id="passkey" type="text" placeholder="Enter passkey" required>
+  <button type="submit">Access</button>
+  <div class="msg" id="msg"></div>
+</form>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBbykwvZZkCQITwsBqdv3aBfEX6oCgTtS8",
+  authDomain: "user-manager-74b70.firebaseapp.com",
+  databaseURL: "https://user-manager-74b70-default-rtdb.firebaseio.com",
+  projectId: "user-manager-74b70",
+  storageBucket: "user-manager-74b70.appspot.com",
+  messagingSenderId: "339101560395",
+  appId: "1:339101560395:web:d2fc89720ba3f3588c27ce"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const form=document.getElementById("accessForm");
+const msg=document.getElementById("msg");
+
+form.addEventListener("submit",async e=>{
+  e.preventDefault();
+  msg.textContent="Checking...";
+  msg.className="msg";
+  const passkey=document.getElementById("passkey").value.trim();
+  const snapshot=await get(child(ref(db),"users"));
+  if(!snapshot.exists()){msg.textContent="No users found";msg.classList.add("error");return;}
+  let found=false;
+  snapshot.forEach(item=>{
+    const u=item.val();
+    if(u.passkey===passkey){
+      found=true;
+      const exp=new Date(u.expiryDate);
+      if(u.status==="active" && exp>new Date()){
+        msg.textContent="✅ Access Granted! Redirecting...";
+        msg.classList.add("success");
+        setTimeout(()=>location.href="dashboard.html",1000);
+      }else{
+        msg.textContent="❌ Key expired or inactive!";
+        msg.classList.add("error");
+      }
+    }
+  });
+  if(!found){msg.textContent="❌ Wrong passkey!";msg.classList.add("error");}
+});
+</script>
+</body>
+</html>

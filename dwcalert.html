@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyber Cafe Alerts</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+  <style>
+    body{
+      margin:0;
+      padding:0;
+      background:#eef3ff;
+      font-family:'Poppins',sans-serif;
+    }
+
+    .header{
+      background:rgba(255,255,255,0.6);
+      backdrop-filter:blur(10px);
+      padding:20px;
+      text-align:center;
+      font-family:'Orbitron';
+      font-size:2rem;
+      font-weight:800;
+      border-bottom:3px solid #7a00ff;
+    }
+
+    .container{
+      max-width:700px;
+      margin:50px auto;
+      padding:20px;
+    }
+
+    .alert-box{
+      background:white;
+      border-left:8px solid #0055ff;
+      padding:20px;
+      border-radius:10px;
+      margin-bottom:20px;
+      box-shadow:0 4px 15px rgba(0,0,0,0.1);
+      display:flex;
+      align-items:flex-start;
+      gap:15px;
+      animation:fadeIn .5s ease;
+    }
+
+    .alert-icon{
+      font-size:1.8rem;
+      color:#0055ff;
+    }
+
+    .alert-text{
+      font-size:1rem;
+      color:#222;
+    }
+
+    .alert-warning{border-left-color:#ff8800;}
+    .alert-warning .alert-icon{color:#ff8800;}
+
+    .alert-danger{border-left-color:#ff3b3b;}
+    .alert-danger .alert-icon{color:#ff3b3b;}
+
+    @keyframes fadeIn{
+      from{opacity:0;transform:translateY(10px);} 
+      to{opacity:1;transform:translateY(0);} 
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">SYSTEM ALERT MESSAGES</div>
+
+  <div class="container">
+
+    <!-- FIXED PERMANENT ALERTS -->
+    <div class="alert-box alert-info">
+      <i class="fa fa-info-circle alert-icon"></i>
+      <div class="alert-text">This system displays your saved alerts permanently.</div>
+    </div>
+
+    <div class="alert-box alert-warning">
+      <i class="fa fa-exclamation-circle alert-icon"></i>
+      <div class="alert-text">Reminder: Update your software list regularly.</div>
+    </div>
+
+    <!-- DAILY AUTO-UPDATE ALERT (EVERY 24 HOURS) -->
+    <div id="daily-alert"></div>
+
+    <div class="alert-box">
+      <i class="fa fa-info-circle alert-icon"></i>
+      <div class="alert-text">This is a general information alert message for users.</div>
+    </div>
+
+    <div class="alert-box alert-warning">
+      <i class="fa fa-exclamation-triangle alert-icon"></i>
+      <div class="alert-text">Warning! Your session will expire in 5 minutes. Please save your work.</div>
+    </div>
+
+    <div class="alert-box alert-danger">
+      <i class="fa fa-ban alert-icon"></i>
+      <div class="alert-text">Critical Alert! Unauthorized activity detected. Contact administrator immediately.</div>
+    </div>
+
+  </div>
+
+  <script>
+    function createAlert(type, message){
+      const box=document.createElement('div');
+      box.className=`alert-box alert-${type}`;
+      box.innerHTML=`<i class="fa fa-${type==='danger'?'ban':type==='warning'?'exclamation-triangle':'info-circle'} alert-icon"></i><div class="alert-text">${message}</div>`;
+      document.querySelector('.container').prepend(box);
+      setTimeout(()=>{box.style.opacity='0';box.style.transform='translateY(-10px)';setTimeout(()=>box.remove(),500);},4000);
+    }
+    setTimeout(()=>createAlert('info','Welcome! System is running smoothly.'),1000);
+    setTimeout(()=>createAlert('warning','High traffic detected. Some services may slow.'),3000);
+    setTimeout(()=>createAlert('danger','Security check triggered! Unusual activity found.'),6000);
+  </script>
+  <script>
+    function createAlert(type, message){
+      const box=document.createElement('div');
+      box.className=`alert-box alert-${type}`;
+      box.innerHTML=`<i class=\"fa fa-${type==='danger'?'ban':type==='warning'?'exclamation-triangle':'info-circle'} alert-icon\"></i><div class=\"alert-text\">${message}</div>`;
+      document.querySelector('.container').prepend(box);
+      setTimeout(()=>{box.style.opacity='0';box.style.transform='translateY(-10px)';setTimeout(()=>box.remove(),500);},5000);
+    }
+
+    /* DAILY AUTO MESSAGE */
+    function dailyMessage(){
+      const last = localStorage.getItem('dailyAlertTime');
+      const now = Date.now();
+      const oneDay = 24 * 60 * 60 * 1000;
+
+      if(!last || now - last >= oneDay){
+        localStorage.setItem('dailyAlertTime', now);
+        document.getElementById('daily-alert').innerHTML = `
+          <div class=\"alert-box alert-info\"> 
+            <i class=\"fa fa-bell alert-icon\"></i>
+            <div class=\"alert-text\">Daily Update: New features arriving soon. Stay tuned!</div>
+          </div>`;
+      }
+    }
+
+    dailyMessage();
+  </script>
+</body>
+</html>

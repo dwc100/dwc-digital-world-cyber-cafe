@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Software Downloads | Digital World Cyber Café</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+<style>
+:root {
+  --blue:#00eaff;
+  --purple:#7a3dff;
+  --pink:#ff2d95;
+  --white:#ffffff;
+  --accent:#0a0f2e;
+  --accent2:#1a1f3a;
+  --text:#eaf6ff;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at top, var(--accent2), var(--accent));
+  color: var(--text);
+  overflow-x: hidden;
+  padding: 40px 20px;
+}
+
+/* Title */
+h1 {
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(32px, 5vw, 60px);
+  background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px var(--blue);
+  animation: glowTitle 3s infinite alternate;
+  margin-bottom: 40px;
+}
+@keyframes glowTitle {
+  0% { text-shadow: 0 0 10px var(--blue); }
+  100% { text-shadow: 0 0 20px var(--purple); }
+}
+
+/* Container */
+.download-box {
+  max-width: 900px;
+  margin: auto;
+  background: rgba(255,255,255,0.05);
+  border-radius: 25px;
+  border: 2px solid var(--purple);
+  box-shadow: 0 0 25px var(--purple), 0 0 50px rgba(125,60,255,.6);
+  backdrop-filter: blur(20px);
+  padding: 30px;
+}
+
+/* Software list */
+.software-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.08);
+  border-radius: 20px;
+  margin: 12px 0;
+  padding: 14px 20px;
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: inset 0 0 15px rgba(0,234,255,0.2);
+  transition: 0.3s ease;
+}
+.software-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px var(--blue);
+}
+
+.software-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--blue);
+  text-shadow: 0 0 8px var(--blue);
+}
+
+/* Glass Buttons */
+.download-btn {
+  position: relative;
+  padding: 10px 22px;
+  border-radius: 40px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(10px);
+  color: var(--white);
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 12px rgba(122,61,255,0.4);
+  overflow: hidden;
+}
+
+.download-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,var(--blue),var(--purple),var(--pink));
+  opacity: 0;
+  z-index: -1;
+  transition: 0.4s ease;
+}
+
+.download-btn:hover {
+  color: #fff;
+  transform: scale(1.07);
+  box-shadow: 0 0 20px var(--pink), 0 0 35px var(--blue);
+}
+
+.download-btn:hover::before {
+  opacity: 1;
+  animation: glowMove 3s linear infinite;
+}
+
+@keyframes glowMove {
+  0% { background-position: 0%; }
+  100% { background-position: 200%; }
+}
+
+/* Responsive */
+@media (max-width:600px) {
+  .software-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .download-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+</style>
+</head>
+<body>
+
+<h1>Software Downloads</h1>
+
+<div class="download-box">
+
+  <div class="software-item">
+    <span class="software-name">Pc Acessor</span>
+    <a href="pcacessor.html" class="download-btn" download>
+      <i class="fa fa-download"></i>open</a>
+  </div>
+
+  <div class="software-item">
+    <span class="software-name">Mozilla Firefox</span>
+    <a href="https://download.mozilla.org/?product=firefox-latest&os=win64&lang=en-US" class="download-btn" download>
+      <i class="fa fa-download"></i> Download
+    </a>
+  </div>
+
+  <div class="software-item">
+    <span class="software-name">VLC Media Player</span>
+    <a href="https://get.videolan.org/vlc/3.0.21/win64/vlc-3.0.21-win64.exe" class="download-btn" download>
+      <i class="fa fa-download"></i> Download
+    </a>
+  </div>
+
+  <div class="software-item">
+    <span class="software-name">WinRAR</span>
+    <a href="https://www.rarlab.com/rar/winrar-x64-621.exe" class="download-btn" download>
+      <i class="fa fa-download"></i> Download
+    </a>
+  </div>
+
+  <div class="software-item">
+    <span class="software-name">Google Chrome</span>
+    <a href="https://dl.google.com/chrome/install/latest/chrome_installer.exe" class="download-btn" download>
+      <i class="fa fa-download"></i> Download
+    </a>
+  </div>
+
+  <div class="software-item">
+    <span class="software-name">7-Zip</span>
+    <a href="https://www.7-zip.org/a/7z2407-x64.exe" class="download-btn" download>
+      <i class="fa fa-download"></i> Download
+    </a>
+  </div>
+
+</div>
+
+</body>
+</html>
