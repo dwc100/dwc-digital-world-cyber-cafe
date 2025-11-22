@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Shop Manager Pro — Firebase Realtime</title>
+  <style>
+    :root{
+      --bg:#eef1f8;
+      --card:#ffffffcc;
+      --accent:#4f46e5;
+      --muted:#6b7280;
+      --success:#10b981;
+      --glass:rgba(255,255,255,0.55);
+      --blur:18px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,Arial;background:var(--bg);color:#111}
+    .container{max-width:1200px;margin:auto;padding:20px}
+
+    header{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+    header h1{margin:0;font-size:26px;font-weight:700}
+
+    .status-pill{
+      padding:8px 14px;border-radius:30px;background:#d6e4ff;font-size:14px;color:#1e40af;font-weight:600;
+    }
+
+    .card{
+      background:var(--glass);
+      backdrop-filter:blur(var(--blur));
+      padding:20px;border-radius:18px;margin-bottom:22px;
+      box-shadow:0 8px 32px rgba(0,0,0,0.08);
+    }
+
+    /* FORM */
+    form.grid{
+      display:grid;
+      grid-template-columns:1fr 150px 150px 120px;
+      gap:16px;
+      align-items:end;
+    }
+    label{font-size:13px;color:var(--muted);margin-bottom:4px;display:block}
+    input{padding:10px;border-radius:10px;border:1px solid #d0d7e6;width:100%}
+
+    button.primary{
+      background:var(--accent);color:white;border:none;padding:12px;border-radius:12px;
+      cursor:pointer;font-weight:600;transition:0.2s;
+    }
+    button.primary:hover{opacity:0.92}
+
+    /* TABLE */
+    .table-wrap{overflow:auto;border-radius:12px}
+    table{width:100%;border-collapse:collapse;margin-top:10px;min-width:900px}
+    thead th{background:#f3f4f6;padding:12px;font-size:13px;color:var(--muted);text-align:right}
+    thead th:first-child{text-align:left}
+
+    tbody td{padding:12px;border-top:1px solid #e6e8ef;text-align:right;font-size:14px;background:white}
+    tbody td:first-child{text-align:left}
+
+    .actions button{
+      padding:6px 8px;border-radius:8px;
+      border:1px solid #ccd3e1;background:white;cursor:pointer;
+      margin-left:6px;font-size:12px;
+    }
+    .actions .del{ color:#c53030; border-color:rgba(197,63,63,0.12) }
+    .empty{text-align:center;padding:28px;color:var(--muted)}
+    .totals{font-weight:700;background:#f8fbff}
+
+    /* SUMMARY BAR */
+    .summary{display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+    .summary-box{flex:1;min-width:200px;padding:16px;border-radius:14px;background:white;box-shadow:0 4px 20px rgba(0,0,0,0.05)}
+    .summary-box h3{margin:0;font-size:16px;color:var(--muted)}
+    .summary-box .num{font-size:26px;font-weight:700;margin-top:6px}
+
+    /* MOBILE */
+    @media(max-width:880px){ form.grid{grid-template-columns:1fr} table{min-width:700px} }
+    @media(max-width:520px){ table{min-width:600px} }
+    footer{margin-top:20px;text-align:center;color:var(--muted);font-size:13px}
+  </style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Shop Manager Pro</h1>
+  <div class="status-pill">Realtime DB Active</div>
+</header>
+
+<!-- SUMMARY BAR -->
+<div class="summary">
+  <div class="summary-box">
+    <h3>Total Products (pieces)</h3>
+    <div id="sumTotal" class="num">0</div>
+  </div>
+  <div class="summary-box">
+    <h3>Total Sold</h3>
+    <div id="sumSold" class="num">0</div>
+  </div>
+  <div class="summary-box">
+    <h3>Total Remaining</h3>
+    <div id="sumRemaining" class="num">0</div>
+  </div>
+  <div class="summary-box">
+    <h3>Total Inventory Value (₹)</h3>
+    <div id="sumValue" class="num">₹0.00</div>
+  </div>
+  <div class="summary-box">
+    <h3>Total Revenue (₹)</h3>
+    <div id="sumRevenue" class="num">₹0.00</div>
+  </div>
+</div>
+
+<!-- ADD ITEM FORM -->
+<div class="card">
+  <h2 style="margin-bottom:14px;font-size:18px">Add New Item</h2>
+  <form id="addForm" class="grid" autocomplete="off">
+    <div>
+      <label>Item Name</label>
+      <input type="text" id="name" required placeholder="e.g. Blue Jeans">
+    </div>
+    <div>
+      <label>Total Pieces</label>
+      <input type="number" id="totalPieces" min="0" required value="0">
+    </div>
+    <div>
+      <label>Unit Price (₹)</label>
+      <input type="number" id="unitPrice" min="0" step="0.01" required value="0">
+    </div>
+    <div>
+      <button class="primary" type="submit">Add Item</button>
+    </div>
+  </form>
+</div>
+
+<!-- TABLE SECTION -->
+<div class="card">
+  <h2 style="margin-bottom:14px;font-size:18px">Inventory Table</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Total</th>
+          <th>Sold</th>
+          <th>Remaining</th>
+          <th>Unit Price</th>
+          <th>Total Value</th>
+          <th>Revenue</th>
+          <th style="text-align:center">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <tr><td colspan="8" class="empty">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<footer>© Shop Manager Pro — Firebase Realtime Edition</footer>
+</div>
+
+<script type="module">
+  // Firebase v9 modular SDK imports
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+  import { getDatabase, ref, onValue, push, update, remove } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
+  // --- Your Firebase config (already provided) ---
+  const firebaseConfig = {
+    apiKey:"AIzaSyBbykwvZZkCQITwsBqdv3aBfEX6oCgTtS8",
+    authDomain:"user-manager-74b70.firebaseapp.com",
+    databaseURL:"https://user-manager-74b70-default-rtdb.firebaseio.com",
+    projectId:"user-manager-74b70",
+    storageBucket:"user-manager-74b70.firebasestorage.app",
+    messagingSenderId:"339101560395",
+    appId:"1:339101560395:web:d2fc89720ba3f3588c27ce",
+    measurementId:"G-0L0SZZ955D"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const itemsRef = ref(db, "items");
+
+  // DOM refs
+  const addForm = document.getElementById('addForm');
+  const tbody = document.getElementById('tbody');
+
+  const sumTotal = document.getElementById('sumTotal');
+  const sumSold = document.getElementById('sumSold');
+  const sumRemaining = document.getElementById('sumRemaining');
+  const sumValue = document.getElementById('sumValue');
+  const sumRevenue = document.getElementById('sumRevenue');
+
+  const fmt = (v) => {
+    const n = Number(v || 0);
+    // Indian format with two decimals
+    return n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
+
+  // helper compute
+  function compute(item){
+    const total = Number(item.totalPieces) || 0;
+    const sold = Number(item.sold) || 0;
+    const unit = Number(item.unitPrice) || 0;
+    const remain = Math.max(0, total - sold);
+    return {
+      total, sold, remain,
+      totalValue: total * unit,
+      revenue: sold * unit,
+      unit
+    };
+  }
+
+  // Add item
+  addForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const totalPieces = Number(document.getElementById('totalPieces').value) || 0;
+    const unitPrice = Number(document.getElementById('unitPrice').value) || 0;
+    if (!name) return alert('Enter item name');
+
+    // Push to realtime DB
+    await push(itemsRef, {
+      name,
+      totalPieces,
+      sold: 0,
+      unitPrice,
+      createdAt: Date.now()
+    });
+
+    addForm.reset();
+  });
+
+  // Render and totals — realtime listener
+  onValue(itemsRef, (snapshot) => {
+    const data = snapshot.val();
+    if (!data) {
+      tbody.innerHTML = '<tr><td colspan="8" class="empty">No items yet</td></tr>';
+      sumTotal.textContent = 0;
+      sumSold.textContent = 0;
+      sumRemaining.textContent = 0;
+      sumValue.textContent = `₹${fmt(0)}`;
+      sumRevenue.textContent = `₹${fmt(0)}`;
+      return;
+    }
+
+    // convert and sort by createdAt desc (if available)
+    const rows = Object.entries(data).map(([id, item]) => ({ id, ...item }));
+    rows.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+
+    let T = 0, S = 0, R = 0, V = 0, Rev = 0;
+
+    tbody.innerHTML = rows.map(r => {
+      const c = compute(r);
+      T += c.total;
+      S += c.sold;
+      R += c.remain;
+      V += c.totalValue;
+      Rev += c.revenue;
+
+      return `
+        <tr data-id="${r.id}">
+          <td>${escapeHtml(r.name)}</td>
+          <td>${c.total}</td>
+          <td>${c.sold}</td>
+          <td>${c.remain}</td>
+          <td>₹${fmt(c.unit)}</td>
+          <td>₹${fmt(c.totalValue)}</td>
+          <td>₹${fmt(c.revenue)}</td>
+          <td class="actions" style="text-align:center">
+            <button data-act="plus">+1</button>
+            <button data-act="minus">-1</button>
+            <button data-act="edit">Edit</button>
+            <button data-act="del" class="del">Delete</button>
+          </td>
+        </tr>
+      `;
+    }).join('') + `
+      <tr class="totals">
+        <td>Totals</td>
+        <td>${T}</td>
+        <td>${S}</td>
+        <td>${R}</td>
+        <td>—</td>
+        <td>₹${fmt(V)}</td>
+        <td>₹${fmt(Rev)}</td>
+        <td></td>
+      </tr>
+    `;
+
+    // update summary boxes
+    sumTotal.textContent = T;
+    sumSold.textContent = S;
+    sumRemaining.textContent = R;
+    sumValue.textContent = `₹${fmt(V)}`;
+    sumRevenue.textContent = `₹${fmt(Rev)}`;
+  }, (err) => {
+    console.error('Realtime listener error:', err);
+  });
+
+  // Event delegation for actions in table
+  tbody.addEventListener('click', async (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    const tr = btn.closest('tr[data-id]');
+    if (!tr) return;
+    const id = tr.getAttribute('data-id');
+    const action = btn.getAttribute('data-act');
+
+    // Fetch current item once (safe update)
+    try {
+      // Read current via onValue once: use a Promise wrapper
+      const snapOnce = await new Promise((resolve, reject) => {
+        const unsub = onValue(ref(db, 'items/' + id), (s) => {
+          resolve(s);
+          // unsubscribing is not needed because onValue returns unsubscribe only in firebase v9 modular if stored,
+          // but resolving once is fine here (listener remains ephemeral). For safety we rely on this minimal use.
+        }, { onlyOnce: true });
+      });
+      const item = snapOnce.val();
+      if (!item) return alert('Item not found');
+
+      if (action === 'plus') {
+        // don't sell more than totalPieces
+        const newSold = Math.min((Number(item.sold) || 0) + 1, Number(item.totalPieces) || Infinity);
+        await update(ref(db, 'items/' + id), { sold: newSold });
+      } else if (action === 'minus') {
+        const newSold = Math.max((Number(item.sold) || 0) - 1, 0);
+        await update(ref(db, 'items/' + id), { sold: newSold });
+      } else if (action === 'del') {
+        if (confirm('Delete this item?')) {
+          await remove(ref(db, 'items/' + id));
+        }
+      } else if (action === 'edit') {
+        // prompt-based edit (keeps single-file simple). You can replace with modal later.
+        const newName = prompt('Item name', item.name) ?? item.name;
+        const newTotal = Number(prompt('Total pieces', item.totalPieces) || item.totalPieces);
+        const newPrice = Number(prompt('Unit price', item.unitPrice) || item.unitPrice);
+        await update(ref(db, 'items/' + id), {
+          name: newName,
+          totalPieces: newTotal,
+          unitPrice: newPrice
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Operation failed, check console.');
+    }
+  });
+
+  // small html escaper
+  function escapeHtml(str){
+    return String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  // note: onValue with {onlyOnce:true} works differently across SDK versions; above we used a promise wrapper.
+  // Everything else runs on the main realtime listener above.
+
+</script>
+</body>
+</html>
