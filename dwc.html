@@ -228,6 +228,45 @@ body {
   color: #b400ff;
   transform: scale(1.1);
 }
+/* Suggestion Box Fully Matching DWC Search Box */
+#suggestionBox {
+  position: fixed;
+  top: calc(50% + 45px);   /* Search box ke bilkul neeche */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 600px;
+
+  background: rgba(255, 255, 255, 0.3);
+  border: 0.2vw solid rgba(180, 0, 255, 0.4);
+  border-top: none;
+  border-radius: 0 0 25px 25px;
+
+  box-shadow: 0 0 2vw #b400ff, 0 0 3vw #0077ff;
+  backdrop-filter: blur(10px);
+
+  max-height: 45vh;
+  overflow-y: auto;
+
+  display: none;
+  z-index: 998; /* Search box ke just neeche */
+}
+
+/* Individual suggestion items */
+#suggestionBox div {
+  padding: 12px 20px;
+  font-size: 1rem;
+  color: #1a0033;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  border-bottom: 1px solid rgba(180,0,255,0.2);
+}
+
+/* Hover effect */
+#suggestionBox div:hover {
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(1.02);
+}
 
 /* ===================== Quick Buttons ===================== */
 .quick-buttons {
@@ -467,24 +506,160 @@ body {
     <a href="adminacess.html"><button id="admin-btn">Admin</button></a>
   <div id="login-btn-container">
     <button id="login-btn">Login</button>
-    <div id="login-form">
-        <input type="email" placeholder="Email ID">
-        <input type="password" placeholder="Password">
-        <button>Login</button>
-        <button class="google-btn">Login with Google</button>
-        <div id="no-account-box">
-          You don't have an account? <span>Click here</span>
-        </div>
+   <div id="login-form">
+    <input id="login-email" type="email" placeholder="Email ID">
+    <input id="login-password" type="password" placeholder="Password">
+    
+    <button id="email-login-btn">Login</button>
+    <button id="google-login-btn" class="google-btn">Login with Google</button>
+
+    <div id="no-account-box">
+        You don't have an account? 
+        <span onclick="window.location.href='registration.html'" style="cursor:pointer; color:#c300ff; font-weight:600;">
+            Click here
+        </span>
     </div>
+</div>
+
   </div>
 </div>
 </div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+// Your Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyBHnpCgh9RFyVrZLxMeYMv2SkokolLI2Vs",
+  authDomain: "use-data-7f613.firebaseapp.com",
+  databaseURL: "https://use-data-7f613-default-rtdb.firebaseio.com",
+  projectId: "use-data-7f613",
+  storageBucket: "use-data-7f613.firebasestorage.app",
+  messagingSenderId: "34772531349",
+  appId: "1:34772531349:web:cb1bb06151fcc0e66a039c"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+// Login Button Click
+document.querySelector("#login-form button:nth-of-type(1)").addEventListener("click", () => {
+    const email = document.querySelector("#login-form input[type='email']").value;
+    const password = document.querySelector("#login-form input[type='password']").value;
+
+    signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+            alert("Login successful!");
+            window.location.href = "userloginpage.html"; // redirect optional
+        })
+        .catch((error) => {
+            alert("Login failed: " + error.message);
+        });
+});
+
+// Google Login
+document.querySelector(".google-btn").addEventListener("click", () => {
+    signInWithPopup(auth, provider)
+        .then(() => {
+            alert("Google Login Successful!");
+            window.location.href = "userloginpage.html";
+        })
+        .catch((error) => {
+            alert("Google Login Failed: " + error.message);
+        });
+});
+</script>
 
 <div class="search-box">
     <img src="https://i.ibb.co/1gQKw6b/56.png" alt="Logo" class="logo-inbox">
-    <input type="text" placeholder="Search...">
-    <button>🔍</button>
+    <input type="text" id="mySearch" placeholder="Search..." onkeyup="showSuggestions()">
+    <button onclick="doSearch()">🔍</button>
+
+    <!-- Suggestions box -->
+    <div id="suggestionBox"></div>
 </div>
+
+<script>
+const defaultSuggestions = [
+    "Class 9th Notes", "Class 9th Chapter 01", "Class 9th Chapter 02",
+    "Class 9th Chapter 03", "Class 9th Chapter 04", "Class 9th Chapter 05",
+    "Class 9th Math Notes", "Class 9th Science Notes", "Class 9th English Notes", "Class 10th Notes"
+];
+
+// Load stored searches from localStorage
+function getStoredSuggestions() {
+    const stored = JSON.parse(localStorage.getItem("userSearches") || "[]");
+    return [...new Set([...defaultSuggestions, ...stored])]; // Merge default + stored, remove duplicates
+}
+
+// Save a search term
+function storeSearch(query) {
+    if (!query) return;
+    let searches = JSON.parse(localStorage.getItem("userSearches") || "[]");
+    if (!searches.includes(query)) {
+        searches.push(query);
+        localStorage.setItem("userSearches", JSON.stringify(searches));
+    }
+}
+
+// Show suggestions in real-time
+function showSuggestions() {
+    let input = document.getElementById("mySearch").value.toLowerCase();
+    let box = document.getElementById("suggestionBox");
+
+    box.innerHTML = "";
+    box.style.display = "none";
+
+    if (input === "") return;
+
+    const suggestionsData = getStoredSuggestions();
+    let filtered = suggestionsData.filter(item =>
+        item.toLowerCase().includes(input)
+    );
+
+    if (filtered.length === 0) return;
+
+    filtered.forEach(item => {
+        let div = document.createElement("div");
+        div.innerText = item;
+
+        div.onclick = function () {
+            document.getElementById("mySearch").value = item;
+            storeSearch(item); // store on click as well
+            doSearch();
+        };
+
+        box.appendChild(div);
+    });
+
+    box.style.display = "block";
+}
+
+// Perform search
+function doSearch() {
+    let query = document.getElementById("mySearch").value.trim();
+    if (query !== "") {
+        storeSearch(query); // store current search
+        window.location.href = "dwcsearchresult.html?q=" + encodeURIComponent(query);
+    }
+}
+
+// ENTER key
+document.getElementById("mySearch").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        doSearch();
+    }
+});
+
+// SEARCH BUTTON
+document.getElementById("searchButton").addEventListener("click", function() {
+    doSearch();
+});
+</script>
+
 
 <div class="quick-buttons">
     <button id="dwcc-btn">
