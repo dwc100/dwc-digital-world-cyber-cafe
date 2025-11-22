@@ -5,21 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <title>Digital World Cyber Cafe</title>
-<!-- Meta Tags -->
 <meta name="description" content="DWC - Digital World Cyber Cafe offers online form services, printing, digital solutions, and more.">
 <meta name="keywords" content="DWC, Digital World, Cyber Cafe, Online Services, Digital Solutions, Printing, Forms">
 <meta name="author" content="DWC Team">
-
-<!-- Favicon and Apple Touch Icon -->
 <link rel="icon" type="image/png" href="https://i.ibb.co/1gQKw6b/56.png">
 <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
-
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-<!-- Font Awesome -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
 <style>
 /* ===================== Base Reset ===================== */
 html, body, * {
@@ -360,81 +352,6 @@ body {
   bottom: -20px;
 }
 
-/* ===================== Login Form ===================== */
-#login-form {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255,255,255,0.95);
-  padding: 1.5vw;
-  border-radius: 1vw;
-  border: 0.2vw solid #b400ff;
-  box-shadow: 0 0 2vw rgba(180,0,255,0.35);
-  z-index: 999;
-  min-width: 250px;
-  transition: all 0.3s ease;
-}
-
-#login-form input {
-  width: 100%;
-  padding: 0.8vw;
-  margin-bottom: 1vw;
-  border-radius: 0.5vw;
-  border: 0.1vw solid #b400ff;
-  font-size: 1rem;
-  outline: none;
-}
-
-#login-form button {
-  width: 100%;
-  padding: 0.8vw;
-  border: none;
-  border-radius: 0.5vw;
-  background: linear-gradient(90deg, #c300ff, #006bff);
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  margin-bottom: 0.5vw;
-  transition: all 0.3s ease;
-}
-
-#login-form button:hover {
-  opacity: 0.9;
-  transform: scale(1.02);
-}
-
-#login-form .google-btn {
-  background: #fff;
-  color: #444;
-  border: 0.1vw solid #b400ff;
-}
-
-#login-btn-container {
-  position: relative;
-}
-#login-form {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255,255,255,0.95);
-    padding: 1.5vw 2vw;
-    border-radius: 1vw;
-    border: 0.2vw solid #b400ff;
-    box-shadow: 0 0 2vw rgba(180,0,255,0.35);
-    z-index: 999;
-    min-width: 250px;
-    text-align: center;
-}
-
-.no-account-msg {
-    font-size: 1rem;
-    color: #1a0033;
-    font-weight: 500;
-}
 
 .no-account-msg .click-here {
     color: #006bff; /* Blue color */
@@ -502,34 +419,45 @@ body {
     </div>
    <div class="nav">
     <a href="about.html"><button id="about-btn">About</button></a>
-	<a href="dwcalert.html"><button class="alert-btn" id="alert-btn"><span class="alert-dot"></span>New Alert</button></a>
-    <a href="adminacess.html"><button id="admin-btn">Admin</button></a>
-  <div id="login-btn-container">
-    <button id="login-btn">Login</button>
-   <div id="login-form">
-    <input id="login-email" type="email" placeholder="Email ID">
-    <input id="login-password" type="password" placeholder="Password">
+    <a href="dwcalert.html"><button class="alert-btn" id="alert-btn"><span class="alert-dot"></span>New Alert</button></a>
     
-    <button id="email-login-btn">Login</button>
-    <button id="google-login-btn" class="google-btn">Login with Google</button>
+    <!-- SHOW USER NAME HERE -->
+    <div id="user-display" style="font-weight:bold; margin-right:10px; color:#4a007f;"></div>
 
-    <div id="no-account-box">
-        You don't have an account? 
-        <span onclick="window.location.href='registration.html'" style="cursor:pointer; color:#c300ff; font-weight:600;">
-            Click here
-        </span>
+    <!-- PROFILE BUTTON -->
+    <a href="userprofile.html"><button id="profile-btn">Profile</button></a>
+
+    <div id="login-btn-container">
+        <button id="logout-btn">Logout</button>
     </div>
 </div>
+</div>
 
-  </div>
+<div class="search-box">
+    <img src="https://i.ibb.co/1gQKw6b/56.png" alt="Logo" class="logo-inbox">
+    <input type="text" id="mySearch" placeholder="Search..." onkeyup="showSuggestions()">
+    <button onclick="doSearch()">🔍</button>
+    <div id="suggestionBox"></div>
 </div>
+
+<div class="quick-buttons">
+    <button id="dwcc-btn"><i class="fas fa-book btn-icon"></i>DWC Learning</button>
+    <button id="cyber-btn"><i class="fas fa-shield-alt btn-icon"></i>DWC Cyber Learning</button>
+    <a href="dwcsoftwares.html" class="button-link">
+        <button id="soft-btn"><i class="fas fa-desktop btn-icon"></i> DWC Softwares</button>
+    </a>
 </div>
+
+<div class="info-box" id="info-box"></div>
+
+<!-- =================== FIREBASE AUTH SCRIPT =================== -->
+<!-- =================== FIREBASE LOGOUT SCRIPT ONLY =================== -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } 
+import { getAuth, signInWithEmailAndPassword, signOut } 
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// Your Firebase Config
+// Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyBHnpCgh9RFyVrZLxMeYMv2SkokolLI2Vs",
   authDomain: "use-data-7f613.firebaseapp.com",
@@ -540,71 +468,49 @@ const firebaseConfig = {
   appId: "1:34772531349:web:cb1bb06151fcc0e66a039c"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
 
-// Login Button Click
-document.querySelector("#login-form button:nth-of-type(1)").addEventListener("click", () => {
-    const email = document.querySelector("#login-form input[type='email']").value;
-    const password = document.querySelector("#login-form input[type='password']").value;
+// Logout button
+const logoutBtn = document.getElementById("logout-btn");
 
-    signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-            alert("Login successful!");
-            window.location.href = "userloginpage.html"; // redirect optional
-        })
-        .catch((error) => {
-            alert("Login failed: " + error.message);
-        });
-});
+logoutBtn.addEventListener("click", async () => {
+    const password = prompt("Enter your password to logout:");
+    if (!password) return;
 
-// Google Login
-document.querySelector(".google-btn").addEventListener("click", () => {
-    signInWithPopup(auth, provider)
-        .then(() => {
-            alert("Google Login Successful!");
-            window.location.href = "userloginpage.html";
-        })
-        .catch((error) => {
-            alert("Google Login Failed: " + error.message);
-        });
+    const user = auth.currentUser;
+    if (!user) {
+        alert("No user is logged in.");
+        return;
+    }
+
+    try {
+        // Re-authenticate with the same email + password to allow logout
+        await signInWithEmailAndPassword(auth, user.email, password);
+        await signOut(auth);
+        alert("Logged out successfully!");
+        window.location.href = "dwc.html"; // redirect after logout
+    } catch (err) {
+        alert("Wrong password! Logout failed.");
+    }
 });
 </script>
 
-<div class="search-box">
-    <img src="https://i.ibb.co/1gQKw6b/56.png" alt="Logo" class="logo-inbox">
-    <input type="text" id="mySearch" placeholder="Search..." onkeyup="showSuggestions()">
-    <button onclick="doSearch()">🔍</button>
-
-    <!-- Suggestions box -->
-    <div id="suggestionBox"></div>
-</div>
-
 <script>
-const defaultSuggestions = [
-    "Class 9th Notes", "Class 9th Chapter 01", "Class 9th Chapter 02",
-    "Class 9th Chapter 03", "Class 9th Chapter 04", "Class 9th Chapter 05",
-    "Class 9th Math Notes", "Class 9th Science Notes", "Class 9th English Notes", "Class 10th Notes"
+const suggestionsData = [
+    "Class 9th Notes",
+    "Class 9th Chapter 01",
+    "Class 9th Chapter 02",
+    "Class 9th Chapter 03",
+    "Class 9th Chapter 04",
+    "Class 9th Chapter 05",
+    "Class 9th Math Notes",
+    "Class 9th Science Notes",
+    "Class 9th English Notes",
+    "Class 10th Notes"
 ];
 
-// Load stored searches from localStorage
-function getStoredSuggestions() {
-    const stored = JSON.parse(localStorage.getItem("userSearches") || "[]");
-    return [...new Set([...defaultSuggestions, ...stored])]; // Merge default + stored, remove duplicates
-}
-
-// Save a search term
-function storeSearch(query) {
-    if (!query) return;
-    let searches = JSON.parse(localStorage.getItem("userSearches") || "[]");
-    if (!searches.includes(query)) {
-        searches.push(query);
-        localStorage.setItem("userSearches", JSON.stringify(searches));
-    }
-}
-
-// Show suggestions in real-time
 function showSuggestions() {
     let input = document.getElementById("mySearch").value.toLowerCase();
     let box = document.getElementById("suggestionBox");
@@ -614,7 +520,6 @@ function showSuggestions() {
 
     if (input === "") return;
 
-    const suggestionsData = getStoredSuggestions();
     let filtered = suggestionsData.filter(item =>
         item.toLowerCase().includes(input)
     );
@@ -626,9 +531,7 @@ function showSuggestions() {
         div.innerText = item;
 
         div.onclick = function () {
-            document.getElementById("mySearch").value = item;
-            storeSearch(item); // store on click as well
-            doSearch();
+            window.location.href = "dwcsearchresult.html?q=" + encodeURIComponent(item);
         };
 
         box.appendChild(div);
@@ -637,16 +540,14 @@ function showSuggestions() {
     box.style.display = "block";
 }
 
-// Perform search
 function doSearch() {
     let query = document.getElementById("mySearch").value.trim();
     if (query !== "") {
-        storeSearch(query); // store current search
         window.location.href = "dwcsearchresult.html?q=" + encodeURIComponent(query);
     }
 }
 
-// ENTER key
+// ✅ ENTER PRESS TO SEARCH
 document.getElementById("mySearch").addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
         event.preventDefault();
@@ -654,36 +555,16 @@ document.getElementById("mySearch").addEventListener("keydown", function(event) 
     }
 });
 
-// SEARCH BUTTON
+// ✅ SEARCH BUTTON CLICK
 document.getElementById("searchButton").addEventListener("click", function() {
     doSearch();
 });
 </script>
-
-
-<div class="quick-buttons">
-    <button id="dwcc-btn">
-        <i class="fas fa-book btn-icon"></i>
-        DWC Learning
-    </button>
-    <button id="cyber-btn">
-        <i class="fas fa-shield-alt btn-icon"></i>
-        DWC Cyber Learning
-    </button>
-   <a href="dwcsoftwares.html" class="button-link">
-  <button id="soft-btn"><i class="fas fa-desktop btn-icon"></i> DWC Softwares</button>
-</a>
-
-</div>
-
-
-<div class="info-box" id="info-box"></div>
-
 <script>
 const tourSteps = [
     { element: '#about-btn', text: 'This is the About button. Learn more about DWC here.' },
     { element: '#alert-btn', text: 'This button shows new alerts and notifications.' },
-    { element: '#login-btn', text: 'Login button for authorized users.' },
+    { element: '#login-btn', text: 'Logout button.' },
     { element: '#dwcc-btn', text: 'DWC Learning resources.' },
     { element: '#cyber-btn', text: 'DWC Cyber Learning programs.' },
     { element: '#soft-btn', text: 'DWC Software tools available.' }
@@ -726,6 +607,5 @@ loginBtn.addEventListener('click', () => {
     loginForm.style.display = loginForm.style.display === 'block' ? 'none' : 'block';
 });
 </script>
-
 </body>
-</html> 
+</html>

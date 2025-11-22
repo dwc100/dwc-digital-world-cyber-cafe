@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Login Information - Digital World Cyber Cafe</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Montserrat',sans-serif}
+body{background:url('https://images.unsplash.com/photo-1531510072931-ff3e71a3a01e') no-repeat center/cover fixed;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(135deg,#c300ff,#006bff,#ff00ff);background-size:400% 400%;animation:gradient 20s ease infinite;opacity:0.3;filter:blur(70px)}
+@keyframes gradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.header{position:fixed;width:100%;top:0;padding:2vw 5vw;display:flex;align-items:center;background:rgba(255,255,255,0.15);backdrop-filter:blur(15px);border-bottom-left-radius:11vw;border-bottom-right-radius:11vw;border:0.2vw solid rgba(180,0,255,0.25);box-shadow:0 0 2.5vw rgba(150,0,255,0.35),0 0 4vw rgba(0,120,255,0.3)}
+.logo{display:flex;align-items:center}
+.logo img{width:10vw;max-width:90px;border-radius:50%;border:0.4vw solid rgba(190,0,255,0.9);box-shadow:0 0 2.5vw rgba(170,0,255,0.8),0 0 3.5vw #006eff}
+.logo-text{font-family:'Orbitron';font-size:2vw;margin-left:1vw;background:linear-gradient(90deg,#c300ff,#006bff,#b900ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.info-box{width:90%;max-width:600px;margin:15vw auto 5vw auto;background:white;padding:2.5vw;border-radius:2vw;border:0.2vw solid;border-image:linear-gradient(45deg,#c300ff,#006bff,#ff00ff)1;box-shadow:0 0 2vw #c300ff,0 0 2vw #006bff;text-align:center}
+.info-title{font-size:2rem;font-family:'Orbitron';margin-bottom:1.2vw}
+.data-box{text-align:left;margin-top:2vw}
+.data-box div{font-size:1.2rem;margin-bottom:12px;font-weight:600}
+.btn{width:100%;padding:12px;margin-top:12px;background:linear-gradient(90deg,#c300ff,#006bff);color:white;border-radius:12px;font-size:1rem;border:none;cursor:pointer}
+.btn:hover{box-shadow:0 0 2vw #c300ff,0 0 2vw #006bff;transform:scale(1.02)}
+#popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:20px;border-radius:15px;border:2px solid #c300ff;box-shadow:0 0 20px #c300ff;display:none;font-size:1.1rem;font-weight:700;text-align:center}
+#error{margin-top:10px;color:#a00;font-weight:700}
+.refresh{margin-top:10px;padding:8px 14px;background:#eee;border-radius:8px;border:1px solid #ccc;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">
+    <img src="https://i.ibb.co/1gQKw6b/56.png" alt="logo">
+    <div class="logo-text">DIGITAL WORLD CYBER CAFE</div>
+  </div>
+</div>
+<div class="info-box">
+  <div class="info-title">Your Login Information</div>
+  <div class="data-box">
+    <div>Email: <span id="showEmail" style="color:#c300ff"></span></div>
+    <div>Password: <span id="showPass" style="color:#006bff"></span></div>
+  </div>
+  <button class="btn" id="homeBtn">Go to Home</button>
+  <button class="btn" id="downloadBtn">Download PDF</button>
+  <div id="error" role="alert" aria-live="polite" style="display:none">Something went wrong while preparing the PDF. Please try again.</div>
+</div>
+<div id="popup">Download starting in <span id="count">3</span>...<br><button class="refresh" id="cancelBtn">Cancel</button></div>
+
+<!-- jsPDF from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+// Read Email + Password from URL
+const url=new URLSearchParams(window.location.search);
+const emailParam=url.get('email')||'';
+const passParam=url.get('pass')||'';
+document.getElementById('showEmail').innerText=emailParam;
+document.getElementById('showPass').innerText=passParam;
+
+// Buttons
+document.getElementById('homeBtn').addEventListener('click',()=>{window.location.href='dwc.html'});
+const popup=document.getElementById('popup');
+const countEl=document.getElementById('count');
+let countdownTimer=null;
+
+async function createAndSavePDF(openInNewTab=false){
+  try{
+    // use jspdf
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(16);
+    doc.text('Digital World Cyber Cafe', 20, 20);
+    doc.setFontSize(12);
+    doc.text('Your Login Information', 20, 34);
+    doc.setFontSize(11);
+    doc.text(`Email: ${emailParam}`, 20, 50);
+    doc.text(`Password: ${passParam}`, 20, 60);
+    doc.setFontSize(9);
+    doc.text('Generated on: ' + new Date().toLocaleString(), 20, 80);
+
+    if(openInNewTab){
+      const dataUrl = doc.output('dataurlnewwindow'); // opens in new window/tab
+    } else {
+      doc.save('Login_Info.pdf');
+    }
+    return true;
+  }catch(err){
+    console.error('PDF creation error:',err);
+    throw err;
+  }
+}
+
+function startDownloadSequence(){
+  // show popup and 3s countdown
+  document.getElementById('error').style.display='none';
+  popup.style.display='block';
+  let c=3;countEl.innerText=c;
+  countdownTimer=setInterval(()=>{
+    c--;countEl.innerText=c;
+    if(c<=0){
+      clearInterval(countdownTimer);popup.style.display='none';
+      // create and save/open PDF
+      createAndSavePDF().catch(e=>{
+        // show error and offer retry
+        document.getElementById('error').style.display='block';
+        document.getElementById('error').innerText='Something went wrong while creating the PDF. Click Download again or try Refresh.';
+      });
+    }
+  },1000);
+}
+
+function cancelDownload(){
+  if(countdownTimer){clearInterval(countdownTimer);countdownTimer=null}
+  popup.style.display='none';
+}
+
+// Event listeners
+document.getElementById('downloadBtn').addEventListener('click',()=>{
+  // basic validation
+  if(!emailParam && !passParam){
+    document.getElementById('error').style.display='block';
+    document.getElementById('error').innerText='No email or password found in URL. Make sure email and pass query params are present.';
+    return;
+  }
+  startDownloadSequence();
+});
+
+document.getElementById('cancelBtn').addEventListener('click',cancelDownload);
+
+// helpful: handle case where jsPDF didn't load
+window.addEventListener('load',()=>{
+  if(!window.jspdf){
+    document.getElementById('error').style.display='block';
+    document.getElementById('error').innerHTML='PDF library failed to load. <button class="refresh" onclick="location.reload()">Refresh</button>';
+  }
+});
+</script>
+</body>
+</html>

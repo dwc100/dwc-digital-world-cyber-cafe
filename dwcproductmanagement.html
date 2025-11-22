@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DWC Project Manager — Inventory (Modern)</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg-1: #0b1020; /* deep navy */
+      --bg-2: #071033;
+      --card: rgba(255,255,255,0.03);
+      --muted: #9aa4c0;
+      --glass: rgba(255,255,255,0.03);
+      --radius:14px;
+      --accent1:#7c3aed; /* purple */
+      --accent2:#06b6d4; /* cyan */
+      --success:#10b981;
+      --danger:#ef4444;
+      --glass-border: rgba(255,255,255,0.06);
+      --card-grad: linear-gradient(135deg, rgba(124,58,237,0.10), rgba(6,182,212,0.06));
+      --glass-2: rgba(255,255,255,0.85);
+      --text-dark: #071033;
+      --shadow: 0 18px 60px rgba(2,6,23,0.45);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+      background: radial-gradient(800px 400px at 10% 10%, rgba(124,58,237,0.06), transparent),
+                  radial-gradient(700px 350px at 90% 80%, rgba(6,182,212,0.03), transparent),
+                  linear-gradient(180deg,#f7f9ff 0%, #eef3fb 100%);
+      color:var(--text-dark);
+      -webkit-font-smoothing:antialiased;
+      padding:28px;
+    }
+
+    .container{max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+
+    /* Header */
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{
+      width:60px;height:60px;border-radius:14px;
+      background:linear-gradient(135deg,var(--accent1),var(--accent2));
+      color:white;display:flex;align-items:center;justify-content:center;font-weight:800;
+      box-shadow:0 20px 60px rgba(6,12,40,0.12);
+      font-size:20px;
+      letter-spacing:0.6px;
+    }
+    h1{margin:0;font-size:20px}
+    .subtitle{font-size:13px;color:var(--muted)}
+
+    .top-actions{display:flex;gap:10px;align-items:center}
+    .btn{padding:10px 14px;border-radius:12px;border:0;cursor:pointer;font-weight:700;box-shadow:0 8px 30px rgba(10,18,40,0.04);display:inline-flex;align-items:center;gap:8px}
+    .btn.ghost{background:var(--glass-2);border:1px solid var(--glass-border)}
+    .btn.primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white}
+    .btn.icon{padding:10px}
+
+    /* Layout */
+    .layout{display:grid;grid-template-columns:380px 1fr;gap:18px;margin-top:14px}
+    @media (max-width:980px){ .layout{grid-template-columns:1fr} }
+
+    /* Left panel */
+    .panel{background:var(--card-grad);border-radius:var(--radius);padding:18px;backdrop-filter:blur(6px);box-shadow:var(--shadow)}
+    .panel h2{margin:0 0 8px 0}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input[type=text], input[type=number], input[type=file]{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(10,18,40,0.06);background:white}
+    .form-row{margin-bottom:12px}
+    .flex{display:flex;gap:10px}
+    .flex > *{flex:1}
+    .small{font-size:13px;color:var(--muted)}
+
+    .summary-row{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+    .summary-item{flex:1;min-width:140px;padding:14px;border-radius:12px;background:white;box-shadow:0 12px 40px rgba(6,12,40,0.04);transition:transform .18s ease}
+    .summary-item:hover{transform:translateY(-6px)}
+    .summary-item h4{margin:0;font-size:13px;color:var(--muted)}
+    .summary-item .big{font-size:20px;font-weight:800;margin-top:8px}
+
+    /* Right panel */
+    .card{background:white;border-radius:14px;padding:12px;box-shadow:0 18px 60px rgba(6,12,40,0.06)}
+    .card .card-head{display:flex;justify-content:space-between;align-items:center;padding:8px 6px}
+    .card .card-head .left{display:flex;flex-direction:column}
+    .search{display:flex;gap:8px;align-items:center}
+    .search input{padding:10px 12px;border-radius:10px;border:1px solid rgba(10,18,40,0.06)}
+    .controls{display:flex;gap:8px;align-items:center}
+
+    .table-wrap{overflow:auto;margin-top:8px;border-radius:10px}
+
+    table{width:100%;border-collapse:collapse;min-width:920px}
+    thead th{background:linear-gradient(180deg,rgba(11,17,34,0.02),rgba(11,17,34,0.01));text-align:right;padding:14px;font-size:13px;color:var(--muted)}
+    thead th:first-child{text-align:left}
+    tbody td{padding:12px;border-top:1px solid rgba(10,18,40,0.03);text-align:right}
+    tbody td:first-child{text-align:left}
+
+    .row-card{display:flex;gap:12px;align-items:center}
+    .row-thumb{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));color:white;display:flex;align-items:center;justify-content:center;font-weight:800}
+    .row-meta{display:flex;flex-direction:column;align-items:flex-start}
+    .row-meta .title{font-weight:800}
+    .meta-small{font-size:13px;color:var(--muted)}
+
+    .actions{display:flex;justify-content:center;gap:8px}
+    .actions button{padding:8px 10px;border-radius:8px;border:0;cursor:pointer;font-weight:700}
+    .actions .sell{background:linear-gradient(90deg,#06b6d4,#7c3aed);color:white}
+    .actions .undo{background:#f1f5f9;color:#334155}
+    .actions .edit{background:#fff8e6;color:#7a5a00;border:1px solid #fde68a}
+    .actions .del{background:transparent;color:var(--danger);border:1px solid rgba(239,68,68,0.08)}
+
+    .totals-row td{font-weight:800;background:linear-gradient(90deg,rgba(124,58,237,0.04),rgba(6,182,212,0.02))}
+
+    /* modal */
+    .modal-backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.5);z-index:1200}
+    .modal{width:640px;max-width:96%;background:white;border-radius:12px;padding:18px;box-shadow:0 22px 80px rgba(2,6,23,0.45)}
+    .modal h3{margin:0 0 10px 0}
+    .modal .row{display:flex;gap:10px}
+    .modal .row input{flex:1;padding:12px;border-radius:8px;border:1px solid rgba(10,18,40,0.06)}
+
+    /* tiny utils */
+    .muted{color:var(--muted)}
+    .pill{padding:6px 8px;border-radius:999px;font-weight:700;font-size:12px}
+
+    /* toast */
+    .toast-wrap{position:fixed;right:22px;bottom:22px;display:flex;flex-direction:column;gap:8px;z-index:1300}
+    .toast{padding:12px 16px;border-radius:10px;background:rgba(11,17,34,0.95);color:white;box-shadow:0 10px 30px rgba(2,6,23,0.4)}
+
+    /* responsive tweaks */
+    @media (max-width:980px){ table{min-width:720px} .summary-item{min-width:160px} }
+    @media (max-width:700px){ table{min-width:600px} .row-thumb{width:44px;height:44px} }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">DWC</div>
+        <div>
+          <h1>DWC Project Manager</h1>
+          <div class="subtitle">Realtime inventory — modern theme</div>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button class="btn ghost" id="importCsv" title="Import CSV">📥 Import</button>
+        <button class="btn ghost" id="exportCsv">📤 Export</button>
+        <button class="btn primary" id="openAdd">＋ New product</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <!-- LEFT -->
+      <aside class="panel" aria-labelledby="addTitle">
+        <h2 id="addTitle">Add product</h2>
+
+        <form id="addForm">
+          <div class="form-row">
+            <label for="name">Product name</label>
+            <input id="name" type="text" placeholder="e.g. Premium Shirt" required />
+          </div>
+
+          <div class="flex">
+            <div class="form-row" style="flex:0.6">
+              <label for="totalPieces">Total pieces</label>
+              <input id="totalPieces" type="number" min="0" value="0" />
+            </div>
+            <div class="form-row" style="flex:0.4">
+              <label for="unitPrice">Unit price (₹)</label>
+              <input id="unitPrice" type="number" min="0" step="0.01" value="0" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="img">Thumbnail (optional)</label>
+            <input id="img" type="file" accept="image/*" />
+          </div>
+
+          <div style="margin-top:8px;display:flex;gap:8px">
+            <button type="submit" class="btn primary">Add product</button>
+            <button type="button" class="btn ghost" id="clearForm">Clear</button>
+          </div>
+        </form>
+
+        <div class="summary-row">
+          <div class="summary-item">
+            <h4>Total inventory value</h4>
+            <div id="totalValue" class="big">₹0.00</div>
+            <div class="small">Sum of (total pieces × unit price)</div>
+          </div>
+
+          <div class="summary-item">
+            <h4>Total sold value</h4>
+            <div id="soldValue" class="big">₹0.00</div>
+            <div class="small">Amount earned from sold pieces</div>
+          </div>
+
+          <div class="summary-item">
+            <h4>Remaining pieces</h4>
+            <div id="remainingPieces" class="big">0</div>
+            <div class="small">Total pieces left across inventory</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+          <div class="muted">Sort:</div>
+          <select id="sortBy" style="padding:8px;border-radius:8px">
+            <option value="createdAt">Newest</option>
+            <option value="name">Name (A–Z)</option>
+            <option value="totalValue">Inventory value</option>
+          </select>
+        </div>
+
+      </aside>
+
+      <!-- RIGHT -->
+      <section class="card" aria-labelledby="inventoryTitle">
+        <div class="card-head">
+          <div class="left">
+            <strong id="inventoryTitle" style="font-size:16px">Inventory</strong>
+            <div class="small">Live data from Firebase Realtime DB</div>
+          </div>
+
+          <div class="right" style="align-items:center">
+            <div class="search"><input id="search" placeholder="Search product... (press / to focus)" /></div>
+            <div class="controls">
+              <div class="muted">Per page</div>
+              <select id="perPage" style="padding:8px;border-radius:8px">
+                <option>8</option>
+                <option selected>12</option>
+                <option>20</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table aria-label="Inventory table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Total</th>
+                <th>Sold</th>
+                <th>Remaining</th>
+                <th>Unit ₹</th>
+                <th>Total Value ₹</th>
+                <th>Revenue ₹</th>
+                <th style="text-align:center">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+              <tr><td colspan="8" class="small">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+          <div class="muted" id="pageInfo">—</div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="btn ghost" id="prevPage">‹ Prev</button>
+            <button class="btn ghost" id="nextPage">Next ›</button>
+          </div>
+        </div>
+
+      </section>
+    </div>
+
+    <footer style="text-align:center;color:var(--muted);font-size:13px">© DWC Project Manager</footer>
+  </div>
+
+  <!-- Edit modal -->
+  <div class="modal-backdrop" id="modal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h3 id="modalTitle">Edit product</h3>
+      <div style="margin-top:8px">
+        <label class="small">Name</label>
+        <input id="editName" type="text" />
+      </div>
+      <div class="row" style="margin-top:8px">
+        <div style="flex:1">
+          <label class="small">Total pieces</label>
+          <input id="editTotal" type="number" min="0" />
+        </div>
+        <div style="flex:1">
+          <label class="small">Unit price (₹)</label>
+          <input id="editPrice" type="number" min="0" step="0.01" />
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px">
+        <button class="btn ghost" id="cancelEdit">Cancel</button>
+        <button class="btn primary" id="saveEdit">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toasts" aria-live="polite"></div>
+
+  <!-- Firebase + JS (keeps same SDK versions) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import {
+      getDatabase, ref, onValue, push, update, remove, runTransaction
+    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
+    // ---------- Firebase config (yours) ----------
+    const firebaseConfig = {
+      apiKey: "AIzaSyBbykwvZZkCQITwsBqdv3aBfEX6oCgTtS8",
+      authDomain: "user-manager-74b70.firebaseapp.com",
+      databaseURL: "https://user-manager-74b70-default-rtdb.firebaseio.com",
+      projectId: "user-manager-74b70",
+      storageBucket: "user-manager-74b70.firebasestorage.app",
+      messagingSenderId: "339101560395",
+      appId: "1:339101560395:web:d2fc89720ba3f3588c27ce",
+      measurementId: "G-0L0SZZ955D"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const itemsRef = ref(db, "items");
+
+    // DOM
+    const addForm = document.getElementById("addForm");
+    const nameInp = document.getElementById("name");
+    const totalInp = document.getElementById("totalPieces");
+    const priceInp = document.getElementById("unitPrice");
+    const fileInp = document.getElementById('img');
+    const tbody = document.getElementById("tbody");
+    const search = document.getElementById("search");
+    const sortBy = document.getElementById('sortBy');
+    const perPageSel = document.getElementById('perPage');
+
+    const totalValueEl = document.getElementById("totalValue");
+    const soldValueEl = document.getElementById("soldValue");
+    const remainingPiecesEl = document.getElementById("remainingPieces");
+
+    const modal = document.getElementById("modal");
+    const editName = document.getElementById("editName");
+    const editTotal = document.getElementById("editTotal");
+    const editPrice = document.getElementById("editPrice");
+    const saveEdit = document.getElementById("saveEdit");
+    const cancelEdit = document.getElementById("cancelEdit");
+
+    const prevPage = document.getElementById('prevPage');
+    const nextPage = document.getElementById('nextPage');
+    const pageInfo = document.getElementById('pageInfo');
+
+    const toasts = document.getElementById('toasts');
+
+    let latest = {}; // latest snapshot
+    let editingId = null;
+
+    // paging/sort state
+    let page = 1;
+    let perPage = Number(perPageSel.value || 12);
+
+    // helpers
+    const fmt = v => Number(v||0).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2});
+    function esc(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\"/g,"&quot;").replace(/'/g,"&#39;"); }
+
+    function toast(msg, timeout=2800){
+      const d = document.createElement('div'); d.className='toast'; d.textContent = msg; toasts.appendChild(d);
+      setTimeout(()=>{ d.style.opacity=0; d.addEventListener('transitionend',()=>d.remove()); }, timeout);
+    }
+
+    function compute(item){
+      const total = Number(item.totalPieces) || 0;
+      const sold = Number(item.sold) || 0;
+      const unit = Number(item.unitPrice) || 0;
+      const remain = Math.max(0, total - sold);
+      return { total, sold, remain, unit, totalValue: total * unit, revenue: sold * unit };
+    }
+
+    // add product
+    addForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = nameInp.value.trim();
+      if(!name) return alert("Enter product name");
+      const totalPieces = Number(totalInp.value) || 0;
+      const unitPrice = Number(priceInp.value) || 0;
+
+      // optional: basic inline thumbnail as dataURL (no storage integration here)
+      let thumb = null;
+      if(fileInp.files && fileInp.files[0]){
+        const f = fileInp.files[0];
+        thumb = await readFileAsDataURL(f);
+      }
+
+      await push(itemsRef, { name, totalPieces, sold: 0, unitPrice, thumb, createdAt: Date.now() });
+      addForm.reset();
+      toast('Product added');
+    });
+
+    function readFileAsDataURL(file){
+      return new Promise((res, rej)=>{
+        const r = new FileReader(); r.onload = ()=>res(r.result); r.onerror = rej; r.readAsDataURL(file);
+      });
+    }
+
+    // listener
+    onValue(itemsRef, (snap) => {
+      latest = snap.val() || {};
+      page = 1; // reset to first page when data changes
+      renderTable();
+      updateSummary();
+    });
+
+    // render
+    function renderTable(){
+      const q = (search.value || "").trim().toLowerCase();
+      const rows = Object.entries(latest).map(([id, it]) => ({ id, ...it }));
+
+      // filtering
+      const filtered = q ? rows.filter(r => String(r.name||"").toLowerCase().includes(q)) : rows;
+
+      // sorting
+      const s = sortBy.value;
+      filtered.sort((a,b)=>{
+        if(s==='createdAt') return (b.createdAt||0)-(a.createdAt||0);
+        if(s==='name') return String(a.name||"").localeCompare(String(b.name||""));
+        if(s==='totalValue') return (compute(b).totalValue - compute(a).totalValue);
+        return 0;
+      });
+
+      // paging
+      perPage = Number(perPageSel.value || 12);
+      const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
+      if(page > totalPages) page = totalPages;
+      const start = (page-1)*perPage;
+      const pageRows = filtered.slice(start, start+perPage);
+
+      if(pageRows.length === 0){
+        tbody.innerHTML = `<tr><td colspan="8" class="small">No products found</td></tr>`;
+        pageInfo.textContent = `Page ${page} of ${totalPages}`;
+        return;
+      }
+
+      const html = pageRows.map(r => {
+        const c = compute(r);
+        const thumbHtml = r.thumb ? `<img src="${r.thumb}" alt="thumb" style="width:56px;height:56px;border-radius:10px;object-fit:cover"/>` : `<div class="row-thumb">${(r.name||"").slice(0,1).toUpperCase()}</div>`;
+        return `
+          <tr data-id="${r.id}">
+            <td>
+              <div class="row-card">
+                ${thumbHtml}
+                <div class="row-meta">
+                  <div class="title">${esc(r.name)}</div>
+                  <div class="meta-small">Added: ${r.createdAt ? new Date(r.createdAt).toLocaleString() : "-"}</div>
+                </div>
+              </div>
+            </td>
+            <td>${c.total}</td>
+            <td>${c.sold}</td>
+            <td>${c.remain}</td>
+            <td>₹${fmt(c.unit)}</td>
+            <td>₹${fmt(c.totalValue)}</td>
+            <td>₹${fmt(c.revenue)}</td>
+            <td class="actions" style="text-align:center">
+              <button class="sell" data-act="sell" title="Sell +1">＋</button>
+              <button class="undo" data-act="undo" title="Undo -1">−</button>
+              <button class="edit" data-act="edit" title="Edit">✎</button>
+              <button class="del" data-act="del" title="Delete">🗑</button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+
+      // append totals row (totals are for ALL items, not the page)
+      const totals = computeTotals();
+      const totalsRow = `
+        <tr class="totals-row">
+          <td>Totals</td>
+          <td>${totals.totalPieces}</td>
+          <td>${totals.totalSold}</td>
+          <td>${totals.totalRemaining}</td>
+          <td>—</td>
+          <td>₹${fmt(totals.inventoryValue)}</td>
+          <td>₹${fmt(totals.soldValue)}</td>
+          <td></td>
+        </tr>
+      `;
+      tbody.innerHTML = html + totalsRow;
+      pageInfo.textContent = `Showing ${start+1}–${start+pageRows.length} of ${filtered.length} — Page ${page} of ${totalPages}`;
+    }
+
+    function computeTotals(){
+      let totalPieces = 0, totalSold = 0, totalRemaining = 0, inventoryValue = 0, soldValue = 0;
+      Object.values(latest).forEach(it => {
+        const c = compute(it);
+        totalPieces += c.total;
+        totalSold += c.sold;
+        totalRemaining += c.remain;
+        inventoryValue += c.totalValue;
+        soldValue += c.revenue;
+      });
+      return { totalPieces, totalSold, totalRemaining, inventoryValue, soldValue };
+    }
+
+    function updateSummary(){
+      const t = computeTotals();
+      totalValueEl.textContent = `₹${fmt(t.inventoryValue)}`;
+      soldValueEl.textContent = `₹${fmt(t.soldValue)}`;
+      remainingPiecesEl.textContent = t.totalRemaining;
+    }
+
+    // delegated actions
+    tbody.addEventListener("click", async (e) => {
+      const btn = e.target.closest("button");
+      if(!btn) return;
+      const tr = btn.closest("tr[data-id]");
+      if(!tr) return;
+      const id = tr.getAttribute("data-id");
+      const act = btn.getAttribute("data-act");
+
+      if(act === "sell" || act === "undo"){
+        const itemRef = ref(db, `items/${id}`);
+        try{
+          await runTransaction(itemRef, (current) => {
+            if(current === null) return current;
+            const total = Number(current.totalPieces) || 0;
+            const sold = Number(current.sold) || 0;
+            if(act === "sell"){
+              if(sold < total) current.sold = sold + 1;
+            } else {
+              current.sold = Math.max(0, sold - 1);
+            }
+            return current;
+          });
+          toast('Updated');
+        }catch(err){ console.error('Transaction error',err); toast('Could not update'); }
+      } else if(act === "del"){
+        if(confirm("Delete this product?")){
+          await remove(ref(db, `items/${id}`));
+          toast('Deleted');
+        }
+      } else if(act === "edit"){
+        editingId = id;
+        const it = latest[id] || {};
+        editName.value = it.name || "";
+        editTotal.value = it.totalPieces || 0;
+        editPrice.value = it.unitPrice || 0;
+        openModal();
+      }
+    });
+
+    // modal handlers
+    function openModal(){ modal.style.display = "flex"; modal.setAttribute("aria-hidden","false"); editName.focus(); }
+    function closeModal(){ modal.style.display = "none"; modal.setAttribute("aria-hidden","true"); editingId = null; }
+
+    cancelEdit.addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => { if(e.target === modal) closeModal(); });
+
+    saveEdit.addEventListener("click", async () => {
+      if(!editingId) return closeModal();
+      const name = editName.value.trim();
+      const totalPieces = Number(editTotal.value) || 0;
+      const unitPrice = Number(editPrice.value) || 0;
+      await update(ref(db, `items/${editingId}`), { name, totalPieces, unitPrice });
+      closeModal();
+      toast('Saved');
+    });
+
+    // open add via top button
+    document.getElementById("openAdd").addEventListener("click", () => { nameInp.focus(); nameInp.scrollIntoView({behavior:"smooth",block:"center"}); });
+
+    // clear form
+    document.getElementById("clearForm").addEventListener("click", () => addForm.reset());
+
+    // search + keyboard shortcut
+    search.addEventListener("input", () => { page = 1; renderTable(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='/' && document.activeElement !== search){ e.preventDefault(); search.focus(); search.select(); }});
+
+    // export CSV
+    document.getElementById("exportCsv").addEventListener("click", () => {
+      const rows = Object.entries(latest).map(([id,it]) => {
+        const c = compute(it);
+        return { id, name: it.name, total: c.total, sold: c.sold, remaining: c.remain, unit: c.unit, totalValue: c.totalValue, revenue: c.revenue };
+      });
+      if(rows.length === 0) return alert("No data");
+      const hdr = ["id","name","total","sold","remaining","unit","totalValue","revenue"];
+      const lines = [hdr.join(",")].concat(rows.map(r => hdr.map(h => JSON.stringify(r[h] ?? "")).join(",")));
+      const csv = lines.join("\n");
+      const blob = new Blob([csv], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a"); a.href = url; a.download = `dwc_inventory_${Date.now()}.csv`; a.click();
+      URL.revokeObjectURL(url);
+      toast('CSV exported');
+    });
+
+    // import CSV (basic, client-side)
+    document.getElementById('importCsv').addEventListener('click', ()=>{
+      const inp = document.createElement('input'); inp.type='file'; inp.accept='.csv,text/csv';
+      inp.onchange = async ()=>{
+        const f = inp.files[0]; if(!f) return;
+        const txt = await f.text();
+        const lines = txt.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
+        const hdr = lines.shift().split(',').map(h=>h.replace(/\"/g,'').trim());
+        const promiseWrites = lines.map(line=>{
+          const vals = JSON.parse('['+line+']'.replace(/,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/g,','));
+          const obj = {};
+          hdr.forEach((k,i)=>obj[k]=vals[i]);
+          const totalPieces = Number(obj.total || obj.totalPieces || 0);
+          const unitPrice = Number(obj.unit || obj.unitPrice || 0);
+          return push(itemsRef, { name: obj.name || 'Imported', totalPieces, sold: Number(obj.sold||0), unitPrice, createdAt: Date.now() });
+        });
+        await Promise.all(promiseWrites);
+        toast('CSV imported');
+      };
+      inp.click();
+    });
+
+    // paging controls
+    prevPage.addEventListener('click', ()=>{ if(page>1){ page--; renderTable(); } });
+    nextPage.addEventListener('click', ()=>{ page++; renderTable(); });
+    perPageSel.addEventListener('change', ()=>{ page=1; renderTable(); });
+    sortBy.addEventListener('change', ()=>{ renderTable(); });
+
+    // Initialize: ensure latest is empty object until onValue fires
+    latest = {};
+
+  </script>
+</body>
+</html>

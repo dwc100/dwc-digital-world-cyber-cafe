@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Secure Vault — Admin Verification</title>
+  <title>Secure Vault — Passkey Verification</title>
   <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
 <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
 
@@ -56,10 +56,11 @@
       box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
       border: 2px solid rgba(125, 60, 255, 0.3);
       text-align: center;
-      transition: transform 0.3s ease;
       position: relative;
       overflow: hidden;
+      transition: transform 0.3s ease;
     }
+
     .card::before {
       content: "";
       position: absolute;
@@ -69,6 +70,7 @@
       z-index: 0;
       opacity: 0.4;
     }
+
     .card::after {
       content: "";
       position: absolute;
@@ -126,7 +128,7 @@
       filter: drop-shadow(0 0 3px var(--blue));
     }
 
-    input[type="password"] {
+    input[type="text"] {
       flex: 1;
       padding: 14px 18px;
       border-radius: 12px;
@@ -134,9 +136,9 @@
       background: transparent;
       font-size: 15px;
       outline: none;
-      user-select: text;
     }
-    input[type="password"]:focus {
+
+    input[type="text"]:focus {
       border-color: var(--blue);
       box-shadow: 0 0 12px rgba(0, 170, 255, 0.4);
     }
@@ -154,6 +156,7 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       margin-top: 10px;
     }
+
     button:hover {
       transform: scale(1.05);
       box-shadow: 0 0 15px rgba(125, 60, 255, 0.5), 0 0 25px rgba(0, 170, 255, 0.4);
@@ -165,11 +168,11 @@
       font-weight: 600;
     }
 
-    /* Loader Modal */
+    /* Loader Overlay */
     .loader-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(255,255,255,0.75);
+      background: rgba(255,255,255,0.8);
       backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
@@ -234,45 +237,43 @@
       50% { left: 30%; }
       100% { left: 100%; }
     }
-
   </style>
 </head>
 <body>
-  <main class="card" role="main" aria-label="Admin password verification form">
-    <h1>Admin Verification</h1>
+  <main class="card">
+    <h1>Passkey Verification</h1>
     <section class="input-container">
-      <div class="lock-icon" aria-hidden="true">
+      <div class="lock-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M12 17a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm6-7h-1V7a5 5 0 0 0-10 0v3H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2zm-7-3a3 3 0 0 1 6 0v3h-6V7z"/>
         </svg>
       </div>
-      <input type="password" id="password" placeholder="Enter password" autocomplete="off" required />
+      <input type="text" id="passkeyInput" placeholder="Enter your Passkey" autocomplete="off" required />
     </section>
-    <button id="verifyBtn" type="button">Verify</button>
+    <button id="verifyBtn">Verify Passkey</button>
     <div class="feedback" id="feedback"></div>
   </main>
 
-  <!-- Loader Overlay -->
   <div class="loader-overlay" id="loaderOverlay" style="display:none;">
     <div class="loader"></div>
-    <div class="loader-text" id="loaderText">Initializing secure check…</div>
+    <div class="loader-text" id="loaderText">Starting secure passkey check…</div>
     <div class="progress"></div>
   </div>
 
   <script>
     (function() {
-      const password = document.getElementById('password');
+      const passInput = document.getElementById('passkeyInput');
       const btn = document.getElementById('verifyBtn');
       const feedback = document.getElementById('feedback');
       const overlay = document.getElementById('loaderOverlay');
       const loaderText = document.getElementById('loaderText');
-      const CORRECT_PASSWORD = 'Sudhanshu100@112';
 
+      const CORRECT_PASSKEY = 'Sudhanshudwc';
       const steps = [
-        "Validating environment integrity…",
-        "Checking cryptographic signatures…",
-        "Comparing password hash…",
-        "Finalizing result…"
+        "Scanning security tokens…",
+        "Encrypting passkey data…",
+        "Matching encrypted hash…",
+        "Authorizing user access…"
       ];
 
       function showOverlay() {
@@ -291,28 +292,28 @@
       }
 
       function verifyResult() {
-        const val = password.value.trim();
-        if (val === CORRECT_PASSWORD) {
-          loaderText.textContent = "✅ Password Verified — Redirecting…";
-          sessionStorage.setItem('admin_entered_password', val);
+        const val = passInput.value.trim();
+        if (val === CORRECT_PASSKEY) {
+          loaderText.textContent = "✅ Passkey Verified — Access Granted";
+          sessionStorage.setItem('verified_passkey', val);
           setTimeout(() => {
             overlay.style.display = 'none';
-            window.location.href = 'dwcadmin passkey veryfication.html';
+            window.location.href = 'adminotp.html';
           }, 1200);
         } else {
-          loaderText.textContent = "❌ Verification Failed — Please retry.";
+          loaderText.textContent = "❌ Wrong Passkey — Retry.";
           setTimeout(() => {
             overlay.style.display = 'none';
-            feedback.textContent = "Wrong password! Try again.";
+            feedback.textContent = "Wrong Passkey! Try again.";
             feedback.style.color = "red";
           }, 1000);
         }
       }
 
       btn.addEventListener('click', () => {
-        const val = password.value.trim();
+        const val = passInput.value.trim();
         if (!val) {
-          feedback.textContent = "Please enter a password.";
+          feedback.textContent = "Please enter your Passkey.";
           feedback.style.color = "red";
           return;
         }
@@ -320,14 +321,13 @@
         showOverlay();
       });
 
-      password.addEventListener('keydown', e => {
+      passInput.addEventListener('keydown', e => {
         if (e.key === 'Enter') {
           e.preventDefault();
           btn.click();
         }
       });
 
-      // Disable inspect tools
       document.addEventListener('contextmenu', e => e.preventDefault());
       document.addEventListener('keydown', e => {
         if (e.ctrlKey && ['c','v','u','s'].includes(e.key.toLowerCase())) e.preventDefault();

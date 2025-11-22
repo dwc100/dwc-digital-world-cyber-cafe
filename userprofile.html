@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile - Digital World Cyber Cafe</title>
+<link rel="icon" type="image/png" href="https://i.ibb.co/1gQKw6b/56.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ===== Base Reset ===== */
+html, body, * { margin:0; padding:0; box-sizing:border-box; font-family: 'Montserrat', sans-serif; }
+
+/* ===== Body Background ===== */
+body {
+    background: url('https://images.unsplash.com/photo-1531510072931-ff3e71a3a01e') no-repeat center center fixed;
+    background-size: cover; color:#fff; overflow-x:hidden;
+}
+body::before {
+    content: ""; position: fixed; inset:0; z-index:-1;
+    background: linear-gradient(135deg, #c300ff, #006bff, #ff00ff);
+    background-size: 400% 400%; animation: gradient 20s ease infinite;
+    opacity:0.3; filter:blur(80px);
+}
+@keyframes gradient { 0% {background-position:0% 50%;} 50% {background-position:100% 50%;} 100% {background-position:0% 50%;} }
+
+/* ===== Header ===== */
+.header { position:fixed; top:0; left:0; right:0; z-index:1000; padding:2vw 5vw; display:flex; justify-content:space-between; align-items:center;
+ background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); border-bottom-left-radius: 11vw; border-bottom-right-radius: 11vw;
+ border:0.2vw solid rgba(180,0,255,0.25); box-shadow:0 0 2.5vw rgba(150,0,255,0.35), 0 0 4vw rgba(0,120,255,0.3);}
+.logo { display:flex; align-items:center; }
+.logo img { width:10vw; max-width:90px; height:auto; border-radius:50%; border:0.4vw solid rgba(190,0,255,0.9);
+ box-shadow:0 0 2.5vw rgba(170,0,255,0.8), 0 0 3.5vw #006eff; }
+.logo-text { font-family: 'Orbitron', sans-serif; font-size:2vw; margin-left:1.5vw;
+ background: linear-gradient(90deg,#c300ff,#006bff,#b900ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+ text-shadow:0 0 1.2vw rgba(170,0,255,0.5),0 0 2.5vw rgba(0,70,255,0.6),0 0 4vw rgba(200,0,255,0.7); }
+
+/* ===== Profile Card ===== */
+.profile-container {
+    max-width: 850px; margin:15vw auto 5vw auto; padding:3vw;
+    background: rgba(0,0,0,0.5); border-radius:3vw;
+    border:0.3vw solid;
+    border-image: linear-gradient(45deg,#c300ff,#006bff,#ff00ff) 1;
+    box-shadow:0 0 2vw #c300ff,0 0 3vw #006bff,0 0 2vw #ff00ff;
+    transition:all 0.5s ease;
+}
+.profile-container h1 { text-align:center; font-size:3vw; margin-bottom:2vw; font-family:'Orbitron', sans-serif; text-shadow:0 0 1vw #fff; }
+
+/* ===== Profile Fields ===== */
+.profile-field { font-size:1.2rem; color:#00ccff; padding:0.8rem 0; border-bottom:1px solid #00ccff; display:flex; justify-content:space-between; align-items:center; }
+.profile-field label { font-weight:600; }
+.profile-field span { font-weight:500; margin-left:1rem; }
+
+/* ===== Password Input ===== */
+.password-input { width:100%; padding:0.8rem; margin-top:1rem; border-radius:1vw; border:0.2vw solid #00ccff; background:rgba(255,255,255,0.1); color:#00ccff; font-weight:bold; font-size:1rem; }
+
+/* ===== Change Password Button ===== */
+.change-pass-btn { display:block; margin:2rem auto 0 auto; padding:1rem 2.5rem; border-radius:25px; background:#0055ff; color:white; font-weight:bold; cursor:pointer; border:none; font-size:1rem; transition:all 0.3s ease; }
+.change-pass-btn:hover { background:#003fcc; transform:scale(1.05); }
+
+/* ===== Popup Notification Card ===== */
+#popup-card {
+    position: fixed; top:50%; left:50%; transform:translate(-50%, -50%) scale(0);
+    background: rgba(0,0,0,0.95); border:0.2vw solid #00ffcc; border-radius:2vw;
+    padding:2rem 3rem; z-index:3000; color:#00ffcc; text-align:center;
+    font-size:1.2rem; font-weight:bold; box-shadow:0 0 2vw #00ffcc, 0 0 4vw #00ffaa; transition:all 0.4s ease;
+}
+#popup-card.show { transform:translate(-50%, -50%) scale(1); }
+
+/* Popup Close Button */
+#popup-close { margin-top:1.5rem; padding:0.5rem 1.5rem; border:none; border-radius:1vw; background:#0055ff; color:#fff; cursor:pointer; font-weight:bold; font-size:1rem; transition:all 0.3s ease;}
+#popup-close:hover { background:#003fcc; transform:scale(1.05); }
+
+/* ===== Responsive ===== */
+@media(max-width:768px){
+    .profile-container h1{ font-size:5vw; }
+    .profile-field{ font-size:1rem; flex-direction:column; align-items:flex-start; }
+    .logo-text{ font-size:3vw; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    <div class="logo">
+        <img src="https://i.ibb.co/1gQKw6b/56.png" alt="Logo">
+        <div class="logo-text">DIGITAL WORLD CYBER CAFE</div>
+    </div>
+</div>
+
+<!-- Profile Section -->
+<div class="profile-container">
+    <h1>Your Profile</h1>
+    <div class="profile-field"><label>Full Name:</label><span id="full-name"></span></div>
+    <div class="profile-field"><label>Father Name:</label><span id="father-name"></span></div>
+    <div class="profile-field"><label>Email:</label><span id="email"></span></div>
+    <div class="profile-field"><label>Mobile Number:</label><span id="mobile"></span></div>
+    <div class="profile-field"><label>UID:</label><span id="uid"></span></div>
+    <div class="profile-field"><label>Age:</label><span id="age"></span></div>
+    <div class="profile-field"><label>Address:</label><span id="address"></span></div>
+    <div class="profile-field"><label>Password:</label><input type="text" id="password-field" class="password-input"></div>
+    <button class="change-pass-btn" id="change-pass-btn">Update Password</button>
+</div>
+
+<!-- Popup Card -->
+<div id="popup-card">
+    <div id="popup-message"></div>
+    <button id="popup-close">OK</button>
+</div>
+
+<!-- Firebase Scripts -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, updatePassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+// Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyBHnpCgh9RFyVrZLxMeYMv2SkokolLI2Vs",
+  authDomain: "use-data-7f613.firebaseapp.com",
+  databaseURL: "https://use-data-7f613-default-rtdb.firebaseio.com",
+  projectId: "use-data-7f613",
+  storageBucket: "use-data-7f613.firebasestorage.app",
+  messagingSenderId: "34772531349",
+  appId: "1:34772531349:web:cb1bb06151fcc0e66a039c"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+const fullName = document.getElementById("full-name");
+const fatherName = document.getElementById("father-name");
+const emailField = document.getElementById("email");
+const mobile = document.getElementById("mobile");
+const uidField = document.getElementById("uid");
+const age = document.getElementById("age");
+const address = document.getElementById("address");
+const passwordField = document.getElementById("password-field");
+const changePassBtn = document.getElementById("change-pass-btn");
+const popupCard = document.getElementById("popup-card");
+const popupMessage = document.getElementById("popup-message");
+const popupClose = document.getElementById("popup-close");
+
+// Show Popup Function
+function showPopup(message){
+    popupMessage.textContent = message;
+    popupCard.classList.add("show");
+}
+
+// Close Popup
+popupClose.addEventListener("click", () => {
+    popupCard.classList.remove("show");
+});
+
+// Load user profile
+onAuthStateChanged(auth, async (user) => {
+    if(user){
+        uidField.textContent = user.uid;
+        emailField.textContent = user.email;
+        
+        const snapshot = await get(ref(db, 'users/' + user.uid));
+        if(snapshot.exists()){
+            const data = snapshot.val();
+            fullName.textContent = data.fullName || "";
+            fatherName.textContent = data.fatherName || "";
+            mobile.textContent = data.mobile || "";
+            age.textContent = data.age || "";
+            address.textContent = data.address || "";
+            passwordField.value = data.password || ""; // Display current password
+        } else {
+            showPopup("User data not found in database!");
+        }
+    } else {
+        showPopup("Please login first!");
+        setTimeout(()=>{ window.location.href = "dwc.html"; }, 2000);
+    }
+});
+
+// Update password
+changePassBtn.addEventListener("click", async () => {
+    const newPassword = passwordField.value;
+    if(!newPassword || newPassword.length < 6){
+        showPopup("Password must be at least 6 characters!");
+        return;
+    }
+
+    const user = auth.currentUser;
+    if(!user) return;
+
+    try{
+        await signInWithEmailAndPassword(auth, user.email, passwordField.value); // Re-auth
+        await updatePassword(user, newPassword);
+        await set(ref(db, 'users/' + user.uid + '/password'), newPassword); // update in DB
+        showPopup("Password updated successfully!");
+    }catch(err){
+        console.error(err);
+        showPopup("Failed to update password!");
+    }
+});
+</script>
+
+</body>
+</html>

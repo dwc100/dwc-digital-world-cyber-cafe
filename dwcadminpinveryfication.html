@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Secure Vault — Admin Verification</title>
+  <title>Secure Vault — PIN Verification</title>
   <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
 <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
 
@@ -60,6 +60,7 @@
       position: relative;
       overflow: hidden;
     }
+
     .card::before {
       content: "";
       position: absolute;
@@ -69,6 +70,7 @@
       z-index: 0;
       opacity: 0.4;
     }
+
     .card::after {
       content: "";
       position: absolute;
@@ -126,7 +128,7 @@
       filter: drop-shadow(0 0 3px var(--blue));
     }
 
-    input[type="password"] {
+    input[type="text"] {
       flex: 1;
       padding: 14px 18px;
       border-radius: 12px;
@@ -136,7 +138,8 @@
       outline: none;
       user-select: text;
     }
-    input[type="password"]:focus {
+
+    input[type="text"]:focus {
       border-color: var(--blue);
       box-shadow: 0 0 12px rgba(0, 170, 255, 0.4);
     }
@@ -154,6 +157,7 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       margin-top: 10px;
     }
+
     button:hover {
       transform: scale(1.05);
       box-shadow: 0 0 15px rgba(125, 60, 255, 0.5), 0 0 25px rgba(0, 170, 255, 0.4);
@@ -165,11 +169,11 @@
       font-weight: 600;
     }
 
-    /* Loader Modal */
+    /* Loader Overlay */
     .loader-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(255,255,255,0.75);
+      background: rgba(255,255,255,0.8);
       backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
@@ -234,21 +238,20 @@
       50% { left: 30%; }
       100% { left: 100%; }
     }
-
   </style>
 </head>
 <body>
-  <main class="card" role="main" aria-label="Admin password verification form">
-    <h1>Admin Verification</h1>
+  <main class="card" role="main" aria-label="PIN verification form">
+    <h1>PIN Verification</h1>
     <section class="input-container">
       <div class="lock-icon" aria-hidden="true">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M12 17a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm6-7h-1V7a5 5 0 0 0-10 0v3H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2zm-7-3a3 3 0 0 1 6 0v3h-6V7z"/>
         </svg>
       </div>
-      <input type="password" id="password" placeholder="Enter password" autocomplete="off" required />
+      <input type="text" id="pinInput" placeholder="Enter your PIN" autocomplete="off" required />
     </section>
-    <button id="verifyBtn" type="button">Verify</button>
+    <button id="verifyPinBtn" type="button">Verify PIN</button>
     <div class="feedback" id="feedback"></div>
   </main>
 
@@ -261,18 +264,18 @@
 
   <script>
     (function() {
-      const password = document.getElementById('password');
-      const btn = document.getElementById('verifyBtn');
+      const pinInput = document.getElementById('pinInput');
+      const btn = document.getElementById('verifyPinBtn');
       const feedback = document.getElementById('feedback');
       const overlay = document.getElementById('loaderOverlay');
       const loaderText = document.getElementById('loaderText');
-      const CORRECT_PASSWORD = 'Sudhanshu100@112';
 
+      const CORRECT_PIN = '886010';
       const steps = [
-        "Validating environment integrity…",
-        "Checking cryptographic signatures…",
-        "Comparing password hash…",
-        "Finalizing result…"
+        "Verifying user environment…",
+        "Encrypting entered PIN…",
+        "Comparing encrypted hash…",
+        "Finalizing secure verification…"
       ];
 
       function showOverlay() {
@@ -291,28 +294,28 @@
       }
 
       function verifyResult() {
-        const val = password.value.trim();
-        if (val === CORRECT_PASSWORD) {
-          loaderText.textContent = "✅ Password Verified — Redirecting…";
-          sessionStorage.setItem('admin_entered_password', val);
+        const val = pinInput.value.trim();
+        if (val === CORRECT_PIN) {
+          loaderText.textContent = "✅ PIN Verified — Redirecting…";
+          sessionStorage.setItem('verified_pin', val);
           setTimeout(() => {
             overlay.style.display = 'none';
-            window.location.href = 'dwcadmin passkey veryfication.html';
+            window.location.href = 'pass_key_very_fivatin.html';
           }, 1200);
         } else {
-          loaderText.textContent = "❌ Verification Failed — Please retry.";
+          loaderText.textContent = "❌ Incorrect PIN — Please retry.";
           setTimeout(() => {
             overlay.style.display = 'none';
-            feedback.textContent = "Wrong password! Try again.";
+            feedback.textContent = "Wrong PIN! Try again.";
             feedback.style.color = "red";
           }, 1000);
         }
       }
 
       btn.addEventListener('click', () => {
-        const val = password.value.trim();
+        const val = pinInput.value.trim();
         if (!val) {
-          feedback.textContent = "Please enter a password.";
+          feedback.textContent = "Please enter your PIN.";
           feedback.style.color = "red";
           return;
         }
@@ -320,14 +323,14 @@
         showOverlay();
       });
 
-      password.addEventListener('keydown', e => {
+      pinInput.addEventListener('keydown', e => {
         if (e.key === 'Enter') {
           e.preventDefault();
           btn.click();
         }
       });
 
-      // Disable inspect tools
+      // Disable inspect / shortcuts
       document.addEventListener('contextmenu', e => e.preventDefault());
       document.addEventListener('keydown', e => {
         if (e.ctrlKey && ['c','v','u','s'].includes(e.key.toLowerCase())) e.preventDefault();

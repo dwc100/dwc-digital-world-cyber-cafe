@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - Users List</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #eef2ff;
+    padding: 20px;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th {
+    background: #4b5cff;
+    color: white;
+    padding: 12px;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background: #f3f4ff;
+}
+
+.delete-btn {
+    padding: 6px 12px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: darkred;
+}
+</style>
+</head>
+<body>
+
+<h2>Registered Users</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Father Name</th>
+            <th>Age</th>
+            <th>Address</th>
+            <th>Mobile</th>
+            <th>Email</th>
+            <th>User UID</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="userTable"></tbody>
+</table>
+
+<script type="module">
+
+import { initializeApp } 
+    from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import { getDatabase, ref, onValue, remove } 
+    from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBHnpCgh9RFyVrZLxMeYMv2SkokolLI2Vs",
+  authDomain: "use-data-7f613.firebaseapp.com",
+  databaseURL: "https://use-data-7f613-default-rtdb.firebaseio.com",
+  projectId: "use-data-7f613",
+  storageBucket: "use-data-7f613.firebasestorage.app",
+  messagingSenderId: "34772531349",
+  appId: "1:34772531349:web:cb1bb06151fcc0e66a039c"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const userTable = document.getElementById("userTable");
+
+const usersRef = ref(db, "users/");
+
+// LIVE LISTENER – हमेशा डेटा auto refresh होगा
+onValue(usersRef, (snapshot) => {
+    userTable.innerHTML = ""; // clear
+
+    snapshot.forEach((childSnapshot) => {
+        let user = childSnapshot.val();
+        let uid = childSnapshot.key;
+
+        let row = `
+            <tr>
+                <td>${user.name}</td>
+                <td>${user.father}</td>
+                <td>${user.age}</td>
+                <td>${user.address}</td>
+                <td>${user.mobile}</td>
+                <td>${user.email}</td>
+                <td>${user.uid}</td>
+                <td>
+                    <button class="delete-btn" onclick="deleteUser('${uid}')">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        `;
+
+        userTable.innerHTML += row;
+    });
+});
+
+// DELETE FUNCTION
+window.deleteUser = function(uid) {
+    if (confirm("Are you sure you want to delete this user?")) {
+        remove(ref(db, "users/" + uid))
+            .then(() => alert("User deleted successfully"))
+            .catch(err => alert("Error: " + err));
+    }
+}
+
+</script>
+
+</body>
+</html>

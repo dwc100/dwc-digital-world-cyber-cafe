@@ -7,13 +7,9 @@
 <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/1gQKw6b/56.png">
 <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
 
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-<!-- Font Awesome -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 :root {
@@ -23,8 +19,6 @@
   --green:#00b894;
   --red:#e63946;
 }
-
-/* ===== GLOBAL ===== */
 *{box-sizing:border-box;transition:all .3s ease;}
 body{
   font-family:'Poppins',sans-serif;
@@ -36,8 +30,6 @@ body{
   overflow:hidden;
   color:#222;
 }
-
-/* ===== CARD ===== */
 form{
   width:340px;
   background:rgba(255,255,255,0.85);
@@ -51,11 +43,7 @@ form{
   animation:float 3s ease-in-out infinite alternate;
 }
 @keyframes float{
-  from{transform:translateY(0);}
-  to{transform:translateY(-8px);}
-}
-
-/* ===== HEADING ===== */
+  from{transform:translateY(0);} to{transform:translateY(-8px);} }
 form h2{
   font-family:'Great Vibes',cursive;
   font-size:2.5rem;
@@ -65,53 +53,28 @@ form h2{
   -webkit-text-fill-color:transparent;
   text-shadow:0 0 12px rgba(123,47,247,0.3);
 }
-
-/* ===== INPUTS ===== */
 input{
-  width:100%;
-  padding:12px 14px;
-  margin-top:10px;
-  border-radius:10px;
-  border:1.5px solid #ccc;
-  font-size:1rem;
-  background:white;
-  color:#333;
+  width:100%;padding:12px 14px;margin-top:10px;border-radius:10px;border:1.5px solid #ccc;font-size:1rem;background:white;color:#333;
 }
 input:focus{
   border-color:var(--purple);
   outline:none;
   box-shadow:0 0 10px rgba(123,47,247,0.25);
 }
-
-/* ===== BUTTON ===== */
 button{
-  width:100%;
-  margin-top:18px;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  font-size:1rem;
-  font-weight:700;
-  background:linear-gradient(90deg,var(--blue),var(--purple));
-  color:white;
-  cursor:pointer;
-  box-shadow:0 0 18px rgba(123,47,247,0.25);
+  width:100%;margin-top:18px;padding:12px;border:none;border-radius:10px;font-size:1rem;font-weight:700;background:linear-gradient(90deg,var(--blue),var(--purple));color:white;cursor:pointer;box-shadow:0 0 18px rgba(123,47,247,0.25);
 }
 button:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 25px rgba(255,77,166,0.3);
+  transform:scale(1.05);box-shadow:0 0 25px rgba(255,77,166,0.3);
 }
-
-/* ===== MESSAGE ===== */
+.alt-btn{
+  margin-top:15px;
+  background:linear-gradient(90deg,var(--red),var(--pink));
+}
 .msg{
-  margin-top:12px;
-  font-weight:600;
-  font-size:0.95rem;
-  color:#333;
-  min-height:24px;
+  margin-top:12px;font-weight:600;font-size:0.95rem;color:#333;min-height:24px;
 }
-.msg.success{color:var(--green);}
-.msg.error{color:var(--red);}
+.msg.success{color:var(--green);} .msg.error{color:var(--red);} 
 </style>
 </head>
 <body>
@@ -120,6 +83,9 @@ button:hover{
   <h2>DWC Access</h2>
   <input id="passkey" type="text" placeholder="Enter passkey" required>
   <button type="submit">Access</button>
+
+  <div style="margin-top:10px; padding:8px; background:#ffeef5; border-radius:8px; font-size:0.85rem; font-weight:600; color:#d6336c;">You do not want to use passkey? <a href="admineloginpagepasswordverification.html"><button type="button" class="alt-btn" style="width:auto; padding:6px 10px; font-size:0.8rem;">Click here</button></a></div>
+
   <div class="msg" id="msg"></div>
 </form>
 
