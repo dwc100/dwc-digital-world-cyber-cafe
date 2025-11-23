@@ -1,0 +1,79 @@
+<!-- buserregistrationstep2.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Step 2 - WhatsApp Number</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Montserrat",sans-serif;}
+body{background:url("https://images.unsplash.com/photo-1531510072931-ff3e71a3a01e") no-repeat center/cover fixed;overflow-x:hidden;}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(135deg,#c300ff,#006bff,#ff00ff);background-size:400% 400%;animation:gradient 20s ease infinite;opacity:0.3;filter:blur(70px);}
+@keyframes gradient{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+.header{position:fixed;width:100%;top:0;padding:2vw 5vw;display:flex;justify-content:center;background:rgba(255,255,255,0.15);backdrop-filter:blur(15px);border-bottom-left-radius:11vw;border-bottom-right-radius:11vw;border:0.2vw solid rgba(180,0,255,0.25);}
+.logo img{width:9vw;max-width:90px;border-radius:50%;border:0.4vw solid rgba(190,0,255,0.9);}
+.logo-text{font-family:"Orbitron";font-size:2vw;margin-left:1vw;background:linear-gradient(90deg,#c300ff,#006bff,#b900ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.form-container{width:90%;max-width:650px;margin:15vw auto 5vw;background:#fff;padding:2rem;border-radius:1.5rem;border:0.2vw solid;border-image:linear-gradient(45deg,#c300ff,#006bff,#ff00ff) 1;box-shadow:0 0 1.5vw #c300ff,0 0 1.5vw #006bff;}
+.form-title{text-align:center;font-size:2rem;font-family:"Orbitron";margin-bottom:1rem;}
+input{width:100%;padding:12px;border-radius:10px;border:2px solid #c300ff;margin-bottom:15px;}
+button{width:100%;padding:12px;background:linear-gradient(90deg,#c300ff,#006bff);color:#fff;border-radius:10px;border:none;cursor:pointer;font-size:1rem;transition:0.2s;}
+button:hover{transform:scale(1.03);box-shadow:0 0 1.5vw #c300ff;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo"><img src="https://i.ibb.co/1gQKw6b/56.png" /></div>
+  <div class="logo-text">DIGITAL WORLD CYBER CAFE</div>
+</div>
+
+<div class="form-container">
+  <div class="form-title">Step 2 — Enter WhatsApp Number</div>
+  <input type="text" id="whatsapp" placeholder="WhatsApp Number" />
+  <button id="nextBtn">Next</button>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getDatabase, ref, update } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDWBgpOAhgmMSChLCnzDb0nlnhUXhVakFc",
+  authDomain: "business-site-user.firebaseapp.com",
+  databaseURL: "https://business-site-user-default-rtdb.firebaseio.com",
+  projectId: "business-site-user",
+  storageBucket: "business-site-user.appspot.com",
+  messagingSenderId: "405082839792",
+  appId: "1:405082839792:web:99574afbb3d17af1914035",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+document.getElementById("nextBtn").addEventListener("click", async () => {
+  let whatsapp = document.getElementById("whatsapp").value.trim();
+  if(!whatsapp){ alert("Please enter WhatsApp number"); return; }
+
+  // UID from Step 1
+  let uid = sessionStorage.getItem("uid");
+  if(!uid){ alert("UID not found. Please complete Step 1."); return; }
+
+  try {
+    // Save WhatsApp number in Firebase
+    await update(ref(db, "users/" + uid), {
+      whatsapp: whatsapp,
+      step: 2,
+      updatedAt: new Date().toISOString()
+    });
+
+    // Go to Step 3
+    window.location.href = "buserregistretionstep3.html";
+  } catch(err) {
+    alert("Error: " + err.message);
+  }
+});
+</script>
+
+</body>
+</html>

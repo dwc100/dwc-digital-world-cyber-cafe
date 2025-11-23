@@ -1,0 +1,87 @@
+<!-- buserregistrationstep3.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Step 3 - DWC Registration</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Montserrat",sans-serif;}
+body{background:url("https://images.unsplash.com/photo-1531510072931-ff3e71a3a01e") no-repeat center/cover fixed;overflow-x:hidden;}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(135deg,#c300ff,#006bff,#ff00ff);background-size:400% 400%;animation:gradient 20s ease infinite;opacity:0.3;filter:blur(70px);}
+.header{position:fixed;width:100%;top:0;padding:2vw 5vw;display:flex;justify-content:center;background:rgba(255,255,255,0.15);backdrop-filter:blur(15px);border-bottom-left-radius:11vw;border-bottom-right-radius:11vw;border:0.2vw solid rgba(180,0,255,0.25);}
+.logo img{width:9vw;max-width:90px;border-radius:50%;border:0.4vw solid rgba(190,0,255,0.9);}
+.logo-text{font-family:"Orbitron";font-size:2vw;margin-left:1vw;background:linear-gradient(90deg,#c300ff,#006bff,#b900ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.form-container{width:90%;max-width:650px;margin:15vw auto 5vw;background:#fff;padding:2rem;border-radius:1.5rem;border:0.2vw solid;border-image:linear-gradient(45deg,#c300ff,#006bff,#ff00ff) 1;box-shadow:0 0 1.5vw #c300ff,0 0 1.5vw #006bff;}
+.form-title{text-align:center;font-size:2rem;font-family:"Orbitron";margin-bottom:1rem;}
+input{width:100%;padding:12px;border-radius:10px;border:2px solid #c300ff;margin-bottom:15px;}
+button{width:100%;padding:12px;background:linear-gradient(90deg,#c300ff,#006bff);color:#fff;border-radius:10px;border:none;cursor:pointer;font-size:1rem;transition:0.2s;}
+button:hover{transform:scale(1.03);box-shadow:0 0 1.5vw #c300ff;}
+button.loading{opacity:0.6;pointer-events:none;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo"><img src="https://i.ibb.co/1gQKw6b/56.png" /></div>
+  <div class="logo-text">DIGITAL WORLD CYBER CAFE</div>
+</div>
+
+<div class="form-container">
+  <div class="form-title">Step 3 — Email & Password</div>
+  <input type="email" id="email" placeholder="Email ID" />
+  <input type="password" id="password" placeholder="Password" />
+  <button id="submitBtn">Submit</button>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getDatabase, ref, update } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDWBgpOAhgmMSChLCnzDb0nlnhUXhVakFc",
+  authDomain: "business-site-user.firebaseapp.com",
+  databaseURL: "https://business-site-user-default-rtdb.firebaseio.com",
+  projectId: "business-site-user",
+  storageBucket: "business-site-user.appspot.com",
+  messagingSenderId: "405082839792",
+  appId: "1:405082839792:web:99574afbb3d17af1914035",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+document.getElementById("submitBtn").addEventListener("click", async () => {
+  let btn = document.getElementById("submitBtn");
+  btn.classList.add("loading"); btn.innerText="Please wait…";
+
+  let email = document.getElementById("email").value.trim();
+  let pass = document.getElementById("password").value.trim();
+  if(!email || !pass){ alert("Please fill all fields!"); btn.classList.remove("loading"); btn.innerText="Submit"; return; }
+
+  let uid = sessionStorage.getItem("uid");
+  if(!uid){ alert("UID not found. Complete previous steps."); btn.classList.remove("loading"); btn.innerText="Submit"; return; }
+
+  try {
+    // Update Email & Password in Realtime DB (Auth can also be updated separately if needed)
+    await update(ref(db,"users/"+uid),{
+      email: email,
+      password: pass, // optional
+      step: 3,
+      updatedAt: new Date().toISOString()
+    });
+
+    // Redirect to success page
+    window.location.href = "businessuser_registrationsuccess.html";
+
+  } catch(err){
+    alert("Error: "+err.message);
+  } finally{
+    btn.classList.remove("loading"); btn.innerText="Submit";
+  }
+});
+</script>
+
+</body>
+</html>

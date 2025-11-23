@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Registration Successful - DWC</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Montserrat',sans-serif; }
+
+  body {
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(135deg, #c300ff, #006bff, #ff00ff);
+    background-size: 400% 400%;
+    animation: gradient 20s ease infinite;
+    overflow:hidden;
+  }
+
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .success-container {
+    background: rgba(255,255,255,0.95);
+    padding: 3rem 2.5rem;
+    border-radius: 1.5rem;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 0 2rem rgba(0,0,0,0.2);
+    animation: fadeIn 1s ease;
+  }
+
+  @keyframes fadeIn {
+    0% { opacity:0; transform: translateY(-20px); }
+    100% { opacity:1; transform: translateY(0); }
+  }
+
+  .success-icon {
+    font-size: 4rem;
+    color: #06b906;
+    margin-bottom: 1rem;
+    animation: bounce 1s infinite alternate;
+  }
+
+  @keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+  }
+
+  h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    color: #006bff;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 2rem;
+  }
+
+  .btn {
+    display:inline-block;
+    text-decoration:none;
+    font-weight:600;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-size:1rem;
+    transition:0.3s;
+    margin: 0.5rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+
+  .whatsapp-btn {
+    background:#25D366;
+    color:#fff;
+  }
+
+  .main-btn {
+    background:#006bff;
+    color:#fff;
+  }
+
+  .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  }
+
+  .note {
+    font-size:0.85rem;
+    color:#666;
+    margin-top:1rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="success-container">
+  <div class="success-icon">✔</div>
+  <h1 id="user-name">Registration Successful!</h1>
+  <p>📩 Our DWC team will contact you on WhatsApp shortly. Please wait…</p>
+
+  <!-- WhatsApp Button -->
+  <a class="btn whatsapp-btn" href="https://wa.me/918002759375" target="_blank">Contact via WhatsApp</a>
+
+  <!-- Go to Main Page Button -->
+  <a class="btn main-btn" href="dwcbusiness.html">Go to Main Page</a>
+
+  <div class="note">*Click WhatsApp button to chat immediately or go to main page.</div>
+</div>
+
+<script>
+  // Fetch name from sessionStorage and show it
+  const name = sessionStorage.getItem("name") || "";
+  if(name){
+    document.getElementById("user-name").innerText = `${name}, your registration is successful!`;
+  }
+</script>
+
+</body>
+</html>

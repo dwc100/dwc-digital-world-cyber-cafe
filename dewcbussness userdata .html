@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DWC Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Montserrat',sans-serif;}
+body{
+  background:url('https://images.unsplash.com/photo-1531510072931-ff3e71a3a01e') no-repeat center/cover fixed;
+  overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:-1;
+  background:linear-gradient(135deg,#c300ff,#006bff,#ff00ff);
+  background-size:400% 400%;animation:gradient 20s ease infinite;
+  opacity:.3;filter:blur(70px);
+}
+@keyframes gradient{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+.header{
+  position:fixed;width:100%;top:0;padding:2vw 5vw;
+  display:flex;justify-content:center;
+  background:rgba(255,255,255,0.15);backdrop-filter:blur(15px);
+  border-bottom-left-radius:11vw;border-bottom-right-radius:11vw;
+  border:.2vw solid rgba(180,0,255,0.25);
+}
+.logo img{
+  width:9vw;max-width:90px;border-radius:50%;
+  border:.4vw solid rgba(190,0,255,0.9);
+}
+.logo-text{
+  font-family:'Orbitron';font-size:2vw;margin-left:1vw;
+  background:linear-gradient(90deg,#c300ff,#006bff,#b900ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.container{
+  width:95%;max-width:1100px;margin:14vw auto 4vw;
+  background:#fff;padding:2rem;border-radius:1.5rem;
+  border:.2vw solid;border-image:linear-gradient(45deg,#c300ff,#006bff,#ff00ff)1;
+  box-shadow:0 0 1.5vw #c300ff,0 0 1.5vw #006bff;
+}
+.table-title{
+  text-align:center;font-family:'Orbitron';font-size:2rem;margin-bottom:1rem;
+}
+table{
+  width:100%;border-collapse:collapse;margin-top:1rem;
+}
+th,td{
+  border:2px solid #c300ff;padding:10px;text-align:center;font-size:.9rem;
+}
+th{
+  background:linear-gradient(90deg,#c300ff,#006bff);color:#fff;font-weight:700;
+}
+button{
+  padding:7px 14px;border:none;border-radius:8px;color:#fff;
+  background:linear-gradient(90deg,#c300ff,#006bff);cursor:pointer;
+  transition:0.3s;
+}
+button:hover{transform:scale(1.05)}
+@media(max-width:768px){
+  th,td{font-size:.8rem;padding:8px;}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo"><img src="https://i.ibb.co/1gQKw6b/56.png"></div>
+  <div class="logo-text">DWC ADMIN PANEL</div>
+</div>
+
+<div class="container">
+  <div class="table-title">Registered Users</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>WhatsApp</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody id="users-table"></tbody>
+  </table>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey:"AIzaSyDWBgpOAhgmMSChLCnzDb0nlnhUXhVakFc",
+  authDomain:"business-site-user.firebaseapp.com",
+  databaseURL:"https://business-site-user-default-rtdb.firebaseio.com",
+  projectId:"business-site-user",
+  storageBucket:"business-site-user.appspot.com",
+  messagingSenderId:"405082839792",
+  appId:"1:405082839792:web:99574afbb3d17af1914035"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const userTable = document.getElementById('users-table');
+
+onValue(ref(db, "users"), (snapshot) => {
+  userTable.innerHTML = "";
+  snapshot.forEach((child) => {
+    let data = child.val();
+
+    let row = `
+      <tr>
+        <td>${data.name || '-'}</td>
+        <td>${data.whatsapp || '-'}</td>
+        <td>${data.email || '-'}</td>
+      </tr>`;
+    userTable.innerHTML += row;
+  });
+});
+</script>
+</body>
+</html>
