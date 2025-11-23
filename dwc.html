@@ -22,6 +22,122 @@
 
 <style>
 /* ===================== Base Reset ===================== */
+
+/* ============================
+   FULL PAGE RESPONSIVE FIX PACK
+   ============================ */
+
+/* Global text size scaling */
+html {
+    font-size: 15px;
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+/* Header Responsive */
+.header {
+    padding: 3vw 4vw;
+    flex-wrap: wrap;
+    gap: 3vw;
+    text-align: center;
+}
+
+.logo img {
+    width: 18vw;
+    max-width: 70px;
+}
+
+.logo-text {
+    font-size: 4.5vw;
+    text-align: center;
+}
+
+/* Nav buttons better stacking */
+.nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2vw;
+}
+
+.nav button {
+    padding: 2.5vw 5vw;
+    font-size: 0.9rem;
+}
+
+/* Search Box Responsive */
+.search-box {
+    width: 92%;
+    max-width: 95%;
+    padding: 2.5vw 4vw;
+}
+
+.search-box img.logo-inbox {
+    width: 11vw;
+    max-width: 42px;
+}
+
+.search-box input {
+    font-size: 0.9rem;
+}
+
+/* Suggestion Box Responsive */
+#suggestionBox {
+    width: 92%;
+    max-width: 95%;
+    max-height: 50vh;
+}
+
+/* Quick Buttons Responsive */
+.quick-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    gap: 3vw;
+    top: calc(50% + 14vw);
+    padding: 0 3vw;
+}
+
+.quick-buttons button {
+    padding: 3vw 5vw;
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: 270px;
+    justify-content: center;
+}
+
+/* Info Box Responsive */
+.info-box {
+    max-width: 70%;
+    font-size: 0.85rem;
+    padding: 3vw;
+}
+
+/* Login Box Responsive */
+#login-form {
+    min-width: 70%;
+    padding: 4vw;
+}
+
+#login-form input,
+#login-form button {
+    padding: 3vw;
+    font-size: 0.9rem;
+}
+
+/* Glow border fix for mobiles */
+@media (max-width:480px) {
+    .glow-frame {
+        border-width: 1.5vw;
+        border-radius: 4vw;
+    }
+}
+
+
+
 html, body, * {
   margin: 0;
   padding: 0;

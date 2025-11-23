@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Digital World Cyber Cafe — DWC</title>
+
+<!-- icons + fonts -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ---------------- Base reset ---------------- */
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Montserrat',sans-serif}
+html,body{height:100%}
+
+/* ---------------- Background / container ---------------- */
+body{
+  background: url('https://images.unsplash.com/photo-1531510072931-ff3e71a3a01e') no-repeat center center fixed;
+  background-size:cover;
+  color:#fff;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+body::before{
+  content:"";
+  position:fixed; inset:0; z-index:-1;
+  background:linear-gradient(135deg,#c300ff,#006bff,#ff00ff);
+  background-size:400% 400%;
+  opacity:0.28; filter:blur(72px);
+  animation:gradAnim 20s linear infinite;
+}
+@keyframes gradAnim{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
+
+/* ---------------- layout ---------------- */
+.container{max-width:1200px;margin:0 auto;padding:0 1.25rem}
+
+/* ---------------- header ---------------- */
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;padding:1rem 1.25rem;
+  background:rgba(255,255,255,0.10);
+  backdrop-filter:blur(10px);
+  border-bottom-left-radius:8vw;border-bottom-right-radius:8vw;
+  border:1px solid rgba(180,0,255,0.12);
+  box-shadow:0 8px 30px rgba(0,0,0,0.28);
+}
+.logo{display:flex;align-items:center;gap:.9rem}
+.logo img{width:58px;height:58px;border-radius:50%;border:3px solid rgba(190,0,255,0.9);box-shadow:0 0 18px rgba(170,0,255,0.6)}
+.logo-text{font-family:'Orbitron',sans-serif;font-size:1.1rem;
+  background:linear-gradient(90deg,#c300ff,#006bff,#b900ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700}
+
+/* nav group */
+.header-right{display:flex;align-items:center;gap:.8rem}
+.nav{display:flex;gap:.6rem;align-items:center}
+.nav a{color:#fff;text-decoration:none;padding:.45rem .75rem;border-radius:.6rem;font-weight:600;background:rgba(255,255,255,0.03);transition:all .22s}
+.nav a:hover{transform:translateY(-3px);background:rgba(255,255,255,0.08);box-shadow:0 8px 20px rgba(0,0,0,0.18)}
+
+/* login button + inline form wrapper */
+.login-wrap{position:relative}
+#login-btn{
+  padding:.6rem .95rem;border-radius:.7rem;border:0;background:linear-gradient(90deg,#006bff,#c300ff);color:#fff;font-weight:700;
+  cursor:pointer;box-shadow:0 6px 22px rgba(0,0,0,0.28);transition:transform .18s;
+}
+#login-btn:hover{transform:scale(1.03)}
+
+/* inline login form that appears below login button */
+#login-dropdown{
+  position:absolute;right:0;top:calc(100% + .5rem);
+  width:320px;max-width:92vw;
+  background:rgba(255,255,255,0.95);color:#111;
+  padding:1rem;border-radius:12px;box-shadow:0 15px 50px rgba(0,0,0,0.45);
+  display:none;flex-direction:column;gap:.6rem;z-index:1000;
+}
+#login-dropdown.show{display:flex}
+
+/* style inputs inside dropdown */
+#login-dropdown input{
+  width:100%;padding:.6rem .75rem;border-radius:8px;border:1px solid #ddd;font-size:.95rem;
+}
+
+/* social login button */
+.google-btn{
+  display:flex;gap:.6rem;align-items:center;justify-content:center;
+  padding:.55rem;border-radius:8px;border:0;background:#e84a4a;color:#fff;font-weight:700;cursor:pointer;
+}
+
+/* small links area */
+#no-account-box{font-size:.9rem;color:#444;margin-top:.3rem;text-align:center}
+
+/* ---------------- hero ---------------- */
+.hero{margin-top:12vh;padding:6.5rem 0 3rem 0;text-align:center}
+.hero h1{font-family:'Orbitron',sans-serif;font-size:clamp(2rem,4vw,3.5rem);margin-bottom:.6rem;text-shadow:0 10px 40px rgba(0,0,0,0.45)}
+.hero p{font-size:1.02rem;max-width:900px;margin:0 auto;color:rgba(255,255,255,0.92)}
+
+/* -------------- contact section wrapper -------------- */
+.section-title{ text-align:center;margin-top:0.25rem;margin-bottom:1rem;color:#fff;font-weight:700}
+
+/* image row (4 animated tiles) */
+.image-row{
+  display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:1rem 0 1.2rem 0;
+}
+.img-tile{
+  width:130px;height:130px;border-radius:12px;overflow:hidden;border:2px solid rgba(255,255,255,0.18);
+  background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(0,0,0,0.08));
+  box-shadow:0 8px 30px rgba(0,0,0,0.25);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .35s, box-shadow .35s;
+  transform-origin:center;
+}
+.img-tile img{width:100%;height:100%;object-fit:cover}
+.img-tile:hover{transform:translateY(-10px) scale(1.03);box-shadow:0 18px 45px rgba(0,0,0,0.4)}
+
+/* subtle float offsets */
+.img-tile:nth-child(1){animation:float 4s ease-in-out infinite}
+.img-tile:nth-child(2){animation:float 4s ease-in-out infinite .35s}
+.img-tile:nth-child(3){animation:float 4s ease-in-out infinite .7s}
+.img-tile:nth-child(4){animation:float 4s ease-in-out infinite 1.05s}
+@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-12px)}100%{transform:translateY(0)}}
+
+/* -------------- contact card (glass) -------------- */
+.contact-card{
+  max-width:760px;margin:1.25rem auto;padding:1.6rem;border-radius:14px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.08));
+  border:1px solid rgba(255,255,255,0.18);backdrop-filter:blur(10px);
+  box-shadow:0 24px 60px rgba(0,0,0,0.45);
+  display:grid;grid-template-columns:1fr;gap:1rem;
+}
+
+/* left: optional image panel (we keep small side card inside main card) */
+.contact-hero{
+  display:flex;gap:1rem;align-items:stretch;flex-wrap:wrap;
+}
+.contact-left{
+  flex:0 0 220px;border-radius:10px;overflow:hidden;
+  background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNOms6dxY-j13uZywJhDbbzlEn0s1n1aVP3g&s');
+  background-size:cover;background-position:center;
+  min-height:160px;box-shadow:inset 0 0 80px rgba(0,0,0,0.25);
+}
+.contact-right{flex:1;padding:.2rem}
+
+/* form */
+.form-row{display:grid;gap:.9rem}
+.form-row input,.form-row textarea{
+  width:100%;padding:.95rem;border-radius:10px;border:1px solid rgba(255,255,255,0.85);background:rgba(255,255,255,0.95);color:#111;font-size:1rem;
+  transition:box-shadow .18s, transform .18s;
+}
+.form-row input:focus,.form-row textarea:focus{outline:none;box-shadow:0 10px 30px rgba(195,0,255,0.15);transform:translateY(-2px)}
+
+.send-btn{
+  width:100%;padding:0.95rem;border-radius:12px;border:0;background:linear-gradient(90deg,#c300ff,#006bff);color:#fff;font-weight:800;font-size:1.02rem;cursor:pointer;
+  box-shadow:0 10px 30px rgba(0,0,0,0.35);transition:transform .18s;
+}
+.send-btn:hover{transform:scale(1.02)}
+
+/* success text */
+#contactResult{display:none;text-align:center;color:#9fffb6;font-weight:700}
+
+/* responsive */
+@media(max-width:880px){
+  .contact-card{padding:1rem}
+  .contact-left{display:block;width:100%;min-height:120px}
+}
+@media(max-width:640px){
+  .header{padding:.7rem .9rem}
+  .logo img{width:50px;height:50px}
+  .logo-text{font-size:1rem}
+  .image-row{gap:.6rem}
+  .img-tile{width:110px;height:110px}
+}
+</style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- header -->
+    <header class="header">
+      <div class="logo">
+        <img src="https://i.ibb.co/1gQKw6b/56.png" alt="DWC logo">
+        <div class="logo-text">DIGITAL WORLD CYBER CAFE</div>
+      </div>
+
+      <div class="header-right">
+        <nav class="nav">
+          <a href="dwcbusiness.html">Home</a>
+          <a href="dwcbusinessabout.html">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <!-- login toggle -->
+        <div class="login-wrap">
+          <button id="login-btn"><i class="fa fa-user"></i>&nbsp;Login</button>
+
+          <!-- LOGIN DROPDOWN (hidden by default) -->
+          <div id="login-dropdown" aria-hidden="true">
+            <input id="login-email" type="email" placeholder="Email ID" />
+            <input id="login-password" type="password" placeholder="Password" />
+            <button id="email-login-btn">Login</button>
+            <button id="google-login-btn" class="google-btn"><i class="fa fa-google"></i> Login with Google</button>
+            <div id="no-account-box">You don't have an account? <span style="color:#c300ff;cursor:pointer;font-weight:700" onclick="location.href='registration.html'">Register</span></div>
+            <div id="loginMessage" style="color:#d00;display:none;margin-top:.5rem;font-weight:700"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- hero -->
+    <section class="hero" id="home">
+      <h1>Dwc Business Manager</h1>
+      <p>Fast internet • Training • Gaming • Support — reach us using the form below</p>
+    </section>
+
+    <!-- section title -->
+    <h2 class="section-title">Contact & Bookings</h2>
+
+    <!-- image tile row -->
+    <div class="image-row" aria-hidden="true">
+      <div class="img-tile"><img src="https://i.ibb.co/5k6TgM4/cs1.jpg" alt="service 1"></div>
+      <div class="img-tile"><img src="https://i.ibb.co/nM1Xv7V/cs2.jpg" alt="service 2"></div>
+      <div class="img-tile"><img src="https://i.ibb.co/F0j6Vyc/cs3.jpg" alt="service 3"></div>
+      <div class="img-tile"><img src="https://i.ibb.co/R0Tgbm5/cs4.jpg" alt="service 4"></div>
+    </div>
+
+    <!-- contact card -->
+    <article class="contact-card" id="contact">
+      <div class="contact-hero">
+        <div class="contact-left" role="img" aria-label="cyber cafe image"></div>
+
+        <div class="contact-right">
+          <form id="contactForm" class="form-row" autocomplete="off">
+            <input id="name" type="text" placeholder="Your Name" required />
+            <input id="mobile" type="text" placeholder="Mobile Number" required />
+            <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+            <button class="send-btn" type="submit">Send Message</button>
+          </form>
+
+          <div id="contactResult">Message sent (demo)</div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- Firebase v10 (modular) -->
+  <script type="module">
+    // --- Replace the firebaseConfig object below with your project's config ---
+    // If you want to point to another Realtime Database, set databaseURL below.
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    // ====== <<< PUT YOUR FIREBASE CONFIG HERE >>> ======
+    // Example template - REPLACE these values with your project's config.
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      databaseURL: "https://YOUR_NEW_DATABASE_URL.firebaseio.com", // <-- set your new realtime database URL here
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "SENDER_ID",
+      appId: "APP_ID"
+    };
+    // ===================================================
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+    const db = getDatabase(app);
+
+    // ---------- login dropdown toggle ----------
+    const loginBtn = document.getElementById('login-btn');
+    const loginDropdown = document.getElementById('login-dropdown');
+    const loginMessage = document.getElementById('loginMessage');
+
+    loginBtn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      loginDropdown.classList.toggle('show');
+      loginDropdown.setAttribute('aria-hidden', loginDropdown.classList.contains('show') ? 'false' : 'true');
+    });
+    // close dropdown when clicking outside
+    document.addEventListener('click', (e)=>{
+      if(!loginDropdown.contains(e.target) && e.target !== loginBtn){
+        loginDropdown.classList.remove('show');
+        loginDropdown.setAttribute('aria-hidden','true');
+      }
+    });
+
+    // ---------- email/password login ----------
+    document.getElementById('email-login-btn').addEventListener('click', async (ev)=>{
+      ev.preventDefault();
+      loginMessage.style.display='none';
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      if(!email || !password){ loginMessage.textContent='Enter email & password'; loginMessage.style.display='block'; return; }
+      try{
+        await signInWithEmailAndPassword(auth, email, password);
+        loginMessage.style.color = 'green'; loginMessage.textContent = 'Login successful — redirecting...'; loginMessage.style.display='block';
+        // OPTIONAL: redirect after login
+        // location.href = 'user-dashboard.html';
+      }catch(err){
+        loginMessage.style.color = '#c30000'; loginMessage.textContent = 'Login failed: ' + (err.message || err.code); loginMessage.style.display='block';
+      }
+    });
+
+    // ---------- google login ----------
+    document.getElementById('google-login-btn').addEventListener('click', async (ev)=>{
+      ev.preventDefault();
+      try{
+        await signInWithPopup(auth, provider);
+        loginMessage.style.color = 'green'; loginMessage.textContent = 'Google login successful'; loginMessage.style.display='block';
+      }catch(err){
+        loginMessage.style.color = '#c30000'; loginMessage.textContent = 'Google login failed: ' + (err.message || err.code); loginMessage.style.display='block';
+      }
+    });
+
+    // ---------- contact form submit: push to realtime DB ----------
+    const contactForm = document.getElementById('contactForm');
+    const contactResult = document.getElementById('contactResult');
+
+    contactForm.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+
+      // read values
+      const name = document.getElementById('name').value.trim();
+      const mobile = document.getElementById('mobile').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      if(!name || !mobile || !message){
+        contactResult.style.display='block';
+        contactResult.style.color = '#ffd9a8';
+        contactResult.textContent = 'Please fill all fields';
+        return;
+      }
+
+      // show temporary feedback
+      contactResult.style.display='block';
+      contactResult.style.color = '#fff';
+      contactResult.textContent = 'Sending...';
+
+      try{
+        // create a new push key under /contacts
+        const contactsRef = ref(db, 'contacts');
+        const newRef = push(contactsRef);
+        // set data
+        await set(newRef, {
+          name,
+          mobile,
+          message,
+          createdAt: Date.now()
+        });
+
+        contactResult.style.color = '#9fffb6';
+        contactResult.textContent = 'Message sent — we will contact you soon!';
+        contactForm.reset();
+
+      }catch(err){
+        contactResult.style.color = '#ffb3b3';
+        contactResult.textContent = 'Failed to send: ' + (err.message || err.code);
+        console.error('db error', err);
+      }
+
+      // hide message after a while
+      setTimeout(()=>{ contactResult.style.display='none'; }, 4500);
+    });
+
+    // accessibility: allow Enter to submit login when focused
+    document.getElementById('login-password').addEventListener('keydown', (ev)=>{
+      if(ev.key === 'Enter'){ document.getElementById('email-login-btn').click(); }
+    });
+
+  </script>
+</body>
+</html>
