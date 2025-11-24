@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Choose Your Login Type</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    *{
+        margin:0; padding:0;
+        font-family:"Poppins", sans-serif;
+        box-sizing: border-box;
+    }
+
+    body{
+        height:100vh;
+        background:#ffffff;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        padding:20px; /* Mobile spacing */
+    }
+
+    .container{
+        text-align:center;
+        animation: fadeIn 1s ease-out;
+        padding:40px 30px;
+        border-radius:18px;
+        background:#ffffff;
+        box-shadow:0 0 25px rgba(0,0,0,0.08);
+        border:1px solid rgba(0,0,0,0.06);
+        width:100%;
+        max-width:450px; /* Keep center & clean on large screens */
+    }
+
+    @keyframes fadeIn{
+        from{ opacity:0; transform:translateY(40px); }
+        to{ opacity:1; transform:translateY(0); }
+    }
+
+    h1{
+        margin-bottom:35px;
+        font-size:2rem;
+        font-weight:700;
+        color:#1b1b1b;
+        text-shadow:0 0 15px rgba(0,123,255,0.15);
+        animation:textPop 1s ease-out;
+    }
+
+    @keyframes textPop{
+        from{ opacity:0; transform:scale(0.7); }
+        to{ opacity:1; transform:scale(1); }
+    }
+
+    .btn-box{
+        display:flex;
+        gap:25px;
+        justify-content:center;
+        flex-wrap:wrap; /* For mobile */
+    }
+
+    .btn{
+        background: #ffffff;
+        padding:16px 35px;
+        font-size:18px;
+        border-radius:14px;
+        text-decoration:none;
+        color:#333;
+        border:2px solid rgba(0,0,0,0.08);
+        font-weight:600;
+        display:flex;
+        align-items:center;
+        gap:12px;
+        transition:0.3s;
+        box-shadow:0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .btn i{
+        font-size:22px;
+        transition:0.3s;
+        color:#2575fc;
+    }
+
+    .btn:hover{
+        background:#f0f6ff;
+        transform:translateY(-6px);
+        border-color:#2575fc;
+        box-shadow:0 8px 25px rgba(37,117,252,0.25);
+        color:#2575fc;
+    }
+
+    .btn:hover i{
+        transform:scale(1.25);
+    }
+
+    /* -------------------------
+       MOBILE RESPONSIVE DESIGN
+       ------------------------- */
+    
+    @media(max-width: 480px){
+        .container{
+            padding:30px 20px;
+        }
+
+        h1{
+            font-size:1.6rem;
+            margin-bottom:25px;
+        }
+
+        .btn{
+            width:100%;
+            justify-content:center;
+            padding:15px 20px;
+            font-size:17px;
+        }
+
+        .btn-box{
+            gap:18px;
+        }
+
+        .btn i{
+            font-size:20px;
+        }
+    }
+</style>
+
+</head>
+<body>
+
+<div class="container">
+    <h1>Choose your login type</h1>
+
+    <div class="btn-box">
+        <a href="bussnessuserpinveeryfication.html" class="btn">
+            <i class="fa-solid fa-key"></i>
+            PIN Login
+        </a>
+
+        <a href="bussnessuserqrcodeveeryfication.html" class="btn">
+            <i class="fa-solid fa-qrcode"></i>
+            QR Scanner
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

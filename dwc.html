@@ -21,123 +21,6 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
 <style>
-/* ===================== Base Reset ===================== */
-
-/* ============================
-   FULL PAGE RESPONSIVE FIX PACK
-   ============================ */
-
-/* Global text size scaling */
-html {
-    font-size: 15px;
-}
-
-@media (max-width: 480px) {
-    html {
-        font-size: 14px;
-    }
-}
-
-/* Header Responsive */
-.header {
-    padding: 3vw 4vw;
-    flex-wrap: wrap;
-    gap: 3vw;
-    text-align: center;
-}
-
-.logo img {
-    width: 18vw;
-    max-width: 70px;
-}
-
-.logo-text {
-    font-size: 4.5vw;
-    text-align: center;
-}
-
-/* Nav buttons better stacking */
-.nav {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2vw;
-}
-
-.nav button {
-    padding: 2.5vw 5vw;
-    font-size: 0.9rem;
-}
-
-/* Search Box Responsive */
-.search-box {
-    width: 92%;
-    max-width: 95%;
-    padding: 2.5vw 4vw;
-}
-
-.search-box img.logo-inbox {
-    width: 11vw;
-    max-width: 42px;
-}
-
-.search-box input {
-    font-size: 0.9rem;
-}
-
-/* Suggestion Box Responsive */
-#suggestionBox {
-    width: 92%;
-    max-width: 95%;
-    max-height: 50vh;
-}
-
-/* Quick Buttons Responsive */
-.quick-buttons {
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    gap: 3vw;
-    top: calc(50% + 14vw);
-    padding: 0 3vw;
-}
-
-.quick-buttons button {
-    padding: 3vw 5vw;
-    font-size: 0.9rem;
-    width: 100%;
-    max-width: 270px;
-    justify-content: center;
-}
-
-/* Info Box Responsive */
-.info-box {
-    max-width: 70%;
-    font-size: 0.85rem;
-    padding: 3vw;
-}
-
-/* Login Box Responsive */
-#login-form {
-    min-width: 70%;
-    padding: 4vw;
-}
-
-#login-form input,
-#login-form button {
-    padding: 3vw;
-    font-size: 0.9rem;
-}
-
-/* Glow border fix for mobiles */
-@media (max-width:480px) {
-    .glow-frame {
-        border-width: 1.5vw;
-        border-radius: 4vw;
-    }
-}
-
-
-
 html, body, * {
   margin: 0;
   padding: 0;
@@ -184,7 +67,7 @@ body {
   border-bottom-left-radius: 11vw;
   border-bottom-right-radius: 11vw;
   border: 0.2vw solid rgba(180, 0, 255, 0.25);
-  box-shadow: 0 0 2.5vw rgba(150,0,255,0.35), 0 0 4vw rgba(0,120,255,0.3);
+  box-shadow: 0 0 2.5vw rgba(120,0,225,0.25), 0 0 2.5vw rgba(0,100,225,0.2);
   transition: all 0.4s ease;
 }
 
@@ -236,9 +119,9 @@ body {
   font-weight: 600;
   cursor: pointer;
   border: 0.2vw solid rgba(180,0,255,0.35);
-  background: rgba(255,255,255,0.2);
+  background: rgba(200,225,215,0.1);
   backdrop-filter: blur(12px);
-  box-shadow: 0 0 1.5vw rgba(150,0,255,0.45), 0 0 2.5vw rgba(0,76,255,0.4);
+  box-shadow: 0 0 1vw rgba(120,0,200,0.25), 0 0 2.0vw rgba(0,70,220,0.3);
   color: #4a007f;
   transition: all 0.3s ease;
 }
@@ -303,7 +186,7 @@ body {
   border: 0.2vw solid rgba(180,0,255,0.4);
   border-radius: 50px;
   padding: 1vw 1.5vw;
-  box-shadow: 0 0 2vw #b400ff, 0 0 3vw #0077ff;
+  box-shadow: 0 0 0.1vw #b400ff, 0 0 0.2vw #0077ff;
   z-index: 999;
   transition: all 0.3s ease;
 }

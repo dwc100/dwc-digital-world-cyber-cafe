@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure PIN Verification</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root { --blue: #00aaff; --purple: #7d3cff; }
+
+  *{ margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+
+  body{
+    height:100vh; display:flex; justify-content:center; align-items:center;
+    background:linear-gradient(135deg,#ffffff,#e6f0ff,#f5f0ff);
+    background-size:400% 400%; animation:bgmove 10s ease infinite;
+  }
+  @keyframes bgmove {
+    0%{background-position:0% 50%} 
+    50%{background-position:100% 50%} 
+    100%{background-position:0% 50%}
+  }
+
+  .card{
+    width:380px; background:#ffffffd9; padding:25px;
+    border-radius:20px; text-align:center;
+    border:2px solid rgba(125,60,255,0.3);
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  }
+
+  h1{
+    font-family:'Orbitron',sans-serif;
+    font-size:26px;
+    background:linear-gradient(90deg,var(--blue),var(--purple));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    margin-bottom:20px;
+  }
+
+  input{
+    width:100%; padding:14px;
+    margin:10px 0; border-radius:10px;
+    border:2px solid #c5c5ff;
+    font-size:18px; outline:none;
+    text-align:center;
+  }
+
+  button{
+    width:100%; padding:12px;
+    border:none; border-radius:10px;
+    font-size:18px; font-weight:600;
+    color:#fff; background:linear-gradient(90deg,var(--blue),var(--purple));
+    cursor:pointer; transition:.3s;
+  }
+  button:hover{
+    transform:scale(1.05);
+    box-shadow:0 8px 20px rgba(0,0,0,0.25);
+  }
+
+  #status{ margin-top:12px; font-weight:600; color:#444; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>PIN Verification</h1>
+
+  <input type="password" id="pin" maxlength="15" placeholder="Enter Your PIN">
+
+  <button onclick="verifyPIN()">Verify PIN</button>
+
+  <div id="status"></div>
+</div>
+
+<script>
+  let verified = false;
+
+  // ============================
+  //   MULTI USER PIN DATABASE
+  // ============================
+  const PIN_CODES = {
+    "1111": "page1.html",
+    "2222": "page2.html",
+    "Arman@123": "softwareregistretionstetusarman.html",
+
+    "C": 
+      "busineessmanagerchotukumarrajaks.html"
+  };
+
+  function verifyPIN(){
+    const pin = document.getElementById("pin").value.trim();
+    const status = document.getElementById("status");
+
+    if(pin === ""){
+      status.textContent = "⚠ Please enter PIN";
+      status.style.color = "red";
+      return;
+    }
+
+    // Correct PIN
+    if(PIN_CODES[pin]){
+      status.textContent = "✅ PIN Verified! Redirecting...";
+      status.style.color = "green";
+
+      setTimeout(()=>{ window.location.href = PIN_CODES[pin]; }, 1500);
+      verified = true;
+      return;
+    }
+
+    // Wrong PIN
+    if(pin.length < 4){
+      status.textContent = "❌ Wrong PIN!";
+      status.style.color = "red";
+    } else {
+      status.textContent = "❌ This PIN is NOT Registered!";
+      status.style.color = "red";
+    }
+  }
+
+
+  // ======================
+  //   SECURITY SYSTEM
+  // ======================
+
+  // Disable Right Click
+  document.addEventListener('contextmenu', e => e.preventDefault());
+
+  // Disable Inspect Tools
+  document.addEventListener('keydown', e => {
+    if (e.key === "F12") e.preventDefault();
+    if (e.ctrlKey && e.shiftKey && ["I","C","J"].includes(e.key)) e.preventDefault();
+    if (e.ctrlKey && e.key === "U") e.preventDefault();
+    if (e.ctrlKey && e.key === "S") e.preventDefault();
+  });
+
+  // DevTools Detection
+  setInterval(() => {
+    let before = new Date().getTime();
+    debugger;
+    let after = new Date().getTime();
+    if (after - before > 200) {
+      document.body.innerHTML = "<h2 style='color:red;text-align:center;margin-top:30%;'>Developer Tools Detected – Access Blocked!</h2>";
+    }
+  }, 1000);
+</script>
+
+</body>
+</html>

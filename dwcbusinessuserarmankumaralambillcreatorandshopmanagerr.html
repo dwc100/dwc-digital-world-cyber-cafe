@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DWC Product + Bill Manager (Final Version)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- PDF Generator -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#f5f6fa;color:#333;min-height:100vh;}
+.header{
+    position:fixed; top:0; left:0; width:100%; height:90px;
+    background:black; color:white; display:flex; justify-content:space-between;
+    align-items:center; padding:0 50px; box-shadow:0 4px 20px rgba(0,0,0,0.3); z-index:1000;
+}
+.logo{height:60px;width:60px;border-radius:50%;border:2px solid white;}
+.title{font-size:1.8rem;font-weight:700;}
+.page{padding-top:120px;padding:20px; max-width:1300px;margin:auto;}
+h2{color:#000;margin:20px 0;}
+.card-box{display:flex; gap:20px; flex-wrap:wrap;}
+.card{
+    flex:1; min-width:250px; background:white; padding:20px; border-radius:10px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1); text-align:center; font-weight:600;
+}
+.card span{font-size:2rem; color:black;}
+
+table{width:100%; margin-top:10px; border-collapse:collapse; background:white; 
+    border-radius:10px; overflow:hidden; box-shadow:0 3px 10px rgba(0,0,0,0.1);}
+th,td{padding:12px; border-bottom:1px solid #eee; text-align:center;}
+th{background:black;color:white;}
+.btn{padding:6px 12px;border-radius:5px;border:none;cursor:pointer;}
+.btn-edit{background:#007bff;color:white;}
+.btn-delete{background:#e60000;color:white;}
+.product-form input{padding:8px;border:1px solid #ccc;border-radius:6px;}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <img src="https://i.ibb.co/1gQKw6b/56.png" class="logo">
+    <h1 class="title">DWC Advanced Manager</h1>
+    <span style="font-size:1.2rem;">Chhotu Kumar</span>
+</header>
+
+<div class="page">
+
+<!-- =====================================
+ DASHBOARD  
+====================================== -->
+<h2>Dashboard Summary</h2>
+<div class="card-box">
+    <div class="card">Total Products <span id="totalProducts">0</span></div>
+    <div class="card">Inventory Value <span id="totalValue">0</span></div>
+    <div class="card">Total Revenue <span id="totalRevenue">0</span></div>
+</div>
+
+<!-- =====================================
+ ADD PRODUCT  
+====================================== -->
+<h2>Add New Product</h2>
+<form class="product-form" id="productForm" style="display:flex; gap:10px; flex-wrap:wrap;">
+    <input type="text" id="prodName" placeholder="Product Name" required>
+    <input type="number" id="prodQty" placeholder="Quantity" required>
+    <input type="number" id="prodPrice" placeholder="Price" required>
+    <input type="number" id="prodDiscount" placeholder="Discount %" value="0">
+    <button class="btn-edit" type="submit">Add</button>
+</form>
+
+<!-- =====================================
+ PRODUCT TABLE  
+====================================== -->
+<h2>Product Inventory</h2>
+<table id="productTable">
+<thead>
+<tr>
+<th>ID</th><th>Name</th><th>Total</th><th>Sold</th><th>Remaining</th>
+<th>Price</th><th>Discount</th><th>Final</th><th>Revenue</th><th>Action</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+
+<!-- =====================================
+ BILL CREATOR  
+====================================== -->
+<h2>Create New Bill</h2>
+
+<form class="product-form" id="billForm" style="display:flex; gap:10px; flex-wrap:wrap;">
+    <input type="text" id="custName" placeholder="Customer Name" required>
+    <input type="text" id="custPhone" placeholder="Phone Number" required>
+    <input type="number" id="billPrice" placeholder="Total Amount" required>
+    <input type="number" id="billDiscount" placeholder="Discount %" value="0">
+    <button class="btn-edit" type="submit">Generate Bill</button>
+</form>
+
+<!-- =====================================
+ BILL HISTORY  
+====================================== -->
+<h2>Bill History</h2>
+<table id="billTable">
+<thead>
+<tr>
+<th>#</th><th>Name</th><th>Phone</th><th>Total</th><th>Discount</th>
+<th>Final</th><th>Date</th><th>PDF</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+
+</div>
+
+<!-- =====================================
+ FIREBASE + SCRIPT  
+====================================== -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import { getDatabase, ref, push, onValue, update, remove, get } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
+
+/* Firebase */
+const firebaseConfig = {
+  apiKey: "AIzaSyDlMv0VFlcUD2s92QHfXFMqDZRK2ocVPbA",
+  authDomain: "duct-manager.firebaseapp.com",
+  databaseURL: "https://duct-manager-default-rtdb.firebaseio.com",
+  projectId: "duct-manager",
+  storageBucket: "duct-manager.firebasestorage.app",
+  messagingSenderId: "643811721550",
+  appId: "1:643811721550:web:44f76794dd93610ed51e1f",
+  measurementId: "G-XKEQX69D0N"
+};
+
+/* Init */
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const productsRef = ref(db, "products/");
+const billsRef = ref(db, "bills/");
+
+const tableBody = document.querySelector("#productTable tbody");
+const billBody = document.querySelector("#billTable tbody");
+
+/* ========== FETCH PRODUCTS ========== */
+onValue(productsRef, (snap) => {
+    tableBody.innerHTML = "";
+    let i = 1;
+    snap.forEach(child => addRow(child.val(), child.key, i++));
+    updateSummary();
+});
+
+/* ========== ADD PRODUCT ========== */
+document.getElementById("productForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const n = prodName.value, q = +prodQty.value, p = +prodPrice.value, d = +prodDiscount.value;
+    const final = p - (p * d / 100);
+
+    push(productsRef, { name:n, totalQty:q, soldQty:0, price:p, discount:d, finalPrice:final });
+    e.target.reset();
+});
+
+/* ========== ADD ROW ========== */
+function addRow(p, key, id){
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+    <td>${id}</td>
+    <td>${p.name}</td>
+    <td>${p.totalQty}</td>
+    <td><input type="number" value="${p.soldQty}" class="sold"></td>
+    <td>${p.totalQty - p.soldQty}</td>
+    <td>${p.price}</td>
+    <td><input type="number" value="${p.discount}" class="discount"></td>
+    <td class="final">${p.finalPrice}</td>
+    <td>${(p.finalPrice*p.soldQty).toFixed(2)}</td>
+    <td><button class="btn-delete">Delete</button></td>
+    `;
+    tableBody.appendChild(tr);
+
+    tr.querySelector(".discount").oninput = () => {
+        let d = +tr.querySelector(".discount").value;
+        let final = p.price - (p.price * d / 100);
+        update(ref(db, "products/"+key), { discount:d, finalPrice:final });
+    };
+
+    tr.querySelector(".sold").oninput = () => {
+        let s = +tr.querySelector(".sold").value;
+        if(s > p.totalQty) s = p.totalQty;
+        update(ref(db, "products/"+key), { soldQty:s });
+    };
+
+    tr.querySelector(".btn-delete").onclick = () => remove(ref(db, "products/"+key));
+}
+
+/* ========== SUMMARY ========== */
+function updateSummary(){
+    let tot=0, val=0, rev=0;
+    tableBody.querySelectorAll("tr").forEach(r=>{
+        const q = +r.children[2].innerText;
+        const s = +r.children[3].children[0].value;
+        const f = +r.querySelector(".final").innerText;
+        tot += q;
+        rev += f*s;
+        val += f*(q-s);
+        r.children[4].innerText = q-s;
+        r.children[8].innerText = (f*s).toFixed(2);
+    });
+
+    totalProducts.innerText = tot;
+    totalValue.innerText = val.toFixed(2);
+    totalRevenue.innerText = rev.toFixed(2);
+}
+
+/* =====================================
+ BILL CREATOR  
+====================================== */
+document.getElementById("billForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+
+    const name = custName.value;
+    const phone = custPhone.value;
+    const price = +billPrice.value;
+    const discount = +billDiscount.value;
+
+    const final = price - (price * discount / 100);
+    const date = new Date().toLocaleString();
+
+    const bill = { name, phone, price, discount, finalPayable:final, date };
+
+    const newRef = await push(billsRef, bill);
+
+    generateBillPDF(name, phone, price, discount, final, date, newRef.key);
+
+    alert("Bill Saved & PDF Downloaded");
+    e.target.reset();
+});
+
+/* ========== FETCH BILLS ========== */
+onValue(billsRef, (snap)=>{
+    billBody.innerHTML = "";
+    let i=1;
+    snap.forEach(child=>{
+        let b = child.val();
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${i++}</td>
+            <td>${b.name}</td>
+            <td>${b.phone}</td>
+            <td>₹${b.price}</td>
+            <td>${b.discount}%</td>
+            <td>₹${b.finalPayable}</td>
+            <td>${b.date}</td>
+            <td><button class="btn-edit" onclick="downloadBill('${child.key}')">PDF</button></td>
+        `;
+        billBody.appendChild(tr);
+    });
+});
+</script>
+
+<!-- =====================================
+ PDF GENERATOR & DOWNLOAD BILL  
+====================================== -->
+<script>
+function generateBillPDF(name, phone, price, discount, finalPayable, date, billID){
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF();
+
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(18);
+    pdf.text("🧾 DWC Official Bill", 10, 20);
+
+    pdf.setFontSize(12);
+    pdf.text(`Bill ID: ${billID}`, 10, 35);
+    pdf.text(`Customer: ${name}`, 10, 45);
+    pdf.text(`Phone: ${phone}`, 10, 55);
+    pdf.text(`Date: ${date}`, 10, 65);
+
+    pdf.line(10, 70, 200, 70);
+
+    pdf.text(`Total : ₹${price}`, 10, 85);
+    pdf.text(`Discount : ${discount}%`, 10, 95);
+    pdf.text(`Final Payable : ₹${finalPayable}`, 10, 105);
+
+    pdf.setFontSize(14);
+    pdf.text("Thank you for shopping!", 10, 125);
+
+    pdf.save(`Bill_${billID}.pdf`);
+}
+
+/* Download existing bill */
+function downloadBill(id){
+    import("https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js")
+    .then(({ getDatabase, ref, get })=>{
+        const db = getDatabase();
+        get(ref(db, "bills/"+id)).then(snap=>{
+            let b = snap.val();
+            generateBillPDF(b.name, b.phone, b.price, b.discount, b.finalPayable, b.date, id);
+        });
+    });
+}
+</script>
+
+</body>
+</html>
