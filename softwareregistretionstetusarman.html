@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,150 +7,143 @@
     *{
         margin:0; padding:0; box-sizing:border-box;
         font-family:"Poppins", sans-serif;
-    }
+    }body{
+    background:#ffffff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
 
-    body{
-        background:#ffffff;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        min-height:100vh;
-        padding:20px;
-    }
+.container{
+    width:100%;
+    max-width:500px;
+    background:#fff;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 0 25px rgba(0,0,0,0.08);
+    text-align:center;
+}
 
-    .container{
-        width:100%;
-        max-width:500px;
-        background:#fff;
-        padding:30px;
-        border-radius:18px;
-        box-shadow:0 0 25px rgba(0,0,0,0.08);
-        text-align:center;
-    }
+h1{
+    margin-bottom:25px;
+    font-size:1.8rem;
+    font-weight:700;
+}
 
-    h1{
-        margin-bottom:25px;
-        font-size:1.8rem;
-        font-weight:700;
-    }
+.progress-circle{
+    width:160px;
+    height:160px;
+    margin:0 auto 25px auto;
+    border-radius:50%;
+    background:conic-gradient(#28a745 0deg, #ddd 0deg);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    box-shadow:0 0 15px rgba(40,167,69,0.5);
+    position:relative;
+}
 
-    .progress-circle{
-        width:160px;
-        height:160px;
-        margin:0 auto 25px auto;
-        border-radius:50%;
-        background:conic-gradient(#28a745 0deg, #ddd 0deg);
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        box-shadow:0 0 15px rgba(40,167,69,0.5);
-        position:relative;
-    }
+.progress-inner{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background:transparent;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:1.8rem;
+    font-weight:700;
+    color:#28a745;
+    position:relative;
+    z-index:10;
+}
 
-    .progress-inner{
-        width:120px;
-        height:120px;
-        border-radius:50%;
-        background:transparent;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        font-size:1.8rem;
-        font-weight:700;
-        color:#28a745;
-        position:relative;
-        z-index:10;
-    }
+.step-box{
+    margin-top:20px;
+    text-align:left;
+}
 
-    .step-box{
-        margin-top:20px;
-        text-align:left;
-    }
+.step{
+    margin-bottom:25px;
+    position:relative;
+    padding-left:25px;
+}
 
-    .step{
-        margin-bottom:25px;
-        position:relative;
-        padding-left:25px;
-    }
+.step::before{
+    content:"";
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:#ccc;
+    position:absolute;
+    left:0;
+    top:5px;
+}
 
-    .step::before{
-        content:"";
-        width:12px;
-        height:12px;
-        border-radius:50%;
-        background:#ccc;
-        position:absolute;
-        left:0;
-        top:5px;
-    }
+.completed::before{
+    background:#28a745;
+}
 
-    .completed::before{
-        background:#28a745;
-    }
+.active::before{
+    background:#28a745;
+    animation:blink 1s infinite;
+}
 
-    .active::before{
-        background:#28a745;
-        animation:blink 1s infinite;
-    }
+@keyframes blink{
+    0%{ opacity:0.3; }
+    50%{ opacity:1; }
+    100%{ opacity:0.3; }
+}
 
-    @keyframes blink{
-        0%{ opacity:0.3; }
-        50%{ opacity:1; }
-        100%{ opacity:0.3; }
-    }
+.message-box{
+    margin-top:20px;
+    padding:15px;
+    background:#e8ffe8;
+    border:1px solid #28a745;
+    border-radius:10px;
+    font-size:1rem;
+    font-weight:600;
+    display:none;
+}
 
-    .message-box{
-        margin-top:20px;
-        padding:15px;
-        background:#e8ffe8;
-        border:1px solid #28a745;
-        border-radius:10px;
-        font-size:1rem;
-        font-weight:600;
-        display:none;
-    }
+.pay-btn{
+    margin-top:15px;
+    padding:12px 20px;
+    border:none;
+    background:#28a745;
+    color:#fff;
+    border-radius:10px;
+    font-size:1rem;
+    cursor:pointer;
+    display:none;
+}
 
-    .pay-btn{
-        margin-top:15px;
-        padding:12px 20px;
-        border:none;
-        background:#28a745;
-        color:#fff;
-        border-radius:10px;
-        font-size:1rem;
-        cursor:pointer;
-        display:none;
-    }
 </style>
 </head>
-<body>
-
-<div class="container">
-    <h1>Process Status</h1>
-
-    <div class="progress-circle" id="circle">
-        <div class="progress-inner">
-            <span id="percentText">0%</span>
-        </div>
+<body><div class="container">
+    <h1>Process Status</h1><div class="progress-circle" id="circle">
+    <div class="progress-inner">
+        <span id="percentText">0%</span>
     </div>
-
-    <div id="currentStatus" style="font-size:1.1rem; font-weight:600; margin-bottom:20px; color:#28a745;">Current Status: 0% Completed</div>
-    </div>
-
-    <div class="step-box">
-        <div id="s1" class="step">Step 1: Registration <span class="status-text"></span></div>
-        <div id="s2" class="step">Step 2: Page Designing <span class="status-text"></span></div>
-        <div id="s3" class="step">Step 3: Feature Setup <span class="status-text"></span></div>
-        <div id="s4" class="step">Step 4: Ready to Use Software <span class="status-text"></span></div>
-        <div id="s5" class="step">Step 5: Payment Status <span class="status-text"></span></div>
-    </div>
-
-    <div id="messageBox" class="message-box"></div>
-    <button id="payBtn" class="pay-btn">Pay Now</button>
-
 </div>
 
-<script>
+<div id="currentStatus" style="font-size:1.1rem; font-weight:600; margin-bottom:20px; color:#28a745;">Current Status: 0% Completed</div>
+</div>
+
+<div class="step-box">
+    <div id="s1" class="step">Step 1: Registration <span class="status-text"></span></div>
+    <div id="s2" class="step">Step 2: Page Designing <span class="status-text"></span></div>
+    <div id="s3" class="step">Step 3: Feature Setup <span class="status-text"></span></div>
+    <div id="s4" class="step">Step 4: Ready to Use Software <span class="status-text"></span></div>
+    <div id="s5" class="step">Step 5: Payment Status <span class="status-text"></span></div>
+</div>
+
+<div id="messageBox" class="message-box"></div>
+<button id="payBtn" class="pay-btn">Pay Now</button>
+
+</div><script>
     function updateCircle(percent){
         const circle = document.getElementById('circle');
         circle.style.background = `conic-gradient(#28a745 ${percent * 3.6}deg, #ddd 0deg)`;
@@ -189,8 +181,191 @@
         }
     }
 
-    updateProcess(5);
-</script>
+    updateProcess(3);
+</script></body>
+</html><!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Process Status</title>
+<style>
+    *{
+        margin:0; padding:0; box-sizing:border-box;
+        font-family:"Poppins", sans-serif;
+    }body{
+    background:#ffffff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
 
-</body>
-</html>
+.container{
+    width:100%;
+    max-width:500px;
+    background:#fff;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 0 25px rgba(0,0,0,0.08);
+    text-align:center;
+}
+
+h1{
+    margin-bottom:25px;
+    font-size:1.8rem;
+    font-weight:700;
+}
+
+.progress-circle{
+    width:160px;
+    height:160px;
+    margin:0 auto 25px auto;
+    border-radius:50%;
+    background:conic-gradient(#28a745 0deg, #ddd 0deg);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    box-shadow:0 0 15px rgba(40,167,69,0.5);
+    position:relative;
+}
+
+.progress-inner{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background:transparent;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:1.8rem;
+    font-weight:700;
+    color:#28a745;
+    position:relative;
+    z-index:10;
+}
+
+.step-box{
+    margin-top:20px;
+    text-align:left;
+}
+
+.step{
+    margin-bottom:25px;
+    position:relative;
+    padding-left:25px;
+}
+
+.step::before{
+    content:"";
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:#ccc;
+    position:absolute;
+    left:0;
+    top:5px;
+}
+
+.completed::before{
+    background:#28a745;
+}
+
+.active::before{
+    background:#28a745;
+    animation:blink 1s infinite;
+}
+
+@keyframes blink{
+    0%{ opacity:0.3; }
+    50%{ opacity:1; }
+    100%{ opacity:0.3; }
+}
+
+.message-box{
+    margin-top:20px;
+    padding:15px;
+    background:#e8ffe8;
+    border:1px solid #28a745;
+    border-radius:10px;
+    font-size:1rem;
+    font-weight:600;
+    display:none;
+}
+
+.pay-btn{
+    margin-top:15px;
+    padding:12px 20px;
+    border:none;
+    background:#28a745;
+    color:#fff;
+    border-radius:10px;
+    font-size:1rem;
+    cursor:pointer;
+    display:none;
+}
+
+</style>
+</head>
+<body><div class="container">
+    <h1>Process Status</h1><div class="progress-circle" id="circle">
+    <div class="progress-inner">
+        <span id="percentText">0%</span>
+    </div>
+</div>
+
+<div id="currentStatus" style="font-size:1.1rem; font-weight:600; margin-bottom:20px; color:#28a745;">Current Status: 0% Completed</div>
+</div>
+
+<div class="step-box">
+    <div id="s1" class="step">Step 1: Registration <span class="status-text"></span></div>
+    <div id="s2" class="step">Step 2: Page Designing <span class="status-text"></span></div>
+    <div id="s3" class="step">Step 3: Feature Setup <span class="status-text"></span></div>
+    <div id="s4" class="step">Step 4: Ready to Use Software <span class="status-text"></span></div>
+    <div id="s5" class="step">Step 5: Payment Status <span class="status-text"></span></div>
+</div>
+
+<div id="messageBox" class="message-box"></div>
+<button id="payBtn" class="pay-btn">Pay Now</button>
+
+</div><script>
+    function updateCircle(percent){
+        const circle = document.getElementById('circle');
+        circle.style.background = `conic-gradient(#28a745 ${percent * 3.6}deg, #ddd 0deg)`;
+        document.getElementById('percentText').innerHTML = percent + '%';
+    }
+
+    function updateProcess(step){
+        const total = 5;
+        let percent = Math.round((step / total) * 100);
+        updateCircle(percent);
+        document.getElementById('currentStatus').innerHTML = `Current Status: ${percent}% Completed`;
+
+        for(let i = 1; i <= total; i++){
+            let el = document.getElementById('s' + i);
+            el.classList.remove('completed', 'active');
+            el.querySelector('.status-text').innerHTML = '';
+
+            if(i < step){
+                el.classList.add('completed');
+                let stepPercent = Math.round((i / total) * 100);
+                el.querySelector('.status-text').innerHTML = ` - Complete (${stepPercent}%)`;
+            }
+            else if(i === step){
+                el.classList.add('active');
+                let stepPercent = Math.round((i / total) * 100);
+                el.querySelector('.status-text').innerHTML = ` - Processing... (${stepPercent}%)`;';
+            }
+        }
+
+        if(step === 5){
+            document.getElementById('messageBox').style.display = 'block';
+            document.getElementById('payBtn').style.display = 'inline-block';
+            document.getElementById('messageBox').innerHTML =
+                "Your software is ready, Arman Kumar. Please pay and enjoy every service.";
+        }
+    }
+
+    updateProcess(3);
+</script></body>
+   </html>
