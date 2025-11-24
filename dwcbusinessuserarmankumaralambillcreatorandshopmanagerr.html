@@ -311,9 +311,118 @@ saveBill.addEventListener('click', async ()=>{
 function openBillPreview(bill){
   const win = window.open('', '_blank', 'width=800,height=900');
   const shopName = 'Kumar Medical Store';
-  const shopName = 'Kumar Medical Store';
   const address = 'Address: Your Address Here';
-  const billHtml = `<!doctype html><html><head><meta charset="utf-8"><title>Bill - ${escapeHtml(bill.patient||'')}</title><style>body{font-family:Arial,Helvetica,sans-serif;padding:20px;color:#111}h2{margin-bottom:4px}table{width:100%;border-collapse:collapse;margin-top:10px}th,td{padding:8px;border-bottom:1px solid #ddd;text-align:left}thead th{background:#f7f7f7}footer{margin-top:10px;font-size:0.95rem} .right{float:right}</style></head><body><div><h2>${shopName}</h2><div>${address}</div><hr><div><strong>Patient:</strong> ${escapeHtml(bill.patient||'—')} <span class="right"><strong>Date:</strong> ${new Date(bill.time).toLocaleString()}</span></div><table><thead><tr><th>#</th><th>Medicine</th><th>Qty</th><th>Unit</th><th>Disc%</th><th>Amount</th></tr></thead><tbody>${bill.items.map((it,i)=>`<tr><td>${i+1}</td><td>${escapeHtml(it.name)}</td><td>${it.qty}</td><td>₹${it.unit.toFixed(2)}</td><td>${it.disc}%</td><td>₹${it.amount.toFixed(2)}</td></tr>`).join('')}</tbody></table><div style="text-align:right;margin-top:10px"><div>Gross: ₹${bill.gross.toFixed(2)}</div><div>Discount: ₹${bill.discount.toFixed(2)}</div><div style="font-weight:700">Net: ₹${bill.net.toFixed(2)}</div></div><hr><div style="margin-top:20px;text-align:center">Thanks for visiting!</div><div style="margin-top:10px;text-align:center"><button onclick="window.print()">Print</button></div></div></body></html>`;
+  const billHtml = `<!doctype html><html><head><meta charset="utf-8"><title>Bill - ${escapeHtml(bill.patient||'')}</title><style>body{font-family:Arial,Helvetica,sans-serif;padding:20px;color:#111}h2{margin-bottom:4px}table{width:100%;border-collapse:collapse;margin-top:10px}th,td{padding:8px;border-bottom:1px solid #ddd;text-align:left}thead th{background:#f7f7f7}footer{margin-top:10px;font-size:0.95rem} .right{float:right}</style></head><body><div><h2>${shopName}</h2><div>${address}</div><hr><div><strong>Patient:</strong> ${escapeHtml(bill.patient||'—')} <span class="right"><strong>Date:</strong> ${new Date(bill.time).toLocaleString()}</span></div><table><thead><tr><th>#</th><th>Medicine</th><th>Qty</th><th>Unit</th><th>Disc%</th><th>Amount</th></tr></thead><tbody>${bill.items.map((it,i)=>`<tr><td>${i+1}</td><td>${escapeHtml(it.name)}</td><td>${it.qty}</td><td>₹${it.unit.toFixed(2)}</td><td>${it.disc}%</td><td>₹${it.amount.toFixed(2)}</td></tr>`).join('')}</tbody></table><div style="text-align:right;margin-top:10px"><div>Gross: ₹${bill.gross.toFixed(2)}</div><div>Discount: ₹${bill.discount.toFixed(2)}</div><div style="font-weight:700">Net: ₹${bill.net.toFixed(2)}</div></div><hr><div style="margin-top:20px;text-align:center">Thanks for visiting!</div><div style="margin-top:10px;text-align:center"><button onclick="window.print()">Print</button></div></div>
+
+<!-- BILL CREATOR START -->
+<div id="billCreator" style="background:white; padding:20px; margin:40px 0; border-radius:10px; box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+    <h2>Create Patient Bill</h2>
+
+    <!-- Patient Form -->
+    <form id="patientForm" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;">
+        <input type="text" id="patientName" placeholder="Patient Name" required style="padding:10px; flex:1; min-width:200px;">
+        <button type="submit" style="padding:10px 20px; background:#6a00ff; color:white; border-radius:5px; border:none;">Next</button>
+    </form>
+
+    <!-- Medicine Form (Hidden First) -->
+    <form id="medicineForm" style="display:none; flex-wrap:wrap; gap:10px; margin-bottom:20px;">
+        <input type="text" id="medName" placeholder="Medicine Name" required style="padding:10px; min-width:180px;">
+        <input type="number" id="medAmount" placeholder="Amount" required style="padding:10px; min-width:120px;">
+        <input type="number" id="medDiscount" placeholder="Discount %" value="0" min="0" max="100" style="padding:10px; min-width:120px;">
+        <input type="number" id="medFinal" placeholder="Final Amount" readonly style="padding:10px; min-width:140px; background:#eee;">
+        <button type="submit" style="padding:10px 20px; background:#00b894; color:white; border-radius:5px; border:none;">Add</button>
+    </form>
+
+    <!-- Bill Table -->
+    <table id="billTable" style="display:none;">
+        <thead>
+            <tr>
+                <th>Medicine</th>
+                <th>Amount</th>
+                <th>Discount</th>
+                <th>Final</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <button id="downloadPDF" style="display:none; margin-top:20px; padding:10px 20px; background:#0984e3; color:white; border:none; border-radius:5px;">Download PDF</button>
+</div>
+
+<script>
+
+let patientNameGlobal = "";
+let billItems = [];
+
+// Patient Form Submit
+patientForm.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    patientNameGlobal = document.getElementById('patientName').value.trim();
+    if(!patientNameGlobal) return alert("Enter patient name");
+
+    patientForm.style.display = "none";
+    medicineForm.style.display = "flex";
+});
+
+// Auto-final calculation
+medDiscount.addEventListener("input", updateFinal);
+medAmount.addEventListener("input", updateFinal);
+function updateFinal(){
+    let amount = parseFloat(medAmount.value) || 0;
+    let d = parseFloat(medDiscount.value) || 0;
+    let final = amount - (amount * d / 100);
+    medFinal.value = final.toFixed(2);
+}
+
+// Add Medicine Item
+medicineForm.addEventListener("submit", (e)=>{
+    e.preventDefault();
+
+    let name = medName.value.trim();
+    let amount = parseFloat(medAmount.value);
+    let discount = parseFloat(medDiscount.value);
+    let final = parseFloat(medFinal.value);
+
+    billItems.push({name, amount, discount, final});
+
+    let row = document.createElement('tr');
+    row.innerHTML = `
+        <td>${name}</td>
+        <td>${amount}</td>
+        <td>${discount}%</td>
+        <td>${final.toFixed(2)}</td>
+    `;
+    billTable.querySelector('tbody').appendChild(row);
+
+    billTable.style.display = "table";
+    downloadPDF.style.display = "block";
+
+    medName.value = "";
+    medAmount.value = "";
+    medDiscount.value = 0;
+    medFinal.value = "";
+});
+
+// PDF Download (Simple Print)
+downloadPDF.addEventListener("click", ()=>{
+    let w = window.open("", "_blank");
+    w.document.write(`
+        <h2>DWC Medical Shop</h2>
+        <h3>Patient: ${patientNameGlobal}</h3>
+        <table border="1" cellpadding="10" cellspacing="0" style="width:100%; border-collapse:collapse;">
+            <tr><th>Medicine</th><th>Amount</th><th>Discount</th><th>Final</th></tr>
+            ${billItems.map(i=>`<tr><td>${i.name}</td><td>${i.amount}</td><td>${i.discount}%</td><td>${i.final}</td></tr>`).join('')}
+        </table>
+    `);
+    w.print();
+    w.close();
+});
+
+</script>
+
+<!-- BILL CREATOR END -->
+
+</body></html>`;
   win.document.write(billHtml);
   win.document.close();
 }
