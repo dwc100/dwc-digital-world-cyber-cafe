@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DWC Advanced Product Manager (Final Version)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#f5f6fa;color:#333;min-height:100vh;}
+.header{
+    position:fixed; top:0; left:0; width:100%; height:100px;
+    background:linear-gradient(90deg,#6a00ff,#00b4ff,#8e2de2);
+    background-size:300% 300%;
+    animation:gradientMove 8s ease infinite;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 50px; box-shadow:0 8px 30px rgba(0,0,0,0.15); z-index:1000;
+}
+@keyframes gradientMove{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+.logo{height:70px;width:70px;border-radius:50%;object-fit:cover;border:2px solid #fff;}
+.title{font-size:2rem;color:white;font-weight:700;}
+.user-area{display:flex;align-items:center;gap:15px;}
+.username{font-size:1.2rem;font-weight:600;color:white;}
+.user-img{height:70px;width:70px;border-radius:50%;object-fit:cover;border:2px solid #fff;}
+.page{padding-top:150px;padding:30px; max-width:1400px;margin:auto;}
+h2{color:#4a2aff;margin-bottom:20px;}
+.cards{display:flex;gap:20px;margin-bottom:30px;flex-wrap:wrap;}
+.card{flex:1; min-width:240px; background:white; padding:20px;border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.1);text-align:center; font-weight:600;}
+.card span{display:block;font-size:2rem;margin-top:10px;color:#6a00ff;}
+.product-form, .discount-form{background:white; padding:20px; margin-bottom:30px;border-radius:10px; box-shadow:0 4px 20px rgba(0,0,0,0.1);display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
+.product-form input, .discount-form input{padding:8px 12px;border-radius:5px;border:1px solid #ccc;flex:1; min-width:120px;}
+.product-form button, .discount-form button{padding:10px 18px;border:none;border-radius:5px;background:#6a00ff;color:white;font-weight:600;cursor:pointer;}
+table{width:100%;border-collapse:collapse;background:white;border-radius:8px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);}
+th, td{padding:12px 15px;text-align:center;border-bottom:1px solid #eee;}
+th{background:#6a00ff;color:white;}
+tr:hover{background:#f1f1f1;}
+.btn{padding:6px 12px;border-radius:5px;font-weight:600;cursor:pointer;}
+.btn-edit{background:#00b4ff;color:white;}
+.btn-delete{background:#ff4d4f;color:white;}
+#loading{position:fixed; top:0; left:0; width:100%; height:100%; background:white; display:flex; align-items:center; justify-content:center; font-size:1.6rem; font-weight:600; color:#6a00ff; z-index:5000;}
+.loader-box{text-align:center;}
+.loader-circle{width:55px;height:55px;border-radius:50%;border:6px solid #d3c6ff;border-top-color:#6a00ff;margin:auto;animation:spin 1s linear infinite;}
+@keyframes spin{100%{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+
+<div id="loading">
+    <div class="loader-box">
+        <div class="loader-circle"></div>
+        <p style="margin-top:15px;">Loading data, please wait...</p>
+    </div>
+</div>
+
+<header class="header">
+    <img src="your-logo.png" class="logo" alt="Logo">
+    <h1 class="title">DWC Advanced Product Manager</h1>
+    <div class="user-area">
+        <span class="username">Chhotu Kumar</span>
+        <img src="user.jpg" class="user-img" alt="User">
+    </div>
+</header>
+
+<div class="page">
+
+<h2>Dashboard Summary</h2>
+<div class="cards">
+    <div class="card">Total Products <span id="totalProducts">0</span></div>
+    <div class="card">Total Inventory Value <span id="totalValue">0.00</span></div>
+    <div class="card">Total Revenue <span id="totalRevenue">0.00</span></div>
+</div>
+
+<h2>Add New Product</h2>
+<form class="product-form" id="productForm">
+    <input type="text" id="prodName" placeholder="Product Name" required>
+    <input type="number" id="prodQty" placeholder="Total Quantity" required>
+    <input type="number" id="prodPrice" placeholder="Price per Unit" required>
+    <input type="number" id="prodDiscount" placeholder="Discount %" value="0" min="0" max="100">
+    <button type="submit">Add Product</button>
+</form>
+
+<h2>Product Inventory</h2>
+<table id="productTable">
+    <thead>
+        <tr>
+            <th>ID</th><th>Name</th><th>Total Qty</th><th>Sold Qty</th>
+            <th>Remaining</th><th>Price</th><th>Discount</th>
+            <th>Final Price</th><th>Revenue</th><th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<h2>Discount Calculator</h2>
+<form class="discount-form" id="discountForm">
+    <input type="number" id="itemPrice" placeholder="Item Price" required>
+    <input type="number" id="discountPercent" placeholder="Discount %" required min="0" max="100">
+    <button type="submit">Calculate Discount</button>
+</form>
+
+<div class="cards" style="margin-bottom:50px;">
+    <div class="card">Discount Amount <span id="discountAmount">0.00</span></div>
+    <div class="card">Total Payable <span id="totalPayable">0.00</span></div>
+</div>
+
+</div>
+
+<!-- ================= FIREBASE v12 SCRIPT ================= -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import { getDatabase, ref, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
+
+/* Firebase config */
+const firebaseConfig = {
+  apiKey: "AIzaSyDlMv0VFlcUD2s92QHfXFMqDZRK2ocVPbA",
+  authDomain: "duct-manager.firebaseapp.com",
+  databaseURL: "https://duct-manager-default-rtdb.firebaseio.com",
+  projectId: "duct-manager",
+  storageBucket: "duct-manager.firebasestorage.app",
+  messagingSenderId: "643811721550",
+  appId: "1:643811721550:web:44f76794dd93610ed51e1f",
+  measurementId: "G-XKEQX69D0N"
+};
+
+/* Initialize Firebase */
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const productsRef = ref(db, "products/");
+
+const tableBody = document.querySelector('#productTable tbody');
+const totalProductsEl = document.getElementById('totalProducts');
+const totalValueEl = document.getElementById('totalValue');
+const totalRevenueEl = document.getElementById('totalRevenue');
+const productForm = document.getElementById('productForm');
+const loading = document.getElementById('loading');
+
+/* Loader fallback */
+let firebaseLoaded = false;
+setTimeout(() => {
+    if (!firebaseLoaded) {
+        loading.style.display = "none";
+        alert("⚠ Firebase से डेटा लोड नहीं हुआ। कृपया config और rules चेक करें।");
+    }
+}, 5000);
+
+/* Fetch products */
+onValue(productsRef, (snapshot) => {
+    firebaseLoaded = true;
+    loading.style.display = "none";
+    tableBody.innerHTML = "";
+    let id = 1;
+    snapshot.forEach(childSnap => {
+        addProductRow(childSnap.val(), childSnap.key, id++);
+    });
+    updateSummary();
+}, (error) => {
+    loading.style.display = "none";
+    console.error("Firebase Read Error:", error.message);
+});
+
+/* Add product row */
+function addProductRow(product, key, id) {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+        <td>${id}</td>
+        <td>${product.name}</td>
+        <td>${product.totalQty}</td>
+        <td><input type="number" class="sold-input" value="${product.soldQty}" min="0" max="${product.totalQty}"></td>
+        <td>${product.totalQty - product.soldQty}</td>
+        <td>${product.price}</td>
+        <td><input type="number" class="discount-input" value="${product.discount}" min="0" max="100"></td>
+        <td class="final-price">${product.finalPrice}</td>
+        <td>${(product.finalPrice * product.soldQty).toFixed(2)}</td>
+        <td>
+            <button class="btn btn-edit">Edit</button>
+            <button class="btn btn-delete">Delete</button>
+        </td>
+    `;
+    tableBody.appendChild(row);
+
+    row.querySelector(".discount-input").addEventListener("input", () => {
+        const price = parseFloat(row.children[5].innerText);
+        const discount = parseFloat(row.querySelector(".discount-input").value) || 0;
+        const finalPrice = (price - price * discount / 100).toFixed(2);
+        row.querySelector(".final-price").innerText = finalPrice;
+        update(ref(db, "products/" + key), { discount, finalPrice });
+        updateSummary();
+    });
+
+    row.querySelector(".sold-input").addEventListener("input", () => {
+        let soldQty = parseInt(row.querySelector(".sold-input").value);
+        const total = parseInt(row.children[2].innerText);
+        if (soldQty > total) soldQty = total;
+        row.querySelector(".sold-input").value = soldQty;
+        update(ref(db, "products/" + key), { soldQty });
+        updateSummary();
+    });
+
+    row.querySelector(".btn-delete").addEventListener("click", () => {
+        remove(ref(db, "products/" + key));
+    });
+
+    row.querySelector(".btn-edit").addEventListener("click", () => {
+        const newName = prompt("New Product Name", product.name);
+        const newQty = prompt("New Total Quantity", product.totalQty);
+        const newPrice = prompt("New Price", product.price);
+        if (!newName || !newQty || !newPrice) return;
+        const discount = parseFloat(row.querySelector(".discount-input").value) || 0;
+        const newFinalPrice = (newPrice - newPrice * discount / 100).toFixed(2);
+        update(ref(db, "products/" + key), {
+            name: newName,
+            totalQty: parseInt(newQty),
+            price: parseFloat(newPrice),
+            finalPrice: newFinalPrice
+        });
+    });
+}
+
+/* Add new product */
+productForm.addEventListener("submit", e => {
+    e.preventDefault();
+    const name = document.getElementById("prodName").value.trim();
+    const totalQty = parseInt(document.getElementById("prodQty").value);
+    const price = parseFloat(document.getElementById("prodPrice").value);
+    const discount = parseFloat(document.getElementById("prodDiscount").value) || 0;
+    if (!name || totalQty <= 0 || price <= 0) {
+        alert("Invalid product details!");
+        return;
+    }
+    const finalPrice = (price - price * discount / 100).toFixed(2);
+    push(productsRef, { name, totalQty, soldQty: 0, price, discount, finalPrice })
+      .then(() => productForm.reset())
+      .catch(err => alert("❌ Error: " + err.message));
+});
+
+/* Update dashboard summary */
+function updateSummary() {
+    let totalProducts = 0, totalValue = 0, totalRevenue = 0;
+    tableBody.querySelectorAll("tr").forEach(row => {
+        const totalQty = parseInt(row.children[2].innerText);
+        const soldQty = parseInt(row.querySelector(".sold-input").value);
+        const finalPrice = parseFloat(row.querySelector(".final-price").innerText);
+        totalProducts += totalQty;
+        totalValue += finalPrice * (totalQty - soldQty);
+        totalRevenue += finalPrice * soldQty;
+        row.children[4].innerText = totalQty - soldQty;
+        row.children[8].innerText = (finalPrice * soldQty).toFixed(2);
+    });
+    totalProductsEl.innerText = totalProducts;
+    totalValueEl.innerText = totalValue.toFixed(2);
+    totalRevenueEl.innerText = totalRevenue.toFixed(2);
+}
+
+/* Discount calculator */
+document.getElementById("discountForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const price = parseFloat(document.getElementById("itemPrice").value);
+    const percent = parseFloat(document.getElementById("discountPercent").value);
+    const discountAmount = price * (percent / 100);
+    const totalPayable = price - discountAmount;
+    document.getElementById("discountAmount").innerText = discountAmount.toFixed(2);
+    document.getElementById("totalPayable").innerText = totalPayable.toFixed(2);
+});
+</script>
+</body>
+</html>
