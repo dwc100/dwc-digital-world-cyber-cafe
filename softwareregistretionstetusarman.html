@@ -35,6 +35,34 @@
         font-weight:700;
     }
 
+    .progress-circle{
+        width:160px;
+        height:160px;
+        margin:0 auto 25px auto;
+        border-radius:50%;
+        background:conic-gradient(#28a745 0deg, #ddd 0deg);
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        box-shadow:0 0 15px rgba(40,167,69,0.5);
+        position:relative;
+    }
+
+    .progress-inner{
+        width:120px;
+        height:120px;
+        border-radius:50%;
+        background:transparent;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        font-size:1.8rem;
+        font-weight:700;
+        color:#28a745;
+        position:relative;
+        z-index:10;
+    }
+
     .step-box{
         margin-top:20px;
         text-align:left;
@@ -72,20 +100,27 @@
         100%{ opacity:0.3; }
     }
 
-    .line{
-        width:100%;
-        height:6px;
-        background:#ddd;
+    .message-box{
+        margin-top:20px;
+        padding:15px;
+        background:#e8ffe8;
+        border:1px solid #28a745;
         border-radius:10px;
-        margin:20px 0;
-        overflow:hidden;
+        font-size:1rem;
+        font-weight:600;
+        display:none;
     }
 
-    .line-fill{
-        height:100%;
-        width:0%;
+    .pay-btn{
+        margin-top:15px;
+        padding:12px 20px;
+        border:none;
         background:#28a745;
-        transition:0.5s;
+        color:#fff;
+        border-radius:10px;
+        font-size:1rem;
+        cursor:pointer;
+        display:none;
     }
 </style>
 </head>
@@ -94,8 +129,13 @@
 <div class="container">
     <h1>Process Status</h1>
 
-    <div class="line">
-        <div id="lineFill" class="line-fill"></div>
+    <div class="progress-circle" id="circle">
+        <div class="progress-inner">
+            <span id="percentText">0%</span>
+        </div>
+    </div>
+
+    <div id="currentStatus" style="font-size:1.1rem; font-weight:600; margin-bottom:20px; color:#28a745;">Current Status: 0% Completed</div>
     </div>
 
     <div class="step-box">
@@ -105,13 +145,24 @@
         <div id="s4" class="step">Step 4: Ready to Use Software <span class="status-text"></span></div>
         <div id="s5" class="step">Step 5: Payment Status <span class="status-text"></span></div>
     </div>
+
+    <div id="messageBox" class="message-box"></div>
+    <button id="payBtn" class="pay-btn">Pay Now</button>
+
 </div>
 
 <script>
+    function updateCircle(percent){
+        const circle = document.getElementById('circle');
+        circle.style.background = `conic-gradient(#28a745 ${percent * 3.6}deg, #ddd 0deg)`;
+        document.getElementById('percentText').innerHTML = percent + '%';
+    }
+
     function updateProcess(step){
         const total = 5;
-        let fill = (step / total) * 100;
-        document.getElementById('lineFill').style.width = fill + '%';
+        let percent = Math.round((step / total) * 100);
+        updateCircle(percent);
+        document.getElementById('currentStatus').innerHTML = `Current Status: ${percent}% Completed`;
 
         for(let i = 1; i <= total; i++){
             let el = document.getElementById('s' + i);
@@ -120,20 +171,26 @@
 
             if(i < step){
                 el.classList.add('completed');
-                el.querySelector('.status-text').innerHTML = ' - Complete';
+                let stepPercent = Math.round((i / total) * 100);
+                el.querySelector('.status-text').innerHTML = ` - Complete (${stepPercent}%)`;
             }
             else if(i === step){
                 el.classList.add('active');
-                el.querySelector('.status-text').innerHTML = ' - Processing...';
+                let stepPercent = Math.round((i / total) * 100);
+                el.querySelector('.status-text').innerHTML = ` - Processing... (${stepPercent}%)`;';
             }
+        }
+
+        if(step === 5){
+            document.getElementById('messageBox').style.display = 'block';
+            document.getElementById('payBtn').style.display = 'inline-block';
+            document.getElementById('messageBox').innerHTML =
+                "Your software is ready, Arman Kumar. Please pay and enjoy every service.";
         }
     }
 
-    // Example: set any step here
-    updateProcess(3);
+    updateProcess(5);
 </script>
 
 </body>
-
 </html>
-
