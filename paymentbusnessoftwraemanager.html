@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>UPI Payment</title>
+
+<style>
+*{
+    margin:0; padding:0; box-sizing:border-box;
+    font-family:"Poppins", sans-serif;
+}
+
+body{
+    background:linear-gradient(140deg,#d7f9ff,#e8ffe7,#e3e1ff);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:15px;
+}
+
+/* MAIN BOX */
+.pay-box{
+    width:100%;
+    max-width:420px;
+    padding:24px;
+    background:rgba(255,255,255,0.75);
+    backdrop-filter:blur(20px);
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.15);
+    animation:fadeIn 0.8s ease-in-out;
+    text-align:center;
+}
+
+@keyframes fadeIn{
+    0%{opacity:0; transform:translateY(20px);}
+    100%{opacity:1; transform:translateY(0);}
+}
+
+h1{
+    font-size:1.7rem;
+    background:linear-gradient(90deg,#28a745,#1a73e8);
+    -webkit-background-clip:text;
+    color:transparent;
+    font-weight:700;
+}
+
+/* Timer */
+.timer-box{
+    margin-top:8px;
+    color:#e60000;
+    font-size:1rem;
+    font-weight:600;
+}
+
+/* Amount Box */
+.amount{
+    background:linear-gradient(120deg,#e8ffe8,#dfffe0);
+    padding:14px;
+    border-radius:14px;
+    font-size:1.2rem;
+    font-weight:700;
+    color:#1b8c3b;
+    margin:18px 0;
+    box-shadow:0 3px 10px rgba(0,0,0,0.10);
+}
+
+/* QR BOX */
+.qr-box{
+    width:200px;
+    height:200px;
+    margin:0 auto 15px auto;
+    padding:10px;
+    background:#fff;
+    border-radius:15px;
+    box-shadow:0 5px 18px rgba(0,0,0,0.15);
+}
+
+/* BUTTONS */
+button{
+    width:100%;
+    padding:13px;
+    border:none;
+    border-radius:12px;
+    font-size:1.05rem;
+    font-weight:700;
+    cursor:pointer;
+    margin-top:10px;
+    transition:0.25s ease;
+}
+
+/* Offer Button */
+#offerBtn{
+    background:linear-gradient(90deg,#ff9800,#ff7b00);
+    color:white;
+}
+#offerBtn:hover{ transform:scale(1.03); }
+
+/* Pay Button */
+#upiPayBtn{
+    background:linear-gradient(90deg,#2196f3,#0c7dd6);
+    color:white;
+}
+#upiPayBtn:hover{ transform:scale(1.03); }
+
+/* Submit Button */
+#submitBtn{
+    background:linear-gradient(90deg,#4caf50,#1f8b37);
+    color:white;
+    display:none;
+}
+#submitBtn:hover{ transform:scale(1.03); }
+
+/* Popup */
+.popup{
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(0,0,0,0.55);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.popup-box{
+    background:#ffffff;
+    width:85%;
+    max-width:300px;
+    padding:25px;
+    border-radius:16px;
+    text-align:center;
+    animation:pop 0.4s ease;
+}
+
+@keyframes pop{
+    0%{transform:scale(0.7); opacity:0;}
+    100%{transform:scale(1); opacity:1;}
+}
+
+.popup-box h2{
+    color:#28a745;
+    margin-bottom:10px;
+}
+
+.popup-box button{
+    background:#28a745;
+    color:white;
+    padding:10px 20px;
+    border-radius:10px;
+    margin-top:14px;
+}
+
+/* MOBILE OPTIMIZATION */
+@media(max-width:420px){
+    h1{ font-size:1.5rem; }
+    .amount{ font-size:1.1rem; }
+    .qr-box{ width:180px; height:180px; }
+    button{ font-size:1rem; padding:12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="pay-box">
+
+    <h1>Scan & Pay</h1>
+    <p>Complete your payment to activate your services.</p>
+
+    <!-- TIMER -->
+    <div class="timer-box">
+        Submit Button Unlocks In: <span id="timer">60</span> sec
+    </div>
+
+    <div id="amountBox" class="amount">Amount: ₹199</div>
+
+    <div class="qr-box">
+        <img id="qrImg"
+             src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=8986029267@naviaxis&pn=Arman&am=199"
+             width="100%" />
+    </div>
+
+    <button id="offerBtn">Activate Offer</button>
+    <button id="upiPayBtn">Pay Using UPI App</button>
+    <button id="submitBtn">Submit Payment</button>
+
+</div>
+
+<!-- POPUP -->
+<div id="popup" class="popup">
+    <div class="popup-box">
+        <h2>Payment Successful</h2>
+        <p>Your payment has been successfully processed.</p>
+        <button onclick="document.getElementById('popup').style.display='none'">OK</button>
+    </div>
+</div>
+
+<script>
+let discounted = false;
+
+/* OFFER BUTTON */
+document.getElementById('offerBtn').onclick = function(){
+    if(!discounted){
+        discounted = true;
+        document.getElementById('amountBox').innerHTML = "Amount: ₹149 (Offer Applied)";
+        document.getElementById('qrImg').src =
+        "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=8986029267@naviaxis&pn=Arman&am=149";
+
+        alert("Offer Activated! Amount Updated to ₹149");
+    }
+};
+
+/* 60 SECOND TIMER */
+let sec = 60;
+let timer = setInterval(()=>{
+    sec--;
+    document.getElementById("timer").textContent = sec;
+
+    if(sec <= 0){
+        clearInterval(timer);
+        document.getElementById("timer").textContent = "Unlocked";
+        document.getElementById("submitBtn").style.display = "block";
+    }
+}, 1000);
+
+/* PAYMENT SUCCESS POPUP */
+document.getElementById("submitBtn").onclick = function(){
+    document.getElementById("popup").style.display = "flex";
+};
+
+/* DIRECT UPI APP PAY */
+document.getElementById("upiPayBtn").onclick = function(){
+    let amount = discounted ? 149 : 199;
+    window.location.href = `upi://pay?pa=8986029267@naviaxis&pn=Arman&am=${amount}&cu=INR`;
+};
+</script>
+
+</body>
+</html>

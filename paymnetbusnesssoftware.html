@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment - Business Software</title>
+
+    <style>
+        *{
+            margin:0; padding:0; box-sizing:border-box;
+            font-family:"Poppins", sans-serif;
+        }
+
+        body{
+            background:linear-gradient(145deg,#e8fff1,#e0f1ff,#ffffff);
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            padding:20px;
+        }
+
+        .pay-container{
+            width:100%;
+            max-width:500px;
+            padding:35px;
+            border-radius:22px;
+            background:rgba(255,255,255,0.7);
+            backdrop-filter:blur(15px);
+            box-shadow:0 10px 35px rgba(0,0,0,0.15);
+            animation:fadeIn 0.7s ease;
+            text-align:center;
+        }
+
+        @keyframes fadeIn{
+            0%{ opacity:0; transform:translateY(20px); }
+            100%{ opacity:1; transform:translateY(0); }
+        }
+
+        h1{
+            font-size:2rem;
+            font-weight:700;
+            background:linear-gradient(90deg,#28a745,#0078ff);
+            -webkit-background-clip:text;
+            color:transparent;
+            margin-bottom:10px;
+        }
+
+        p{
+            font-size:1rem;
+            color:#444;
+            line-height:1.4rem;
+            margin-bottom:25px;
+        }
+
+        .amount-box{
+            background:linear-gradient(120deg,#e6ffe6,#d7ffd7);
+            padding:18px;
+            border-radius:14px;
+            box-shadow:0 4px 15px rgba(0,0,0,0.1);
+            font-size:1.3rem;
+            font-weight:600;
+            color:#1a9b3b;
+            margin:25px 0;
+        }
+
+        button{
+            padding:14px 28px;
+            width:100%;
+            border:none;
+            border-radius:14px;
+            background:linear-gradient(90deg,#28a745,#00b860);
+            color:#fff;
+            font-size:1.15rem;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s;
+            box-shadow:0 4px 18px rgba(0,128,0,0.25);
+        }
+        button:hover{
+            transform:translateY(-2px);
+            box-shadow:0 6px 20px rgba(0,128,0,0.3);
+        }
+
+        .back{
+            display:block;
+            margin-top:20px;
+            font-size:0.95rem;
+            color:#007bff;
+            text-decoration:none;
+            transition:0.3s;
+        }
+        .back:hover{
+            color:#005fcc;
+            text-decoration:underline;
+        }
+
+        /* Mobile Friendly */
+        @media (max-width:480px){
+            .pay-container{
+                padding:25px;
+                border-radius:18px;
+            }
+            h1{ font-size:1.7rem; }
+            .amount-box{ font-size:1.2rem; }
+            button{ font-size:1rem; padding:12px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="pay-container">
+
+    <h1>Complete Your Payment</h1>
+    <p>Dear <strong>Mr. Arman</strong>, your software is ready.<br>
+       Please complete your payment to activate all services.</p>
+
+    <div class="amount-box">Total Amount: ₹149</div>
+
+    <button onclick="window.location.href='paymentbusnessoftwraemanager.html'">
+        Proceed to Pay
+    </button>
+
+    <a href="softwareregistretionstetusarman.html" class="back">⬅ Go Back</a>
+
+</div>
+
+</body>
+</html>
