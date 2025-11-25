@@ -1,93 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Process Status</title>
-<style>
-    *{
-        margin:0; padding:0; box-sizing:border-box;
-        font-family:"Poppins", sans-serif;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Process Status</title>
+    <style>
+        *{
+            margin:0; padding:0; box-sizing:border-box;
+            font-family:"Poppins", sans-serif;
+        }
+        body{
+            background:#ffffff;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+            padding:20px;
+        }
+        .container{
+            width:100%;
+            max-width:500px;
+            background:#fff;
+            padding:30px;
+            border-radius:18px;
+            box-shadow:0 0 25px rgba(0,0,0,0.08);
+            text-align:center;
+        }
+        h1{
+            margin-bottom:25px;
+            font-size:1.8rem;
+            font-weight:700;
+        }
+        .step-box{
+            margin-top:20px;
+            text-align:left;
+        }
+        .step{
+            margin-bottom:25px;
+            position:relative;
+            padding-left:25px;
+        }
+        .step::before{
+            content:"";
+            width:12px;
+            height:12px;
+            border-radius:50%;
+            background:#ccc;
+            position:absolute;
+            left:0;
+            top:5px;
+        }
+        .completed::before{
+            background:#28a745;
+        }
+        .active::before{
+            background:#28a745;
+            animation:blink 1s infinite;
+        }
+        @keyframes blink{
+            0%{ opacity:0.3; }
+            50%{ opacity:1; }
+            100%{ opacity:0.3; }
+        }
+        .line{
+            width:100%;
+            height:6px;
+            background:#ddd;
+            border-radius:10px;
+            margin:20px 0;
+            overflow:hidden;
+        }
+        .line-fill{
+            height:100%;
+            width:0%;
+            background:#28a745;
+            transition:0.5s;
+        }
 
-    body{
-        background:#ffffff;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        min-height:100vh;
-        padding:20px;
-    }
+        /* Pay Now Box */
+        #payBox{
+            display:none;
+            margin-top:30px;
+            padding:20px;
+            border-radius:15px;
+            background:#e8ffe8;
+            box-shadow:0 0 10px rgba(0,0,0,0.07);
+        }
 
-    .container{
-        width:100%;
-        max-width:500px;
-        background:#fff;
-        padding:30px;
-        border-radius:18px;
-        box-shadow:0 0 25px rgba(0,0,0,0.08);
-        text-align:center;
-    }
+        #payBox h2{
+            margin-bottom:10px;
+            font-size:1.4rem;
+            color:#28a745;
+            font-weight:600;
+        }
 
-    h1{
-        margin-bottom:25px;
-        font-size:1.8rem;
-        font-weight:700;
-    }
+        #payBox button{
+            margin-top:15px;
+            padding:12px 22px;
+            border:none;
+            background:#28a745;
+            color:#fff;
+            font-size:1rem;
+            border-radius:10px;
+            cursor:pointer;
+            transition:0.3s;
+        }
 
-    .step-box{
-        margin-top:20px;
-        text-align:left;
-    }
-
-    .step{
-        margin-bottom:25px;
-        position:relative;
-        padding-left:25px;
-    }
-
-    .step::before{
-        content:"";
-        width:12px;
-        height:12px;
-        border-radius:50%;
-        background:#ccc;
-        position:absolute;
-        left:0;
-        top:5px;
-    }
-
-    .completed::before{
-        background:#28a745;
-    }
-
-    .active::before{
-        background:#28a745;
-        animation:blink 1s infinite;
-    }
-
-    @keyframes blink{
-        0%{ opacity:0.3; }
-        50%{ opacity:1; }
-        100%{ opacity:0.3; }
-    }
-
-    .line{
-        width:100%;
-        height:6px;
-        background:#ddd;
-        border-radius:10px;
-        margin:20px 0;
-        overflow:hidden;
-    }
-
-    .line-fill{
-        height:100%;
-        width:0%;
-        background:#28a745;
-        transition:0.5s;
-    }
-</style>
+        #payBox button:hover{
+            background:#208a37;
+        }
+    </style>
 </head>
 <body>
 
@@ -105,6 +127,14 @@
         <div id="s4" class="step">Step 4: Ready to Use Software <span class="status-text"></span></div>
         <div id="s5" class="step">Step 5: Payment Status <span class="status-text"></span></div>
     </div>
+
+    <!-- Pay Now + Message Box -->
+    <div id="payBox">
+        <h2>Your software is ready to use,<br> Mr. Arman!</h2>
+        <p>Please complete your payment to enjoy all services.</p>
+        <button onclick="alert('Redirecting to payment...')">Pay Now</button>
+    </div>
+
 </div>
 
 <script>
@@ -127,12 +157,18 @@
                 el.querySelector('.status-text').innerHTML = ' - Processing...';
             }
         }
+
+        // Show Pay Now only on Step 5
+        if(step === 5){
+            document.getElementById('payBox').style.display = 'block';
+        } else {
+            document.getElementById('payBox').style.display = 'none';
+        }
     }
 
-    // Example: set any step here
-    updateProcess(4);
+    // Example: Step 5
+    updateProcess(5);
 </script>
 
 </body>
-
 </html>
