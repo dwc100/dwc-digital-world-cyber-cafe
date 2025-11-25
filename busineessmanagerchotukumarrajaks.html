@@ -389,7 +389,7 @@ const db  = getDatabase(app);
 /* =========================================================
    GLOBALS
 ========================================================= */
-let productList = [];      // inventory products
+let productList = {};      // inventory products
 let billItems = [];        // items added in bill
 let selectedPatient = "";  // patient name
 
@@ -400,7 +400,6 @@ const medicineSelect = document.getElementById("medicineSelect");
 const billTable = document.querySelector("#billTable tbody");
 const billTableBox = document.getElementById("billTable");
 const billSummary = document.getElementById("billSummary");
-
 
 /* =========================================================
    LOAD INVENTORY FROM FIREBASE
@@ -424,8 +423,8 @@ async function loadProducts() {
                 <td>${p.qty - p.sold}</td>
                 <td>${p.price}</td>
                 <td>${p.discount}%</td>
-                <td>${p.Amount}</td>
-                <td>${p.revenue}</td>
+                <td>${(p.final || (p.price - (p.price*p.discount/100))*p.qty).toFixed(2)}</td>
+                <td>${p.revenue.toFixed(2)}</td>
                 <td>
                     <button class="btn btn-delete" onclick="deleteProduct('${id}')">Delete</button>
                 </td>
@@ -439,14 +438,13 @@ async function loadProducts() {
 }
 loadProducts();
 
-
 /* =========================================================
    ADD NEW PRODUCT
 ========================================================= */
 document.getElementById("productForm").addEventListener("submit", async (e)=>{
     e.preventDefault();
 
-    let name = prodName.value;
+    let name = prodName.value.trim();
     let qty  = Number(prodQty.value);
     let price = Number(prodPrice.value);
     let disc = Number(prodDiscount.value);
@@ -459,11 +457,12 @@ document.getElementById("productForm").addEventListener("submit", async (e)=>{
         sold:0,
         price:price,
         discount:disc,
-        final:finalP,
+        final:finalP * qty,
         revenue:0
     });
 
     alert("Product added!");
+    prodName.value = prodQty.value = prodPrice.value = prodDiscount.value = "";
     loadProducts();
 });
 
@@ -471,8 +470,10 @@ document.getElementById("productForm").addEventListener("submit", async (e)=>{
    DELETE PRODUCT
 ========================================================= */
 window.deleteProduct = async function (id){
-    await set(ref(db, "products/"+id), null);
-    loadProducts();
+    if(confirm("Are you sure to delete this product?")){
+        await set(ref(db, "products/"+id), null);
+        loadProducts();
+    }
 };
 
 /* =========================================================
@@ -494,10 +495,10 @@ document.getElementById("discountForm").addEventListener("submit",(e)=>{
 ========================================================= */
 patientNextBtn.addEventListener("click", ()=>{
     if(!patientName.value.trim()){
-        alert("Enter Coustomername");
+        alert("Enter Customer Name");
         return;
     }
-    selectedPatient = patientName.value;
+    selectedPatient = patientName.value.trim();
     patientFormBox.style.display = "none";
     medicineFormBox.style.display = "block";
 });
@@ -512,6 +513,7 @@ medicineSelect.addEventListener("change", ()=>{
     medName.value = p.name;
     medPrice.value = p.price;
     medDiscount.value = p.discount;
+    medQty.value = 1;
 });
 
 /* =========================================================
@@ -520,21 +522,31 @@ medicineSelect.addEventListener("change", ()=>{
 addMedToBillBtn.addEventListener("click", ()=>{
     if(!medName.value.trim()) return alert("Enter Product Name");
 
-    let name = medName.value;
+    let name = medName.value.trim();
     let price = Number(medPrice.value);
     let discount = Number(medDiscount.value);
     let qty = Number(medQty.value);
     let final = (price - (price*discount/100)) * qty;
 
     billItems.push({name, price, discount, qty, final});
-
     renderBill();
+
+    // Reset fields
+    medName.value = medPrice.value = medDiscount.value = "";
+    medQty.value = 1;
+    medicineSelect.value = "";
 });
 
 /* =========================================================
    RENDER BILL TABLE + SUMMARY
 ========================================================= */
 function renderBill(){
+    if(billItems.length === 0){
+        billTableBox.style.display = "none";
+        billSummary.style.display = "none";
+        return;
+    }
+
     billTableBox.style.display = "table";
     billSummary.style.display = "block";
 
@@ -556,7 +568,7 @@ function renderBill(){
 
     billSummary.innerHTML = `
         <h3>Bill Summary</h3>
-        <p><b>Coustomer Name:</b> ${selectedPatient}</p>
+        <p><b>Customer Name:</b> ${selectedPatient}</p>
         <p><b>Total:</b> ₹${total.toFixed(2)}</p>
         <button class="bill-btn" style="background:#00b44e" onclick="saveAndPrint()">Save & Print</button>
     `;
@@ -575,25 +587,32 @@ window.removeBillItem = function(i){
 ========================================================= */
 window.saveAndPrint = async function(){
 
+    if(billItems.length === 0){
+        alert("No items in bill");
+        return;
+    }
+
     // UPDATE INVENTORY
-    billItems.forEach(it=>{
-        Object.keys(productList).forEach(id=>{
+    for(let it of billItems){
+        for(let id of Object.keys(productList)){
             if(productList[id].name === it.name){
                 let sold = productList[id].sold + it.qty;
                 let revenue = productList[id].revenue + it.final;
-
-                update(ref(db,"products/"+id),{
+                let finalTotal = (productList[id].price - (productList[id].price*productList[id].discount/100)) * productList[id].qty;
+                await update(ref(db,"products/"+id),{
                     sold:sold,
-                    revenue:revenue
+                    revenue:revenue,
+                    final:finalTotal
                 });
             }
-        });
-    });
+        }
+    }
 
     // SAVE BILL
     await push(ref(db,"bills"),{
-        patient:selectedPatient,
+        customer:selectedPatient,
         items:billItems,
+        total: billItems.reduce((a,b)=>a+b.final,0),
         date:new Date().toLocaleString()
     });
 
@@ -606,9 +625,10 @@ window.saveAndPrint = async function(){
    PRINT BILL
 ========================================================= */
 function printBill(){
+    let total = 0;
     let html = `
-    <h3>BIHAR INTERPRISES</h3>
-    <p><b>COUSTOMER:</b> ${selectedPatient}</p>
+    <h3 style="text-align:center;">BIHAR ENTERPRISES</h3>
+    <p><b>Customer:</b> ${selectedPatient}</p>
     <p>${new Date().toLocaleString()}</p>
     <table border="1" style="width:100%;border-collapse:collapse;margin-top:10px;">
         <tr>
@@ -617,16 +637,15 @@ function printBill(){
         </tr>
     `;
 
-    let total = 0;
     billItems.forEach(it=>{
-        total += it.Amount;
+        total += it.final;
         html += `
             <tr>
                 <td>${it.name}</td>
                 <td>${it.qty}</td>
                 <td>${it.price}</td>
                 <td>${it.discount}%</td>
-                <td>${it.Amount}</td>
+                <td>${it.final.toFixed(2)}</td>
             </tr>
         `;
     });
@@ -634,7 +653,7 @@ function printBill(){
     html += `
         <tr>
             <td colspan="4"><b>Total Amount</b></td>
-            <td><b>${total}</b></td>
+            <td><b>${total.toFixed(2)}</b></td>
         </tr>
     </table>`;
 
@@ -645,6 +664,7 @@ function printBill(){
 }
 
 </script>
+
 
 <!-- ================= JS COMES IN PART–3 ================= -->
 

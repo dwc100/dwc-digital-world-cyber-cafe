@@ -295,6 +295,24 @@ header.hero h1{
   line-height:1.5;
 }
 
+.styled-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  background: linear-gradient(90deg, #00eaff, #9b59ff, #ff4d6d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  margin: 20px 0;
+  transition: transform 0.3s, text-shadow 0.3s;
+  text-align: center;
+}
+
+.styled-text:hover {
+  transform: scale(1.05);
+  text-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
 /* Buttons inside cards */
 .card-btn{
   display:inline-block;
@@ -320,22 +338,6 @@ header.hero h1{
   header.hero h1{font-size:clamp(28px,8vw,50px);}
 }
 </style>
-</head>
-<body>
-<!-- Logout Button -->
-<button id="logoutBtn"><i class="fa fa-power-off"></i> Logout</button>
-
-<header class="hero">
-  <h1>DWC CONTROL ROOM</h1>
-</header>
-
-<button class="main-btn" onclick="location.href='allusercontrol.html'">Access All Controls</button>
-
-<div class="controls-container">
-  <div class="control-card">
-    <h3>Buttons</h3>
-    <p class="styled-text">Control All Buttons And Status.</p>
-
 <style>
 .styled-text {
   font-family: 'Orbitron', sans-serif;
@@ -347,6 +349,7 @@ header.hero h1{
   text-shadow: 0 2px 6px rgba(0,0,0,0.15);
   margin: 20px 0;
   transition: transform 0.3s, text-shadow 0.3s;
+  transition: transform 0.3s, text-shadow 0.3s;
   text-align: center;
 }
 
@@ -355,15 +358,17 @@ header.hero h1{
   text-shadow: 0 4px 12px rgba(0,0,0,0.25);
 }
 </style>
+</head>
+<body>
+<!-- Logout Button -->
+<button id="logoutBtn"><i class="fa fa-power-off"></i> Logout</button>
 
-    <a href="allbuttoncontrol.html" class="card-btn"><i class="fa fa-toggle-on"></i> Control</a>
-  </div>
-  <div class="control-card">
-    <h3>Index Page</h3>
-    <p>Manage Index page features and content.</p>
-    <a href="index.html" class="card-btn"><i class="fa fa-file"></i> Manage</a>
-  </div>
-</div>
+<header class="hero">
+  <h1>DWC CONTROL ROOM</h1>
+</header>
+
+<button class="main-btn" onclick="location.href='allusercontrol.html'">Access All Controls</button>
+
 
 <!-- Modal -->
 <div class="modal-overlay" id="modalOverlay">
@@ -376,35 +381,25 @@ header.hero h1{
     </div>
   </div>
 </div>
+
 <div class="controls-container">
   <div class="control-card">
-    <h3>REGISTRETION</h3>
+    <h3>REGISTERD USER</h3>
     <p class="styled-text">Control All REGISTERD USER And Status.</p>
-
-<style>
-.styled-text {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 600;
-  background: linear-gradient(90deg, #00eaff, #9b59ff, #ff4d6d);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  margin: 20px 0;
-  transition: transform 0.3s, text-shadow 0.3s;
-  transition: transform 0.3s, text-shadow 0.3s;
-  text-align: center;
-}
-
-.styled-text:hover {
-  transform: scale(1.05);
-  text-shadow: 0 4px 12px rgba(0,0,0,0.25);
-}
-</style>
-
     <a href="userdata.html" class="card-btn"><i class="fa fa-toggle-on"></i> Control</a>
   </div>
   </div>
+  
+  
+<div class="controls-container">
+  <div class="control-card">
+    <h3>REGISTERD BUSINESS USER</h3>
+    <p class="styled-text">Control All REGISTERD USER And Status.</p>
+    <a href="dwcbusnessuserdata.html" class="card-btn"><i class="fa fa-toggle-on"></i> Control</a>
+  </div>
+  </div>
+  
+  
 <script>
 const logoutBtn=document.getElementById('logoutBtn');
 const modalOverlay=document.getElementById('modalOverlay');

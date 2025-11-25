@@ -7,6 +7,123 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+/* ===============================
+   RESPONSIVE DESIGN
+=============================== */
+
+/* Small devices: phones */
+@media (max-width: 768px) {
+    
+    .header {
+        flex-direction: column;
+        height: auto;
+        padding: 15px 20px;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .user-area {
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .page {
+        padding: 20px 15px;
+    }
+
+    .cards {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .product-form,
+    .discount-form,
+    .bill-box {
+        flex-direction: column;
+    }
+
+    .product-form input,
+    .discount-form input,
+    .bill-box input,
+    .bill-box select,
+    .product-form button,
+    .discount-form button,
+    .bill-btn {
+        width: 100%;
+        flex: unset;
+    }
+
+    table, #billTable, #printTable {
+        font-size: 0.85rem;
+    }
+
+    table th, table td {
+        padding: 8px 10px;
+    }
+
+}
+
+/* Medium devices: tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .header {
+        padding: 15px 30px;
+        height: auto;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .title {
+        font-size: 1.7rem;
+    }
+
+    .cards {
+        flex-wrap: wrap;
+    }
+
+    .product-form input,
+    .discount-form input,
+    .bill-box input,
+    .bill-box select {
+        min-width: 200px;
+    }
+}
+
+/* Very small screens (landscape phones) */
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.3rem;
+    }
+
+    .username {
+        font-size: 1rem;
+    }
+
+    .product-form input,
+    .discount-form input,
+    .bill-box input,
+    .bill-box select {
+        font-size: 0.9rem;
+    }
+
+    .bill-btn, .product-form button, .discount-form button {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+
+    .cards .card {
+        font-size: 0.9rem;
+    }
+
+    table th, table td {
+        padding: 6px 8px;
+    }
+}
+
+
 /* =======================================
    GLOBAL RESET & FONTS
 ======================================= */
@@ -237,7 +354,7 @@ tr:hover{background:#f1f1f1;}
 <!-- HEADER -->
 <header class="header">
     <img src="https://i.ibb.co/1gQKw6b/56.png" class="logo" alt="Logo">
-    <h1 class="title">DWC Advanced Product Manager</h1>
+    <h1 class="title">DWC Medical Product Manager</h1>
     <div class="user-area">
         <span class="username">MR Arman</span>
         <img src="user.jpg" class="user-img" alt="User">
