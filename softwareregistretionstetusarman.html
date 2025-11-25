@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Process Status</title>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Process Status</title>
     <style>
         * {
             margin: 0;
@@ -56,7 +54,6 @@
             color: transparent;
         }
 
-        /* Progress Line */
         .line {
             width: 100%;
             height: 7px;
@@ -84,7 +81,6 @@
             }
         }
 
-        /* Steps */
         .step-box {
             margin-top: 10px;
         }
@@ -151,7 +147,6 @@
             }
         }
 
-        /* Pay Now Box */
         #payBox {
             display: none;
             margin-top: 35px;
@@ -190,117 +185,111 @@
             margin-bottom: 18px;
             color: #333;
         }
-
-        #payBox button {
-            padding: 12px 28px;
-            border: none;
-            background: linear-gradient(90deg, #00c24e, #0094ff);
-            color: #fff;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: 0.3s;
-        }
-
-        #payBox button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
-        }
-
-        /* 📱 Mobile Responsive */
-        @media (max-width: 480px) {
-            .container {
-                padding: 20px;
-                border-radius: 18px;
-            }
-
-            h1 {
-                font-size: 1.5rem;
-            }
-
-            .step {
-                font-size: 0.95rem;
-                padding-left: 28px;
-            }
-
-            .step::before {
-                width: 12px;
-                height: 12px;
-            }
-
-            #payBox h2 {
-                font-size: 1.2rem;
-            }
-
-            #payBox p {
-                font-size: 0.9rem;
-            }
-
-            #payBox button {
-                width: 100%;
-                padding: 12px;
-                font-size: 1rem;
-            }
-        }
     </style>
+<style>
+/* (same CSS from earlier, shortened for clarity in this example) */
+button.open-soft {
+    margin-top:15px;
+    padding:12px 28px;
+    border:none;
+    background: linear-gradient(90deg, #007bff, #00c24e);
+    color:#fff;
+    font-size:1rem;
+    border-radius:50px;
+    cursor:pointer;
+    font-weight:600;
+}
+button.open-soft:hover{
+    transform:translateY(-3px);
+}
+</style>
 </head>
-
 <body>
+<div class="container">
+<h1>Process Status</h1>
+<div class="line"><div id="lineFill" class="line-fill"></div></div>
 
-    <div class="container">
-        <h1>Process Status</h1>
+<div class="step-box">
+<div id="s1" class="step">Step 1: Registration</div>
+<div id="s2" class="step">Step 2: Page Designing</div>
+<div id="s3" class="step">Step 3: Feature Setup</div>
+<div id="s4" class="step">Step 4: Ready to Use Software</div>
+<div id="s5" class="step">
+Step 5: Payment Status <br>
+<span id="timerText" style="color:#007aff; font-weight:600;"></span>
+</div>
+</div>
 
-        <div class="line">
-            <div id="lineFill" class="line-fill"></div>
-        </div>
+<button id="openBtn" class="open-soft" style="display:none;" onclick="window.location.href='dwcbusinessuserarmankumaralambillcreatorandshopmanagerr.html'">Open Software</button>
 
-        <div class="step-box">
-            <div id="s1" class="step">Step 1: Registration <span class="status-text"></span></div>
-            <div id="s2" class="step">Step 2: Page Designing <span class="status-text"></span></div>
-            <div id="s3" class="step">Step 3: Feature Setup <span class="status-text"></span></div>
-            <div id="s4" class="step">Step 4: Ready to Use Software <span class="status-text"></span></div>
-            <div id="s5" class="step">Step 5: Payment Status <span class="status-text"></span></div>
-        </div>
+<div id="payBox">
+<h2 id="msgTitle"></h2>
+<p id="msgDesc"></p>
+</div>
+</div>
 
-        <!-- Pay Now -->
-        <div id="payBox">
-            <h2>Your software is ready to use, Mr. Arman!</h2>
-            <p>Please complete your payment to unlock all premium features.</p>
-            <button onclick="window.location.href='paymnetbusnesssoftware.html'">Pay Now</button>
-        </div>
-    </div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
 
-    <script>
-        function updateProcess(step) {
-            const total = 5;
-            document.getElementById('lineFill').style.width = (step / total) * 100 + '%';
+const firebaseConfig = {
+  apiKey: "AIzaSyCCfrccr_ilE8wCcFknA2KT83DROdXesRY",
+  authDomain: "timer-b8e94.firebaseapp.com",
+  databaseURL: "https://timer-b8e94-default-rtdb.firebaseio.com",
+  projectId: "timer-b8e94",
+  storageBucket: "timer-b8e94.appspot.com",
+  messagingSenderId: "269113367484",
+  appId: "1:269113367484:web:c5ddafce088cfabe45e9b9",
+  measurementId: "G-T81JBTX5VH"
+};
 
-            for (let i = 1; i <= total; i++) {
-                let el = document.getElementById('s' + i);
-                el.classList.remove('completed', 'active');
-                el.querySelector('.status-text').innerHTML = '';
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-                if (i < step) {
-                    el.classList.add('completed');
-                    el.querySelector('.status-text').innerHTML = ' - Complete';
-                } else if (i === step) {
-                    el.classList.add('active');
-                    el.querySelector('.status-text').innerHTML = ' - In Progress...';
-                }
-            }
+const startRef = ref(db, "trialStart");
 
-            if (step === 5) {
-                document.getElementById('payBox').style.display = 'block';
-            } else {
-                document.getElementById('payBox').style.display = 'none';
-            }
+get(startRef).then(snapshot => {
+    if (!snapshot.exists()) {
+        const now = Date.now();
+        set(startRef, now);
+        startTimer(now);
+    } else {
+        startTimer(snapshot.val());
+    }
+});
+
+function startTimer(startTime){
+    const openBtn = document.getElementById('openBtn');
+    const payBox = document.getElementById('payBox');
+
+    const interval = setInterval(()=>{
+        let now = Date.now();
+        let diff = now - startTime;
+        let limit = 3 * 24 * 60 * 60 * 1000;
+
+        if(diff >= limit){
+            document.getElementById("timerText").innerHTML = "Trial Expired";
+            openBtn.style.display = "none";
+            payBox.style.display = "block";
+            document.getElementById("msgTitle").innerHTML = "Mr. Arman, Your 3-Day Trial Has Expired!";
+            document.getElementById("msgDesc").innerHTML = "Please contact DWC team to reactivate service.";
+            clearInterval(interval);
+            return;
         }
 
-        updateProcess(5);
-    </script>
+        // trial active
+        openBtn.style.display = "block";
+        payBox.style.display = "none";
 
+        let remaining = limit - diff;
+        let d = Math.floor(remaining / (1000*60*60*24));
+        let h = Math.floor((remaining / (1000*60*60)) % 24);
+        let m = Math.floor((remaining / (1000*60)) % 60);
+        let s = Math.floor((remaining / 1000) % 60);
+
+        document.getElementById("timerText").innerHTML = `Free Trial Active: ${d}d ${h}h ${m}m ${s}s`;
+    },1000);
+}
+</script>
 </body>
-
 </html>
