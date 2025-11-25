@@ -151,7 +151,6 @@ button{
     margin-top:14px;
 }
 
-/* MOBILE OPTIMIZATION */
 @media(max-width:420px){
     h1{ font-size:1.5rem; }
     .amount{ font-size:1.1rem; }
@@ -176,7 +175,7 @@ button{
 
     <div class="qr-box">
         <img id="qrImg"
-             src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=8986029267@naviaxis&pn=Arman&am=199"
+             src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=8986029267@naviaxis&pn=Arman&am=199&cu=INR"
              width="100%" />
     </div>
 
@@ -202,15 +201,16 @@ let discounted = false;
 document.getElementById('offerBtn').onclick = function(){
     if(!discounted){
         discounted = true;
+
         document.getElementById('amountBox').innerHTML = "Amount: ₹149 (Offer Applied)";
         document.getElementById('qrImg').src =
-        "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=8986029267@naviaxis&pn=Arman&am=149";
+        "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=8986029267@naviaxis&pn=Arman&am=149&cu=INR";
 
         alert("Offer Activated! Amount Updated to ₹149");
     }
 };
 
-/* 60 SECOND TIMER */
+/* TIMER */
 let sec = 60;
 let timer = setInterval(()=>{
     sec--;
@@ -228,10 +228,11 @@ document.getElementById("submitBtn").onclick = function(){
     document.getElementById("popup").style.display = "flex";
 };
 
-/* DIRECT UPI APP PAY */
+/* FIXED-AMOUNT UPI DIRECT PAY */
 document.getElementById("upiPayBtn").onclick = function(){
     let amount = discounted ? 149 : 199;
-    window.location.href = `upi://pay?pa=8986029267@naviaxis&pn=Arman&am=${amount}&cu=INR`;
+    window.location.href =
+        `upi://pay?pa=8986029267@naviaxis&pn=Arman&am=${amount}&cu=INR`;
 };
 </script>
 

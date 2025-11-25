@@ -271,7 +271,7 @@ tr:hover{background:#f1f1f1;}
         <tr>
             <th>ID</th><th>Name</th><th>Total Qty</th><th>Sold Qty</th>
             <th>Remaining</th><th>Price</th><th>Discount</th>
-            <th>Final Price</th><th>Revenue</th><th>Actions</th>
+            <th>Amount</th><th>Revenue</th><th>Actions</th>
         </tr>
     </thead>
     <tbody></tbody>
@@ -298,8 +298,8 @@ tr:hover{background:#f1f1f1;}
 
 <!-- PATIENT BOX -->
 <div id="patientFormBox" class="bill-box">
-    <label>Patient Name</label>
-    <input type="text" id="patientName" placeholder="Enter patient name" style="width:100%;padding:8px;margin-top:6px;">
+    <label>Coustomer Name</label>
+    <input type="text" id="patientName" placeholder="Enter Coustomer name" style="width:100%;padding:8px;margin-top:6px;">
     <button id="patientNextBtn" class="bill-btn">Next</button>
 </div>
 
@@ -310,8 +310,8 @@ tr:hover{background:#f1f1f1;}
         <option value="">-- Select --</option>
     </select>
 
-    <label style="margin-top:10px;">Medicine Name</label>
-    <input type="text" id="medName" placeholder="Medicine name" style="width:100%;padding:8px;">
+    <label style="margin-top:10px;">Product Name</label>
+    <input type="text" id="medName" placeholder="Product Name" style="width:100%;padding:8px;">
 
     <label style="margin-top:10px;">Price</label>
     <input type="number" id="medPrice" placeholder="Price" style="width:100%;padding:8px;">
@@ -329,11 +329,11 @@ tr:hover{background:#f1f1f1;}
 <table id="billTable" style="display:none;width:100%;margin-top:20px;border-collapse:collapse;background:white;box-shadow:0 3px 10px rgba(0,0,0,0.1);">
     <thead>
         <tr>
-            <th>Medicine</th>
+            <th>Product</th>
             <th>Qty</th>
             <th>Unit</th>
             <th>Discount</th>
-            <th>Final</th>
+            <th>Amount</th>
             <th>Remove</th>
         </tr>
     </thead>
@@ -346,20 +346,20 @@ tr:hover{background:#f1f1f1;}
 <!-- PRINT TEMPLATE -->
 <div id="printTemplate" style="display:none;">
     <div id="printHeader" style="text-align:center;margin-bottom:8px;">
-        <h2 style="margin:0">DWC Medical Shop</h2>
+        <h2 style="margin:0">BIHAR INTERPRISES.</h2>
         <div id="printPatientLine" style="margin-top:6px;font-weight:600"></div>
         <div id="printDateLine" style="margin-top:4px;color:#555;font-size:0.9rem"></div>
     </div>
     <table id="printTable" style="width:100%;border-collapse:collapse;">
         <thead>
             <tr>
-                <th>#</th><th>Medicine</th><th>Qty</th>
-                <th>Unit</th><th>Discount</th><th>Final</th>
+                <th>#</th><th>Prroduct</th><th>Qty</th>
+                <th>Unit</th><th>Discount</th><th>Amount</th>
             </tr>
         </thead>
         <tbody id="printTableBody"></tbody>
         <tfoot>
-            <tr><td colspan="5">Total</td><td id="printTotalCell"></td></tr>
+            <tr><td colspan="5">Total Amount</td><td id="printTotalCell"></td></tr>
         </tfoot>
     </table>
 </div>
@@ -424,7 +424,7 @@ async function loadProducts() {
                 <td>${p.qty - p.sold}</td>
                 <td>${p.price}</td>
                 <td>${p.discount}%</td>
-                <td>${p.final}</td>
+                <td>${p.Amount}</td>
                 <td>${p.revenue}</td>
                 <td>
                     <button class="btn btn-delete" onclick="deleteProduct('${id}')">Delete</button>
@@ -494,7 +494,7 @@ document.getElementById("discountForm").addEventListener("submit",(e)=>{
 ========================================================= */
 patientNextBtn.addEventListener("click", ()=>{
     if(!patientName.value.trim()){
-        alert("Enter patient name");
+        alert("Enter Coustomername");
         return;
     }
     selectedPatient = patientName.value;
@@ -518,7 +518,7 @@ medicineSelect.addEventListener("change", ()=>{
    ADD ITEM TO BILL
 ========================================================= */
 addMedToBillBtn.addEventListener("click", ()=>{
-    if(!medName.value.trim()) return alert("Enter medicine name");
+    if(!medName.value.trim()) return alert("Enter Product Name");
 
     let name = medName.value;
     let price = Number(medPrice.value);
@@ -556,7 +556,7 @@ function renderBill(){
 
     billSummary.innerHTML = `
         <h3>Bill Summary</h3>
-        <p><b>Patient:</b> ${selectedPatient}</p>
+        <p><b>Coustomer Name:</b> ${selectedPatient}</p>
         <p><b>Total:</b> ₹${total.toFixed(2)}</p>
         <button class="bill-btn" style="background:#00b44e" onclick="saveAndPrint()">Save & Print</button>
     `;
@@ -607,33 +607,33 @@ window.saveAndPrint = async function(){
 ========================================================= */
 function printBill(){
     let html = `
-    <h3>DWC Medical Shop</h3>
-    <p><b>Patient:</b> ${selectedPatient}</p>
+    <h3>BIHAR INTERPRISES</h3>
+    <p><b>COUSTOMER:</b> ${selectedPatient}</p>
     <p>${new Date().toLocaleString()}</p>
     <table border="1" style="width:100%;border-collapse:collapse;margin-top:10px;">
         <tr>
-            <th>Medicine</th><th>Qty</th><th>Unit</th>
-            <th>Discount</th><th>Final</th>
+            <th>PRODUCT</th><th>Qty</th><th>Unit</th>
+            <th>Discount</th><th>Amount</th>
         </tr>
     `;
 
     let total = 0;
     billItems.forEach(it=>{
-        total += it.final;
+        total += it.Amount;
         html += `
             <tr>
                 <td>${it.name}</td>
                 <td>${it.qty}</td>
                 <td>${it.price}</td>
                 <td>${it.discount}%</td>
-                <td>${it.final}</td>
+                <td>${it.Amount}</td>
             </tr>
         `;
     });
 
     html += `
         <tr>
-            <td colspan="4"><b>Total</b></td>
+            <td colspan="4"><b>Total Amount</b></td>
             <td><b>${total}</b></td>
         </tr>
     </table>`;

@@ -1,546 +1,652 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<title>DWC Medical Shop Manager — Inventory & Billing</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DWC Advanced Product Manager (Final Version)</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-  body{background:#f5f6fa;color:#333;min-height:100vh;}
-  .header{position:fixed; top:0; left:0; width:100%; height:100px;
+/* =======================================
+   GLOBAL RESET & FONTS
+======================================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+body{
+    background:#f5f6fa;
+    color:#333;
+    min-height:100vh;
+}
+
+/* =======================================
+   HEADER
+======================================= */
+.header{
+    position:fixed;
+    top:0; left:0;
+    width:100%;
+    height:100px;
     background:linear-gradient(90deg,#6a00ff,#00b4ff,#8e2de2);
-    background-size:300% 300%; animation:gradientMove 8s ease infinite;
-    display:flex; align-items:center; justify-content:space-between;
-    padding:0 30px; box-shadow:0 8px 30px rgba(0,0,0,0.15); z-index:1000;}
-  @keyframes gradientMove{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-  .logo{height:70px;width:70px;border-radius:50%;object-fit:cover;border:2px solid #fff;}
-  .title{font-size:1.6rem;color:white;font-weight:700;}
-  .user-area{display:flex;align-items:center;gap:12px;color:white;}
-  .page{padding-top:140px;padding:30px; max-width:1200px;margin:auto;}
-  h2{color:#4a2aff;margin-bottom:14px;}
-  .cards{display:flex;gap:20px;margin-bottom:20px;flex-wrap:wrap;}
-  .card{flex:1; min-width:220px; background:white; padding:16px;border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.08);text-align:center; font-weight:600;}
-  .card span{display:block;font-size:1.6rem;margin-top:8px;color:#6a00ff;}
-  .product-form, .discount-form{background:white; padding:18px; margin-bottom:18px;border-radius:10px; box-shadow:0 4px 20px rgba(0,0,0,0.06);display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
-  .product-form input, .discount-form input{padding:8px 12px;border-radius:6px;border:1px solid #ddd;flex:1; min-width:120px;}
-  .product-form button, .discount-form button{padding:10px 16px;border:none;border-radius:6px;background:#6a00ff;color:white;font-weight:600;cursor:pointer;}
-  table{width:100%;border-collapse:collapse;background:white;border-radius:8px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);margin-top:12px;}
-  th, td{padding:10px 12px;text-align:center;border-bottom:1px solid #eee;font-size:0.95rem;}
-  th{background:#6a00ff;color:white;}
-  tr:hover{background:#f8f8ff;}
-  .btn{padding:6px 10px;border-radius:6px;font-weight:600;cursor:pointer;border:none;}
-  .btn-edit{background:#00b4ff;color:white;}
-  .btn-delete{background:#ff4d4f;color:white;}
-  .bill-box{background:white;padding:18px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.06);margin-top:30px;}
-  .bill-btn{background:#6a00ff;color:white;padding:10px 18px;border:none;border-radius:6px;font-weight:700;margin-top:12px;cursor:pointer;}
-  .small{font-size:0.92rem;color:#555}
-  #loading{position:fixed; top:0; left:0; width:100%; height:100%; background:white; display:flex; align-items:center; justify-content:center; font-size:1.2rem; color:#6a00ff; z-index:5000;}
-  @media (max-width:900px){ .cards{flex-direction:column} .product-form{flex-direction:column} }
+    background-size:300% 300%;
+    animation:gradientMove 8s ease infinite;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 50px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.15);
+    z-index:1000;
+}
+@keyframes gradientMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+.logo, .user-img{
+    height:70px;width:70px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid #fff;
+}
+.title{font-size:2rem;color:white;font-weight:700;}
+.user-area{display:flex;align-items:center;gap:15px;}
+.username{font-size:1.2rem;font-weight:600;color:white;}
+
+/* =======================================
+   PAGE WRAPPER
+======================================= */
+.page{
+    padding-top:150px;
+    padding:30px;
+    max-width:1400px;
+    margin:auto;
+}
+h2{
+    color:#4a2aff;
+    margin-bottom:20px;
+}
+
+/* =======================================
+   DASHBOARD CARDS
+======================================= */
+.cards{
+    display:flex;
+    gap:20px;
+    margin-bottom:30px;
+    flex-wrap:wrap;
+}
+.card{
+    flex:1;
+    min-width:240px;
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.1);
+    text-align:center;
+    font-weight:600;
+}
+.card span{
+    display:block;
+    font-size:2rem;
+    margin-top:10px;
+    color:#6a00ff;
+}
+
+/* =======================================
+   FORMS
+======================================= */
+.product-form,
+.discount-form,
+.bill-box{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 4px 20px rgba(0,0,0,0.1);
+    margin-bottom:30px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+.product-form input,
+.discount-form input,
+.bill-box input,
+.bill-box select{
+    padding:8px 12px;
+    border-radius:5px;
+    border:1px solid #ccc;
+    flex:1;
+    min-width:150px;
+}
+.product-form button,
+.discount-form button,
+.bill-btn{
+    padding:10px 18px;
+    border:none;
+    border-radius:5px;
+    background:#6a00ff;
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+}
+
+/* =======================================
+   TABLES
+======================================= */
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow:0 4px 20px rgba(0,0,0,0.1);
+}
+th,td{
+    padding:12px 15px;
+    text-align:center;
+    border-bottom:1px solid #eee;
+}
+th{
+    background:#6a00ff;
+    color:white;
+}
+tr:hover{background:#f1f1f1;}
+
+.btn{
+    padding:6px 12px;
+    border-radius:5px;
+    font-weight:600;
+    cursor:pointer;
+}
+.btn-edit{background:#00b4ff;color:white;}
+.btn-delete{background:#ff4d4f;color:white;}
+
+/* =======================================
+   BILL CREATOR
+======================================= */
+.bill-box{
+    display:block;
+    margin-top:15px;
+}
+.bill-box label{
+    font-weight:600;
+    display:block;
+    margin-top:10px;
+}
+.bill-btn{
+    margin-top:10px;
+    width:auto;
+}
+
+#billSummary .small{
+    font-size:0.95rem;
+    color:#555;
+}
+
+/* =======================================
+   LOADING SCREEN
+======================================= */
+#loading{
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.6rem;
+    font-weight:600;
+    color:#6a00ff;
+    z-index:5000;
+}
+.loader-box{text-align:center;}
+.loader-circle{
+    width:55px;height:55px;
+    border-radius:50%;
+    border:6px solid #d3c6ff;
+    border-top-color:#6a00ff;
+    margin:auto;
+    animation:spin 1s linear infinite;
+}
+@keyframes spin{100%{transform:rotate(360deg);}}
+
+/* =======================================
+   PRINT TEMPLATE
+======================================= */
+#printTemplate table th{
+    background:#f1f1f1;
+}
+
+/* YOUR SAME CSS – will send optimized version later (PART–2) */
 </style>
+
 </head>
 <body>
 
-<div id="loading">Loading app...</div>
+<!-- LOADING SCREEN -->
+<div id="loading">
+    <div class="loader-box">
+        <div class="loader-circle"></div>
+        <p style="margin-top:15px;">Loading data, please wait...</p>
+    </div>
+</div>
 
+<!-- HEADER -->
 <header class="header">
-  <div style="display:flex;align-items:center;gap:12px;">
     <img src="https://i.ibb.co/1gQKw6b/56.png" class="logo" alt="Logo">
-    <div class="title">DWC Medical Shop Manager</div>
-  </div>
-  <div class="user-area">
-    <div class="small">User: Chhotu Kumar</div>
-  </div>
+    <h1 class="title">DWC Advanced Product Manager</h1>
+    <div class="user-area">
+        <span class="username">MR Arman</span>
+        <img src="user.jpg" class="user-img" alt="User">
+    </div>
 </header>
 
 <div class="page">
 
-  <!-- DASHBOARD SUMMARY -->
-  <h2>Dashboard Summary</h2>
-  <div class="cards">
+<!-- Dashboard -->
+<h2>Dashboard Summary</h2>
+<div class="cards">
     <div class="card">Total Products <span id="totalProducts">0</span></div>
     <div class="card">Total Inventory Value <span id="totalValue">0.00</span></div>
     <div class="card">Total Revenue <span id="totalRevenue">0.00</span></div>
-  </div>
-
-  <!-- ADD / MANAGE PRODUCTS -->
-  <h2>Add New Product</h2>
-  <form class="product-form" id="productForm">
-    <input type="text" id="prodName" placeholder="Product / Medicine Name" required>
-    <input type="number" id="prodQty" placeholder="Total Quantity" required min="0">
-    <input type="number" id="prodPrice" placeholder="Price per Unit" required step="0.01" min="0">
-    <input type="number" id="prodDiscount" placeholder="Discount % (0)" value="0" min="0" max="100">
-    <button type="submit">Add Product</button>
-  </form>
-
-  <h2>Product Inventory</h2>
-  <table id="productTable">
-    <thead>
-      <tr><th>ID</th><th>Name</th><th>Stock</th><th>Sold</th><th>Remaining</th><th>Price</th><th>Disc%</th><th>Final</th><th>Revenue</th><th>Actions</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <!-- BILL CREATION -->
-  <h2 style="margin-top:36px">Patient Bill Creator</h2>
-  <div id="billSection" class="bill-box">
-
-    <!-- Patient Name -->
-    <div id="patientFormBox">
-      <h3 style="margin-bottom:8px">Enter Patient Name</h3>
-      <input type="text" id="patientName" placeholder="Patient Name" style="padding:10px;width:100%;border:1px solid #ccc;border-radius:6px">
-      <button class="bill-btn" id="patientNextBtn">Next</button>
-    </div>
-
-    <!-- Medicine Add -->
-    <div id="medicineFormBox" style="display:none;margin-top:16px">
-      <h3 style="margin-bottom:8px">Add Medicine</h3>
-      <!-- Optional: dropdown from inventory is supported -->
-      <select id="medicineSelect" style="padding:10px;width:100%;border-radius:6px;border:1px solid #ccc;margin-bottom:8px;">
-        <option value="">-- Select from Inventory (optional) --</option>
-      </select>
-      <input type="text" id="medName" placeholder="Medicine Name" style="padding:10px;width:100%;border:1px solid #ccc;border-radius:6px;margin-bottom:8px;">
-      <input type="number" id="medPrice" placeholder="Amount (unit * qty)" style="padding:10px;width:100%;border:1px solid #ccc;border-radius:6px;margin-bottom:8px;" step="0.01" min="0">
-      <input type="number" id="medDiscount" placeholder="Discount %" value="0" style="padding:10px;width:100%;border:1px solid #ccc;border-radius:6px;margin-bottom:8px;" min="0" max="100">
-      <div style="display:flex;gap:8px;align-items:center;">
-        <input type="number" id="medQty" placeholder="Qty (optional)" style="padding:10px;border:1px solid #ccc;border-radius:6px;width:120px;">
-        <div class="small" style="align-self:center;color:#555">Final after disc shown in table</div>
-      </div>
-      <button class="bill-btn" id="addMedToBillBtn" style="margin-top:10px">Add Medicine</button>
-    </div>
-
-    <!-- Bill Table -->
-    <table id="billTable" style="display:none;margin-top:14px">
-      <thead>
-        <tr><th>Medicine</th><th>Qty</th><th>Unit Amount</th><th>Discount</th><th>Final</th><th>Action</th></tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-
-    <!-- Summary & Actions -->
-    <div id="billSummary" style="display:none;margin-top:12px">
-      <div style="display:flex;justify-content:space-between;gap:8px;align-items:center">
-        <div class="small">Total Items: <span id="billTotalItems">0</span></div>
-        <div class="small">Gross: ₹<span id="billGross">0.00</span></div>
-        <div class="small">Total Discount: ₹<span id="billTotalDiscount">0.00</span></div>
-        <div class="small"><strong>Net Payable: ₹<span id="billNet">0.00</span></strong></div>
-      </div>
-      <div style="display:flex;gap:10px;justify-content:flex-end;">
-        <button class="bill-btn" id="clearBillBtn" style="background:#ff6b6b">Clear</button>
-        <button class="bill-btn" id="saveBillBtn" style="background:#00b894">Save & Print</button>
-      </div>
-    </div>
-
-  </div>
-
-</div> <!-- /page -->
-
-<!-- Hidden print template area -->
-<div id="printTemplate" style="display:none;">
-  <div id="printHeader" style="text-align:center;margin-bottom:8px;">
-    <h2 style="margin:0">DWC Medical Shop</h2>
-    <div id="printPatientLine" style="margin-top:6px;font-weight:600"></div>
-    <div id="printDateLine" style="margin-top:4px;color:#555;font-size:0.9rem"></div>
-  </div>
-  <table id="printTable" style="width:100%;border-collapse:collapse;">
-    <thead>
-      <tr>
-        <th style="padding:8px;border:1px solid #ddd;background:#f1f1f1">#</th>
-        <th style="padding:8px;border:1px solid #ddd;background:#f1f1f1">Medicine</th>
-        <th style="padding:8px;border:1px solid #ddd;background:#f1f1f1">Qty</th>
-        <th style="padding:8px;border:1px solid #ddd;background:#f1f1f1">Unit</th>
-        <th style="padding:8px;border:1px solid #ddd;background:#f1f1f1">Discount</th>
-        <th style="padding:8px;border:1px solid #ddd;background:#f1f1f1">Final</th>
-      </tr>
-    </thead>
-    <tbody id="printTableBody"></tbody>
-    <tfoot>
-      <tr>
-        <td colspan="5" style="text-align:right;padding:8px;border:1px solid #ddd">Total</td>
-        <td id="printTotalCell" style="padding:8px;border:1px solid #ddd"></td>
-      </tr>
-    </tfoot>
-  </table>
 </div>
 
-<!-- Firebase v12 -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-import { getDatabase, ref, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
+<!-- Add Product -->
+<h2>Add New Product</h2>
+<form class="product-form" id="productForm">
+    <input type="text" id="prodName" placeholder="Product Name" required>
+    <input type="number" id="prodQty" placeholder="Total Quantity" required>
+    <input type="number" id="prodPrice" placeholder="Price per Unit" required>
+    <input type="number" id="prodDiscount" placeholder="Discount %" value="0" min="0" max="100">
+    <button type="submit">Add Product</button>
+</form>
 
-/* ====== Firebase config - change if needed ====== */
-const firebaseConfig = {
-  apiKey: "AIzaSyDlMv0VFlcUD2s92QHfXFMqDZRK2ocVPbA",
-  authDomain: "duct-manager.firebaseapp.com",
-  databaseURL: "https://duct-manager-default-rtdb.firebaseio.com",
-  projectId: "duct-manager",
-  storageBucket: "duct-manager.firebasestorage.app",
-  messagingSenderId: "643811721550",
-  appId: "1:643811721550:web:44f76794dd93610ed51e1f",
-  measurementId: "G-XKEQX69D0N"
-};
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const productsRef = ref(db, "products/");
-const billsRef = ref(db, "bills/");
+<!-- Inventory -->
+<h2>Product Inventory</h2>
+<table id="productTable">
+    <thead>
+        <tr>
+            <th>ID</th><th>Name</th><th>Total Qty</th><th>Sold Qty</th>
+            <th>Remaining</th><th>Price</th><th>Discount</th>
+            <th>Final Price</th><th>Revenue</th><th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
 
-/* ====== Elements ====== */
-const loadingEl = document.getElementById('loading');
-const productForm = document.getElementById('productForm');
-const tableBody = document.querySelector('#productTable tbody');
-const totalProductsEl = document.getElementById('totalProducts');
-const totalValueEl = document.getElementById('totalValue');
-const totalRevenueEl = document.getElementById('totalRevenue');
+<!-- Discount Calculator -->
+<h2>Discount Calculator</h2>
+<form class="discount-form" id="discountForm">
+    <input type="number" id="itemPrice" placeholder="Item Price" required>
+    <input type="number" id="discountPercent" placeholder="Discount %" required min="0" max="100">
+    <button type="submit">Calculate Discount</button>
+</form>
 
-/* Bill elements */
-const patientNextBtn = document.getElementById('patientNextBtn');
-const patientNameInput = document.getElementById('patientName');
-const medicineFormBox = document.getElementById('medicineFormBox');
-const medicineSelect = document.getElementById('medicineSelect');
-const medNameInput = document.getElementById('medName');
-const medPriceInput = document.getElementById('medPrice');
-const medDiscountInput = document.getElementById('medDiscount');
-const medQtyInput = document.getElementById('medQty');
-const addMedToBillBtn = document.getElementById('addMedToBillBtn');
-const billTable = document.getElementById('billTable');
-const billTableBody = billTable.querySelector('tbody');
-const billSummaryDiv = document.getElementById('billSummary');
-const billTotalItemsEl = document.getElementById('billTotalItems');
-const billGrossEl = document.getElementById('billGross');
-const billTotalDiscountEl = document.getElementById('billTotalDiscount');
-const billNetEl = document.getElementById('billNet');
-const clearBillBtn = document.getElementById('clearBillBtn');
-const saveBillBtn = document.getElementById('saveBillBtn');
+<div class="cards" style="margin-bottom:50px;">
+    <div class="card">Discount Amount <span id="discountAmount">0.00</span></div>
+    <div class="card">Total Payable <span id="totalPayable">0.00</span></div>
+</div>
 
-const printTemplate = document.getElementById('printTemplate');
-const printPatientLine = document.getElementById('printPatientLine');
-const printDateLine = document.getElementById('printDateLine');
-const printTableBody = document.getElementById('printTableBody');
-const printTotalCell = document.getElementById('printTotalCell');
+<!-- ============================================= -->
+<!-- BILL CREATOR — FULL FIXED UI ADDED HERE -->
+<!-- ============================================= -->
 
-/* ====== State ====== */
-let firebaseLoaded = false;
-let products = {}; // key -> product data
-let billState = { patient: '', items: [] };
+<h2 style="margin-top:40px;">Bill Creator</h2>
 
-/* Loader fallback */
-setTimeout(()=>{ if(!firebaseLoaded){ loadingEl.style.display='none'; alert('Firebase load timeout — check config/rules'); } }, 6000);
+<!-- PATIENT BOX -->
+<div id="patientFormBox" class="bill-box">
+    <label>Patient Name</label>
+    <input type="text" id="patientName" placeholder="Enter patient name" style="width:100%;padding:8px;margin-top:6px;">
+    <button id="patientNextBtn" class="bill-btn">Next</button>
+</div>
 
-/* ====== Listen products (inventory) ====== */
-onValue(productsRef, snapshot => {
-  firebaseLoaded = true;
-  loadingEl.style.display = 'none';
-  tableBody.innerHTML = '';
-  medicineSelect.innerHTML = '<option value=\"\">-- Select from Inventory (optional) --</option>';
-  let id = 1, totalStockValue = 0, totalRevenue = 0, totalProducts = 0;
-  snapshot.forEach(child => {
-    const key = child.key;
-    const p = child.val();
-    products[key] = p;
-    // create row
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${id++}</td>
-      <td>${escapeHtml(p.name)}</td>
-      <td>${p.totalQty||0}</td>
-      <td><input type="number" class="sold-input" value="${p.soldQty||0}" min="0" max="${p.totalQty||0}" style="width:70px;padding:4px;border-radius:4px;border:1px solid #ddd"></td>
-      <td>${( (p.totalQty||0) - (p.soldQty||0) )}</td>
-      <td>₹${parseFloat(p.price||0).toFixed(2)}</td>
-      <td><input type="number" class="discount-input" value="${p.discount||0}" min="0" max="100" style="width:70px;padding:4px;border-radius:4px;border:1px solid #ddd"></td>
-      <td class="final-price">₹${parseFloat(p.finalPrice||0).toFixed(2)}</td>
-      <td>₹${( (parseFloat(p.finalPrice||0) * (p.soldQty||0)) ).toFixed(2)}</td>
-      <td>
-        <button class="btn btn-edit" data-key="${key}">Edit</button>
-        <button class="btn btn-delete" data-key="${key}">Delete</button>
-      </td>`;
-    tableBody.appendChild(tr);
+<!-- MEDICINE BOX -->
+<div id="medicineFormBox" class="bill-box" style="display:none;">
+    <label>Select From Inventory</label>
+    <select id="medicineSelect" style="width:100%;padding:8px;margin-top:6px;">
+        <option value="">-- Select --</option>
+    </select>
 
-    // attach events
-    tr.querySelector('.btn-delete').addEventListener('click', ()=> {
-      if(confirm('Delete this product?')) remove(ref(db, 'products/' + key));
-    });
-    tr.querySelector('.btn-edit').addEventListener('click', ()=> {
-      const newName = prompt('New Product Name', p.name);
-      const newQty = prompt('New Total Quantity', p.totalQty);
-      const newPrice = prompt('New Price', p.price);
-      if(!newName || !newQty || !newPrice) return;
-      const discountVal = parseFloat(tr.querySelector('.discount-input').value) || 0;
-      const newFinal = (parseFloat(newPrice) - parseFloat(newPrice) * discountVal / 100).toFixed(2);
-      update(ref(db, 'products/' + key), { name: newName, totalQty: parseInt(newQty), price: parseFloat(newPrice), finalPrice: newFinal, discount: discountVal });
-    });
+    <label style="margin-top:10px;">Medicine Name</label>
+    <input type="text" id="medName" placeholder="Medicine name" style="width:100%;padding:8px;">
 
-    // discount change event
-    tr.querySelector('.discount-input').addEventListener('input', (e)=> {
-      const disc = parseFloat(e.target.value) || 0;
-      const priceText = tr.children[5].innerText.replace('₹','') || '0';
-      const priceVal = parseFloat(priceText);
-      const finalVal = (priceVal - priceVal * disc / 100).toFixed(2);
-      tr.querySelector('.final-price').innerText = '₹' + finalVal;
-      update(ref(db, 'products/' + key), { discount: disc, finalPrice: finalVal });
-      recalcSummary();
-    });
+    <label style="margin-top:10px;">Price</label>
+    <input type="number" id="medPrice" placeholder="Price" style="width:100%;padding:8px;">
 
-    // sold change event
-    tr.querySelector('.sold-input').addEventListener('input', (e)=> {
-      let sold = parseInt(e.target.value) || 0;
-      const total = parseInt(tr.children[2].innerText) || 0;
-      if(sold > total) sold = total;
-      e.target.value = sold;
-      update(ref(db, 'products/' + key), { soldQty: sold });
-      recalcSummary();
-    });
+    <label style="margin-top:10px;">Discount %</label>
+    <input type="number" id="medDiscount" value="0" style="width:100%;padding:8px;">
 
-    // options for select
-    const opt = document.createElement('option');
-    opt.value = key;
-    opt.innerText = `${p.name} — ₹${parseFloat(p.finalPrice||0).toFixed(2)} (stock ${p.totalQty||0})`;
-    medicineSelect.appendChild(opt);
+    <label style="margin-top:10px;">Quantity</label>
+    <input type="number" id="medQty" value="1" style="width:100%;padding:8px;">
 
-    totalProducts ++;
-    totalStockValue += (parseFloat(p.finalPrice||0) * ((p.totalQty||0) - (p.soldQty||0)));
-    totalRevenue += (parseFloat(p.finalPrice||0) * (p.soldQty||0));
-  });
+    <button id="addMedToBillBtn" class="bill-btn" style="margin-top:15px;background:#6a00ff;">Add to Bill</button>
+</div>
 
-  totalProductsEl.innerText = totalProducts;
-  totalValueEl.innerText = totalStockValue.toFixed(2);
-  totalRevenueEl.innerText = totalRevenue.toFixed(2);
-});
+<!-- BILL TABLE -->
+<table id="billTable" style="display:none;width:100%;margin-top:20px;border-collapse:collapse;background:white;box-shadow:0 3px 10px rgba(0,0,0,0.1);">
+    <thead>
+        <tr>
+            <th>Medicine</th>
+            <th>Qty</th>
+            <th>Unit</th>
+            <th>Discount</th>
+            <th>Final</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
 
-/* ====== Add new product ====== */
-productForm.addEventListener('submit', e => {
-  e.preventDefault();
-  const name = document.getElementById('prodName').value.trim();
-  const totalQty = parseInt(document.getElementById('prodQty').value) || 0;
-  const price = parseFloat(document.getElementById('prodPrice').value) || 0;
-  const discount = parseFloat(document.getElementById('prodDiscount').value) || 0;
-  if(!name || totalQty < 0 || price <= 0){ alert('Enter valid product details'); return; }
-  const finalPrice = (price - price * discount / 100).toFixed(2);
-  push(productsRef, { name, totalQty, soldQty: 0, price, discount, finalPrice })
-    .then(()=>{ productForm.reset(); })
-    .catch(err => alert('Error: '+err.message));
-});
+<!-- BILL SUMMARY -->
+<div id="billSummary" class="bill-box" style="display:none;"></div>
 
-/* ====== recalc summary helper ====== */
-function recalcSummary(){
-  let totP = 0, totVal = 0, totRev = 0;
-  document.querySelectorAll('#productTable tbody tr').forEach(row=>{
-    const totalQty = parseInt(row.children[2].innerText) || 0;
-    const soldQty = parseInt(row.querySelector('.sold-input').value) || 0;
-    const finalPriceText = row.querySelector('.final-price').innerText.replace('₹','') || '0';
-    const finalPrice = parseFloat(finalPriceText);
-    totP += totalQty;
-    totVal += finalPrice * (totalQty - soldQty);
-    totRev += finalPrice * soldQty;
-    row.children[4].innerText = (totalQty - soldQty);
-    row.children[8].innerText = (finalPrice * soldQty).toFixed(2);
-  });
-  totalProductsEl.innerText = totP;
-  totalValueEl.innerText = totVal.toFixed(2);
-  totalRevenueEl.innerText = totRev.toFixed(2);
-}
-
-/* ====== Billing logic ====== */
-patientNextBtn.addEventListener('click', ()=> {
-  const name = patientNameInput.value.trim();
-  if(!name){ alert('Enter patient name'); return; }
-  billState.patient = name;
-  // hide patient box, show medicine form
-  document.getElementById('patientFormBox').style.display = 'none';
-  medicineFormBox.style.display = 'block';
-  medNameInput.focus();
-});
-
-medicineSelect.addEventListener('change', ()=> {
-  const key = medicineSelect.value;
-  if(!key) return;
-  const p = products[key];
-  if(!p) return;
-  medNameInput.value = p.name || '';
-  medPriceInput.value = parseFloat(p.finalPrice||p.price||0).toFixed(2);
-  medDiscountInput.value = p.discount||0;
-  medQtyInput.value = 1;
-});
-
-addMedToBillBtn.addEventListener('click', (e)=> {
-  e.preventDefault();
-  const name = medNameInput.value.trim();
-  const amount = parseFloat(medPriceInput.value) || 0;
-  const discount = parseFloat(medDiscountInput.value) || 0;
-  const qty = parseInt(medQtyInput.value) || 1;
-  if(!name || amount <= 0){ alert('Enter medicine name and amount'); return; }
-  const unit = amount; // assume amount is unit price or total— user can enter accordingly
-  const final = +( (unit - (unit * discount / 100)) * qty ).toFixed(2);
-  const line = { name, qty, unit: +unit.toFixed(2), discount, final };
-  billState.items.push(line);
-  renderBillTable();
-  // show summary
-  billTable.style.display = 'table';
-  billSummaryDiv.style.display = 'block';
-  // clear form fields
-  medNameInput.value=''; medPriceInput.value=''; medDiscountInput.value=0; medQtyInput.value='';
-});
-
-function renderBillTable(){
-  billTableBody.innerHTML='';
-  let gross = 0, totalDisc = 0, itemsCount = 0;
-  billState.items.forEach((it, idx)=>{
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${escapeHtml(it.name)}</td>
-                    <td>${it.qty}</td>
-                    <td>₹${it.unit.toFixed(2)}</td>
-                    <td>${it.discount}%</td>
-                    <td>₹${it.final.toFixed(2)}</td>
-                    <td><button class="btn" data-idx="${idx}" style="background:#ff6b6b;color:white;border-radius:6px;padding:6px 8px">Remove</button></td>`;
-    billTableBody.appendChild(tr);
-    tr.querySelector('button').addEventListener('click', ()=> {
-      billState.items.splice(idx,1);
-      renderBillTable();
-    });
-    gross += it.final;
-    totalDisc += (it.unit * it.qty) - it.final;
-    itemsCount += it.qty;
-  });
-  billTotalItemsEl.innerText = itemsCount;
-  billGrossEl.innerText = gross.toFixed(2);
-  billTotalDiscountEl.innerText = totalDisc.toFixed(2);
-  billNetEl.innerText = gross.toFixed(2);
-  // show/hide as needed
-  if(billState.items.length === 0){
-    billTable.style.display = 'none';
-    billSummaryDiv.style.display = 'none';
-  }
-}
-
-/* Clear bill */
-clearBillBtn.addEventListener('click', ()=> {
-  if(confirm('Clear current bill?')){
-    billState.items = [];
-    billState.patient = '';
-    document.getElementById('patientFormBox').style.display = 'block';
-    medicineFormBox.style.display = 'none';
-    patientNameInput.value = '';
-    renderBillTable();
-  }
-});
-
-/* Save bill & Print (also updates inventory sold/stock) */
-saveBillBtn.addEventListener('click', async ()=> {
-  if(!billState.patient){ alert('Patient name missing'); return; }
-  if(billState.items.length === 0){ alert('Bill is empty'); return; }
-  const time = Date.now();
-  const gross = parseFloat(billGrossEl.innerText) || 0;
-  const totalDisc = parseFloat(billTotalDiscountEl.innerText) || 0;
-  const net = parseFloat(billNetEl.innerText) || 0;
-  const billObj = {
-    patient: billState.patient,
-    items: billState.items,
-    gross, discount: totalDisc, net, time
-  };
-  try {
-    // save bill
-    await push(billsRef, billObj);
-    // update inventory sold & stock if matching product found by name (best-effort)
-    for(const it of billState.items){
-      // find product by exact name match
-      const matchKey = Object.keys(products).find(k => products[k].name && products[k].name.toLowerCase() === it.name.toLowerCase());
-      if(matchKey){
-        const prod = products[matchKey];
-        const newStock = (parseInt(prod.totalQty||0) - parseInt(it.qty||0));
-        const newSold = (parseInt(prod.soldQty||0) + parseInt(it.qty||0));
-        await update(ref(db, 'products/' + matchKey), { totalQty: newStock, soldQty: newSold });
-      }
-    }
-    // Print bill
-    printBill(billObj);
-    // reset bill state
-    billState = { patient:'', items:[] };
-    document.getElementById('patientFormBox').style.display = 'block';
-    medicineFormBox.style.display = 'none';
-    patientNameInput.value = '';
-    renderBillTable();
-    alert('Bill saved and sent to print.');
-  } catch(err){
-    alert('Error saving bill: ' + err.message);
-  }
-});
-
-/* Print using hidden template */
-function printBill(billObj){
-  // populate header
-  printPatientLine.innerText = 'Patient: ' + (billObj.patient || '');
-  const d = new Date(billObj.time || Date.now());
-  printDateLine.innerText = 'Date: ' + d.toLocaleString();
-  // populate table
-  printTableBody.innerHTML = '';
-  let total = 0;
-  billObj.items.forEach((it, idx)=>{
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td style="padding:8px;border:1px solid #ddd;text-align:center">${idx+1}</td>
-                    <td style="padding:8px;border:1px solid #ddd;text-align:left">${escapeHtml(it.name)}</td>
-                    <td style="padding:8px;border:1px solid #ddd;text-align:center">${it.qty}</td>
-                    <td style="padding:8px;border:1px solid #ddd;text-align:right">₹${it.unit.toFixed(2)}</td>
-                    <td style="padding:8px;border:1px solid #ddd;text-align:center">${it.discount}%</td>
-                    <td style="padding:8px;border:1px solid #ddd;text-align:right">₹${it.final.toFixed(2)}</td>`;
-    printTableBody.appendChild(tr);
-    total += it.final;
-  });
-  printTotalCell.innerText = '₹' + total.toFixed(2);
-
-  // assemble printable HTML
-  const printContent = `
-    <div style="font-family:Arial,Helvetica,sans-serif;color:#111">
-      <div style="text-align:center">
+<!-- PRINT TEMPLATE -->
+<div id="printTemplate" style="display:none;">
+    <div id="printHeader" style="text-align:center;margin-bottom:8px;">
         <h2 style="margin:0">DWC Medical Shop</h2>
-        <div style="margin-top:6px;font-weight:600">${escapeHtml(billObj.patient)}</div>
-        <div style="margin-top:4px;color:#555;font-size:0.9rem">${d.toLocaleString()}</div>
-      </div>
-      <table style="width:100%;border-collapse:collapse;margin-top:12px;font-size:14px;">
-        <thead>
-          <tr>
-            <th style="padding:8px;border:1px solid #ddd;background:#f1f1f1">#</th>
-            <th style="padding:8px;border:1px solid #ddd;background:#f1f1f1">Medicine</th>
-            <th style="padding:8px;border:1px solid #ddd;background:#f1f1f1">Qty</th>
-            <th style="padding:8px;border:1px solid #ddd;background:#f1f1f1">Unit</th>
-            <th style="padding:8px;border:1px solid #ddd;background:#f1f1f1">Disc%</th>
-            <th style="padding:8px;border:1px solid #ddd;background:#f1f1f1">Final</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${billObj.items.map((it,i)=>`
-            <tr>
-              <td style="padding:8px;border:1px solid #ddd;text-align:center">${i+1}</td>
-              <td style="padding:8px;border:1px solid #ddd;text-align:left">${escapeHtml(it.name)}</td>
-              <td style="padding:8px;border:1px solid #ddd;text-align:center">${it.qty}</td>
-              <td style="padding:8px;border:1px solid #ddd;text-align:right">₹${it.unit.toFixed(2)}</td>
-              <td style="padding:8px;border:1px solid #ddd;text-align:center">${it.discount}%</td>
-              <td style="padding:8px;border:1px solid #ddd;text-align:right">₹${it.final.toFixed(2)}</td>
-            </tr>`).join('')}
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="5" style="text-align:right;padding:10px;border:1px solid #ddd">Net Payable</td>
-            <td style="padding:10px;border:1px solid #ddd;text-align:right">₹${billObj.net.toFixed(2)}</td>
-          </tr>
-        </tfoot>
-      </table>
-      <div style="text-align:center;margin-top:16px;font-size:0.9rem;color:#666">Thanks for visiting!</div>
+        <div id="printPatientLine" style="margin-top:6px;font-weight:600"></div>
+        <div id="printDateLine" style="margin-top:4px;color:#555;font-size:0.9rem"></div>
     </div>
-  `;
+    <table id="printTable" style="width:100%;border-collapse:collapse;">
+        <thead>
+            <tr>
+                <th>#</th><th>Medicine</th><th>Qty</th>
+                <th>Unit</th><th>Discount</th><th>Final</th>
+            </tr>
+        </thead>
+        <tbody id="printTableBody"></tbody>
+        <tfoot>
+            <tr><td colspan="5">Total</td><td id="printTotalCell"></td></tr>
+        </tfoot>
+    </table>
+</div>
+<script type="module">
 
-  const w = window.open('', '_blank', 'width=800,height=900');
-  w.document.write(`<html><head><title>Bill</title></head><body>${printContent}</body></html>`);
-  w.document.close();
-  w.focus();
-  w.print();
-  setTimeout(()=>{ w.close(); }, 500);
+/* =========================================================
+   FIREBASE CONFIG
+========================================================= */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, push, set, update, get, child } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAFMz9MLA6zIqs2uDr02jwP9HUN3mcVd2Y",
+  authDomain: "arman-bill.firebaseapp.com",
+  databaseURL: "https://arman-bill-default-rtdb.firebaseio.com",
+  projectId: "arman-bill",
+  storageBucket: "arman-bill.firebasestorage.app",
+  messagingSenderId: "877639309710",
+  appId: "1:877639309710:web:22746dd8cd7c8fff94acdf",
+  measurementId: "G-NXNV6VS8GC"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getDatabase(app);
+
+/* =========================================================
+   GLOBALS
+========================================================= */
+let productList = [];      // inventory products
+let billItems = [];        // items added in bill
+let selectedPatient = "";  // patient name
+
+/* SELECTORS */
+const loading = document.getElementById("loading");
+const productTable = document.querySelector("#productTable tbody");
+const medicineSelect = document.getElementById("medicineSelect");
+const billTable = document.querySelector("#billTable tbody");
+const billTableBox = document.getElementById("billTable");
+const billSummary = document.getElementById("billSummary");
+
+
+/* =========================================================
+   LOAD INVENTORY FROM FIREBASE
+========================================================= */
+async function loadProducts() {
+    const snap = await get(child(ref(db), "products"));
+    productList = snap.exists() ? snap.val() : {};
+
+    productTable.innerHTML = "";
+    medicineSelect.innerHTML = `<option value="">-- Select --</option>`;
+
+    Object.keys(productList).forEach(id => {
+        let p = productList[id];
+
+        productTable.innerHTML += `
+            <tr>
+                <td>${id}</td>
+                <td>${p.name}</td>
+                <td>${p.qty}</td>
+                <td>${p.sold}</td>
+                <td>${p.qty - p.sold}</td>
+                <td>${p.price}</td>
+                <td>${p.discount}%</td>
+                <td>${p.final}</td>
+                <td>${p.revenue}</td>
+                <td>
+                    <button class="btn btn-delete" onclick="deleteProduct('${id}')">Delete</button>
+                </td>
+            </tr>
+        `;
+
+        medicineSelect.innerHTML += `<option value="${id}">${p.name}</option>`;
+    });
+
+    loading.style.display = "none";
+}
+loadProducts();
+
+
+/* =========================================================
+   ADD NEW PRODUCT
+========================================================= */
+document.getElementById("productForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+
+    let name = prodName.value;
+    let qty  = Number(prodQty.value);
+    let price = Number(prodPrice.value);
+    let disc = Number(prodDiscount.value);
+    let finalP = price - (price * disc / 100);
+
+    const newRef = push(ref(db, "products"));
+    await set(newRef, {
+        name:name,
+        qty:qty,
+        sold:0,
+        price:price,
+        discount:disc,
+        final:finalP,
+        revenue:0
+    });
+
+    alert("Product added!");
+    loadProducts();
+});
+
+/* =========================================================
+   DELETE PRODUCT
+========================================================= */
+window.deleteProduct = async function (id){
+    await set(ref(db, "products/"+id), null);
+    loadProducts();
+};
+
+/* =========================================================
+   DISCOUNT CALCULATOR
+========================================================= */
+document.getElementById("discountForm").addEventListener("submit",(e)=>{
+    e.preventDefault();
+    let p = Number(itemPrice.value);
+    let d = Number(discountPercent.value);
+    let disc = p*d/100;
+    let total = p - disc;
+
+    discountAmount.textContent = disc.toFixed(2);
+    totalPayable.textContent = total.toFixed(2);
+});
+
+/* =========================================================
+   BILL CREATOR — STEP 1: PATIENT NAME
+========================================================= */
+patientNextBtn.addEventListener("click", ()=>{
+    if(!patientName.value.trim()){
+        alert("Enter patient name");
+        return;
+    }
+    selectedPatient = patientName.value;
+    patientFormBox.style.display = "none";
+    medicineFormBox.style.display = "block";
+});
+
+/* =========================================================
+   BILL CREATOR — STEP 2: AUTOFILL ON INVENTORY SELECT
+========================================================= */
+medicineSelect.addEventListener("change", ()=>{
+    if(!medicineSelect.value) return;
+
+    let p = productList[medicineSelect.value];
+    medName.value = p.name;
+    medPrice.value = p.price;
+    medDiscount.value = p.discount;
+});
+
+/* =========================================================
+   ADD ITEM TO BILL
+========================================================= */
+addMedToBillBtn.addEventListener("click", ()=>{
+    if(!medName.value.trim()) return alert("Enter medicine name");
+
+    let name = medName.value;
+    let price = Number(medPrice.value);
+    let discount = Number(medDiscount.value);
+    let qty = Number(medQty.value);
+    let final = (price - (price*discount/100)) * qty;
+
+    billItems.push({name, price, discount, qty, final});
+
+    renderBill();
+});
+
+/* =========================================================
+   RENDER BILL TABLE + SUMMARY
+========================================================= */
+function renderBill(){
+    billTableBox.style.display = "table";
+    billSummary.style.display = "block";
+
+    billTable.innerHTML = "";
+    let total = 0;
+    billItems.forEach((it,i)=>{
+        total += it.final;
+        billTable.innerHTML += `
+        <tr>
+            <td>${it.name}</td>
+            <td>${it.qty}</td>
+            <td>${it.price}</td>
+            <td>${it.discount}%</td>
+            <td>${it.final.toFixed(2)}</td>
+            <td><button onclick="removeBillItem(${i})" class="btn btn-delete">X</button></td>
+        </tr>
+        `;
+    });
+
+    billSummary.innerHTML = `
+        <h3>Bill Summary</h3>
+        <p><b>Patient:</b> ${selectedPatient}</p>
+        <p><b>Total:</b> ₹${total.toFixed(2)}</p>
+        <button class="bill-btn" style="background:#00b44e" onclick="saveAndPrint()">Save & Print</button>
+    `;
 }
 
-/* ====== Helpers ====== */
-function escapeHtml(str){
-  if(str === null || str === undefined) return '';
-  return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[s]);
+/* =========================================================
+   REMOVE ITEM FROM BILL
+========================================================= */
+window.removeBillItem = function(i){
+    billItems.splice(i,1);
+    renderBill();
+};
+
+/* =========================================================
+   SAVE BILL + INVENTORY UPDATE + PRINT
+========================================================= */
+window.saveAndPrint = async function(){
+
+    // UPDATE INVENTORY
+    billItems.forEach(it=>{
+        Object.keys(productList).forEach(id=>{
+            if(productList[id].name === it.name){
+                let sold = productList[id].sold + it.qty;
+                let revenue = productList[id].revenue + it.final;
+
+                update(ref(db,"products/"+id),{
+                    sold:sold,
+                    revenue:revenue
+                });
+            }
+        });
+    });
+
+    // SAVE BILL
+    await push(ref(db,"bills"),{
+        patient:selectedPatient,
+        items:billItems,
+        date:new Date().toLocaleString()
+    });
+
+    printBill();
+    billItems = [];
+    renderBill();
+};
+
+/* =========================================================
+   PRINT BILL
+========================================================= */
+function printBill(){
+    let html = `
+    <h3>Medical Shop</h3>
+    <p><b>Patient:</b> ${selectedPatient}</p>
+    <p>${new Date().toLocaleString()}</p>
+    <table border="1" style="width:100%;border-collapse:collapse;margin-top:10px;">
+        <tr>
+            <th>Medicine</th><th>Qty</th><th>Unit</th>
+            <th>Discount</th><th>Final</th>
+        </tr>
+    `;
+
+    let total = 0;
+    billItems.forEach(it=>{
+        total += it.final;
+        html += `
+            <tr>
+                <td>${it.name}</td>
+                <td>${it.qty}</td>
+                <td>${it.price}</td>
+                <td>${it.discount}%</td>
+                <td>${it.final}</td>
+            </tr>
+        `;
+    });
+
+    html += `
+        <tr>
+            <td colspan="4"><b>Total</b></td>
+            <td><b>${total}</b></td>
+        </tr>
+    </table>`;
+
+    let w = window.open();
+    w.document.write(html);
+    w.print();
+    w.close();
 }
+
 </script>
+
+<!-- ================= JS COMES IN PART–3 ================= -->
 
 </body>
 </html>
