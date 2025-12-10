@@ -1,202 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DWC Loading.........</title>
-<meta name="keywords" content="DWC, Digital World, Cyber Cafe, Online Services, Digital Solutions, Printing, Forms">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="DWC, Digital World, Cyber Cafe, Online Services, Digital Solutions, Printing, Forms">
   <meta name="author" content="DWC Team">
-  
+          <title>DWC Loading.........</title>
   <link rel="icon" type="image/png" href="https://i.ibb.co/1gQKw6b/56.png">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
-
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-<!-- Font Awesome -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-<style>
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{
-    background:radial-gradient(circle at center,#eef4ff 0%,#d9e6ff 100%);
-    height:100vh;display:flex;flex-direction:column;
-    justify-content:center;align-items:center;
-    font-family:"Poppins",sans-serif;overflow:hidden;
-    transition:opacity .6s ease;
-    user-select:none;
-  }
-
-  .logo-box{
-    position:relative;
-    width:40vmin;max-width:200px;min-width:120px;
-    height:40vmin;max-height:200px;min-height:120px;
-    display:flex;justify-content:center;align-items:center;
-    animation:fadeIn 1s ease forwards;
-  }
-
-  .logo-circle{
-    position:absolute;width:120%;height:120%;border-radius:50%;
-    border:4px solid rgba(0,136,255,0.3);
-    box-shadow:0 0 25px rgba(0,136,255,0.7),inset 0 0 20px rgba(0,136,255,0.5);
-    animation:glow 2s ease-in-out infinite alternate;
-  }
-
-  .logo{
-    width:80%;height:80%;border-radius:50%;
-    object-fit:cover;background:#fff;z-index:2;
-    box-shadow:0 0 25px rgba(0,0,0,0.2);
-    animation:pulse 3s ease-in-out infinite alternate;
-  }
-
-  @keyframes glow{
-    from{box-shadow:0 0 20px rgba(0,136,255,0.6),inset 0 0 15px rgba(0,136,255,0.4);}
-    to{box-shadow:0 0 35px rgba(0,136,255,1),inset 0 0 25px rgba(0,136,255,0.8);}
-  }
-  @keyframes pulse{from{transform:scale(1);}to{transform:scale(1.05);}}
-  @keyframes fadeIn{from{opacity:0;transform:scale(.85);}to{opacity:1;transform:scale(1);}}
-
-  /* Progress Bar Responsive */
-  .progress-container{
-    width:80vw;max-width:380px;height:10px;background:#eaeaea;
-    border-radius:8px;overflow:hidden;
-    margin-top:10vh;position:relative;
-    box-shadow:inset 0 0 10px rgba(0,0,0,0.1);
-  }
-
-  .progress-bar{
-    width:0%;height:100%;
-    background:linear-gradient(90deg,#ff2b2b,#ff5757,#ff2b2b);
-    background-size:200% 100%;
-    border-radius:8px;
-    position:relative;
-    animation:flow 3s linear infinite,neonPulse 2s ease-in-out infinite alternate;
-  }
-
-  .progress-bar::before{
-    content:"";
-    position:absolute;top:0;left:0;width:100%;height:100%;
-    background:repeating-linear-gradient(135deg,
-      rgba(255,255,255,0.25) 0px,rgba(255,255,255,0.25) 10px,
-      rgba(255,60,60,0.1) 10px,rgba(255,60,60,0.1) 20px);
-    background-size:200% 100%;
-    animation:wave 4s linear infinite;
-    mix-blend-mode:overlay;
-  }
-
-  .progress-bar::after{
-    content:"";
-    position:absolute;right:-10px;top:-3px;width:12px;height:12px;
-    border-radius:50%;
-    background:radial-gradient(circle,#fff 10%,rgba(255,60,60,0.5) 60%,transparent 80%);
-    animation:spark 1.5s ease-in-out infinite;
-  }
-
-  @keyframes flow{0%{background-position:0% 50%;}100%{background-position:100% 50%;}}
-  @keyframes wave{0%{background-position:0% 0;}100%{background-position:200% 0;}}
-  @keyframes spark{0%,100%{transform:scale(0.8);opacity:.8;}50%{transform:scale(1.4);opacity:1;}}
-  @keyframes neonPulse{
-    from{box-shadow:0 0 10px rgba(255,50,50,0.5);}
-    to{box-shadow:0 0 25px rgba(255,50,50,1);}
-  }
-
-  .error{
-    color:#e53935;font-size:clamp(14px,1.5vw,16px);font-weight:600;
-    margin-top:25px;display:none;animation:fadeIn .6s ease;text-align:center;
-  }
-
-  .secure-tag{
-    position:absolute;bottom:18px;
-    font-size:clamp(10px,2vw,12px);color:#666;letter-spacing:0.5px;
-    text-transform:uppercase;opacity:.8;text-align:center;
-  }
-
-  @media (max-height:500px){
-    .progress-container{margin-top:5vh;}
-  }
-</style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
   <div class="logo-box">
     <div class="logo-circle"></div>
     <img src="https://i.ibb.co/1gQKw6b/56.png" class="logo" alt="DWC Logo">
   </div>
-
   <div class="progress-container">
     <div class="progress-bar" id="bar"></div>
   </div>
-
   <div class="error" id="errorMsg">⚠️ No network, please try again</div>
   <div class="secure-tag"></div>
-
-<script>
-(function(){
-  const bar=document.getElementById("bar");
-  const error=document.getElementById("errorMsg");
-  const conn=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
-  let netType=conn&&conn.effectiveType?conn.effectiveType:"4g";
-
-  // Adjust loading duration based on network + CPU
-  let baseDuration;
-  switch(netType){
-    case"slow-2g":baseDuration=12000;break;
-    case"2g":baseDuration=9000;break;
-    case"3g":baseDuration=6000;break;
-    default:baseDuration=3200;
-  }
-  const cores=navigator.hardwareConcurrency||4;
-  const cpuBoost=cores>6?0.8:cores>3?1:1.1;
-  let duration=baseDuration*cpuBoost;
-
-  let progress=0;
-  const step=100/(duration/60);
-  let timer;
-
-  function start(){
-    clearInterval(timer);
-    timer=setInterval(()=>{
-      if(!navigator.onLine){
-        clearInterval(timer);
-        bar.style.width="0%";
-        error.style.display="block";
-        return;
-      }
-      progress+=step;
-      if(progress>=100){
-        progress=100;
-        bar.style.width="100%";
-        clearInterval(timer);
-        setTimeout(()=>{document.body.style.opacity="0";},400);
-        setTimeout(()=>{window.location.href="dwc.html";},900);
-      } else {
-        bar.style.width=progress+"%";
-      }
-    },60);
-  }
-
-  if(!navigator.onLine){error.style.display="block";}
-  else{error.style.display="none";start();}
-
-  window.addEventListener("offline",()=>{clearInterval(timer);error.style.display="block";});
-  window.addEventListener("online",()=>{if(progress<100){error.style.display="none";start();}});
-
-  /* -------- SECURITY LOCKS -------- */
-  document.addEventListener("contextmenu",e=>e.preventDefault()); // Disable right click
-  document.addEventListener("keydown",e=>{
-    if(
-      e.key==="F12" ||
-      (e.ctrlKey && ["S","U","A","C","X","P"].includes(e.key.toUpperCase())) ||
-      (e.ctrlKey && e.shiftKey && ["I","J"].includes(e.key.toUpperCase()))
-    ){
-      e.preventDefault();e.stopPropagation();return false;
-    }
-  });
-
-  document.addEventListener("copy",e=>e.preventDefault());
-  document.addEventListener("cut",e=>e.preventDefault());
-  document.addEventListener("paste",e=>e.preventDefault());
-  document.addEventListener("dragstart",e=>e.preventDefault());
-})();
-</script>
+  <script src="index.js"></script>
 </body>
 </html>
