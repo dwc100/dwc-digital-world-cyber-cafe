@@ -22,7 +22,228 @@ body{
              0 0 3.5vw rgba(0,120,255,.35);
   border-radius:1.2vw;
   pointer-events:none;
-  z-index:9999;
+  z-index:999;
+}
+/* ===================== RESET ===================== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+  user-select:none;
+}
+
+body{
+  min-height:100vh;
+  background:linear-gradient(180deg,#fdfcff,#f6f4ff);
+  color:#1a0033;
+  overflow-x:hidden;
+}
+
+/* ===================== GLOW FRAME ===================== */
+.glow-frame{
+  position:fixed;
+  inset:0;
+  border:0.35vw solid rgba(160,0,255,.55);
+  box-shadow:0 0 2vw rgba(180,0,255,.45),
+             0 0 3.5vw rgba(0,120,255,.35);
+  border-radius:1.2vw;
+  pointer-events:none;
+  z-index:999;
+}
+
+/* ===================== HEADER ===================== */
+.header{
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:1000;
+  padding:16px 5vw;
+  background:rgba(255,255,255,.28);
+  backdrop-filter:blur(18px);
+  border-bottom-left-radius:80px;
+  border-bottom-right-radius:80px;
+  border:1px solid rgba(180,0,255,.25);
+  box-shadow:0 0 2vw rgba(120,0,225,.18);
+}
+
+.header-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+/* ===================== LOGO ===================== */
+.logo{
+  display:flex;
+  align-items:center;
+}
+
+.logo img{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  border:3px solid rgba(190,0,255,.75);
+  box-shadow:0 0 20px rgba(160,0,255,.6),
+             0 0 25px rgba(0,110,255,.5);
+}
+
+.logo span{
+  margin-left:12px;
+  font-family:"Algerian",serif;
+  font-size:22px;
+  letter-spacing:2px;
+  background:linear-gradient(90deg,#b200ff,#005bff,#b200ff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 12px rgba(160,0,255,.45);
+}
+
+/* ===================== NAV ===================== */
+.nav{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.nav a{ text-decoration:none; }
+
+.nav button{
+  padding:10px 22px;
+  border-radius:30px;
+  font-weight:600;
+  border:1px solid rgba(180,0,255,.3);
+  background:rgba(255,255,255,.22);
+  backdrop-filter:blur(14px);
+  color:#4a007f;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.nav button:hover{
+  background:rgba(255,255,255,.42);
+  box-shadow:0 0 20px rgba(200,0,255,.55),
+             0 0 30px rgba(0,120,255,.45);
+  transform:scale(1.05);
+}
+
+/* ===================== MAIN CENTER (SEARCH + BUTTONS) ===================== */
+.main-center{
+  margin-top:260px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:100%;
+}
+
+/* ===================== SEARCH ===================== */
+.search-area{
+  width:100%;
+  display:flex;
+  justify-content:center;
+}
+
+.search-box{
+  width:90%;
+  max-width:600px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:14px 18px;
+  border-radius:50px;
+  background:rgba(255,255,255,.35);
+  border:1px solid rgba(180,0,255,.35);
+  box-shadow:0 0 25px rgba(180,0,255,.35);
+}
+
+.search-box img{
+  width:40px;
+  border-radius:50%;
+}
+
+.search-box input{
+  flex:1;
+  border:none;
+  outline:none;
+  font-size:16px;
+  background:transparent;
+}
+
+.search-box button{
+  background:none;
+  border:none;
+  font-size:18px;
+  color:#4a007f;
+  cursor:pointer;
+}
+
+/* ===================== SUGGESTIONS ===================== */
+#suggestionBox{
+  width:90%;
+  max-width:600px;
+  margin-top:8px;
+  display:none;
+  background:rgba(255,255,255,.4);
+  border-radius:0 0 20px 20px;
+  box-shadow:0 0 30px rgba(180,0,255,.45);
+}
+
+/* ===================== QUICK BUTTONS ===================== */
+.quick-buttons{
+  margin-top:25px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.quick-buttons button{
+  padding:12px 26px;
+  border-radius:40px;
+  border:1px solid rgba(180,0,255,.35);
+  background:rgba(255,255,255,.28);
+  box-shadow:0 0 20px rgba(160,0,255,.35);
+  color:#4a007f;
+  font-weight:600;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.quick-buttons button:hover{
+  transform:scale(1.06);
+  background:rgba(255,255,255,.45);
+}
+
+/* ===================== MOBILE RESPONSIVE ===================== */
+@media(max-width:768px){
+
+  .header-inner{
+    flex-direction:column;
+  }
+
+  .logo span{
+    font-size:16px;
+  }
+
+  .logo img{
+    width:55px;
+    height:55px;
+  }
+
+  .main-center{
+    margin-top:38vh; /* screen ke center ke paas */
+  }
+
+  .search-box{
+    width:92%;
+  }
+
+  .quick-buttons{
+    width:90%;
+  }
 }
 
 /* ===================== HEADER ===================== */
@@ -137,10 +358,11 @@ body{
 
 /* ===================== SEARCH ===================== */
 .search-area{
-  margin-top:160px;
+  margin-top:450px; /* thoda aur niche */
   display:flex;
   justify-content:center;
 }
+
 .search-box{
   width:90%;
   max-width:600px;
@@ -193,12 +415,14 @@ body{
 
 /* ===================== QUICK BUTTONS ===================== */
 .quick-buttons{
-  margin-top:30px;
+  margin-top:25px;
   display:flex;
   justify-content:center;
+  align-items:center;
   gap:15px;
   flex-wrap:wrap;
 }
+
 .quick-buttons button{
   padding:12px 26px;
   border-radius:40px;
@@ -210,11 +434,19 @@ body{
   cursor:pointer;
   transition:.3s;
 }
-.quick-buttons button i{ margin-right:8px; }
-.quick-buttons button:hover{
-  background:rgba(255,255,255,.45);
-  transform:scale(1.06);
+@media(max-width:768px){
+
+  .search-area{
+    margin-top:55vh; /* screen ke center ke paas */
+  }
+
+  .quick-buttons{
+    margin-top:20px;
+    justify-content:center;
+  }
+
 }
+
 
 /* ===================== MOBILE ===================== */
 @media(max-width:768px){
