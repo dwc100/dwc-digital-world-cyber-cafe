@@ -1,148 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cyber Cafe Alerts</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Cafe Alerts</title>
 
-  <style>
-    body{
-      margin:0;
-      padding:0;
-      background:#eef3ff;
-      font-family:'Poppins',sans-serif;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="dwcalert.css" rel="stylesheet">
 
-    .header{
-      background:rgba(255,255,255,0.6);
-      backdrop-filter:blur(10px);
-      padding:20px;
-      text-align:center;
-      font-family:'Orbitron';
-      font-size:2rem;
-      font-weight:800;
-      border-bottom:3px solid #7a00ff;
-    }
+<style>
+/* Extra styling for no-alert + loading text */
+.no-alert, .loading-alert {
+  text-align:center;
+  margin-top:40px;
+  font-size:1.2rem;
+  color:#666;
+  padding:15px;
+}
 
-    .container{
-      max-width:700px;
-      margin:50px auto;
-      padding:20px;
-    }
+.loading-alert i {
+  margin-right:8px;
+  animation:spin 1.2s linear infinite;
+}
 
-    .alert-box{
-      background:white;
-      border-left:8px solid #0055ff;
-      padding:20px;
-      border-radius:10px;
-      margin-bottom:20px;
-      box-shadow:0 4px 15px rgba(0,0,0,0.1);
-      display:flex;
-      align-items:flex-start;
-      gap:15px;
-      animation:fadeIn .5s ease;
-    }
+@keyframes spin {
+  from { transform:rotate(0deg); }
+  to { transform:rotate(360deg); }
+}
+</style>
 
-    .alert-icon{
-      font-size:1.8rem;
-      color:#0055ff;
-    }
-
-    .alert-text{
-      font-size:1rem;
-      color:#222;
-    }
-
-    .alert-warning{border-left-color:#ff8800;}
-    .alert-warning .alert-icon{color:#ff8800;}
-
-    .alert-danger{border-left-color:#ff3b3b;}
-    .alert-danger .alert-icon{color:#ff3b3b;}
-
-    @keyframes fadeIn{
-      from{opacity:0;transform:translateY(10px);} 
-      to{opacity:1;transform:translateY(0);} 
-    }
-  </style>
 </head>
 <body>
 
-  <div class="header">SYSTEM ALERT MESSAGES</div>
+<div class="header">
+  <i class="fa-solid fa-bell"></i> SYSTEM ALERTS
+</div>
 
-  <div class="container">
+<div class="container" id="alerts-area">
+  <div class="loading-alert"><i class="fa fa-spinner"></i> Please wait… loading alerts</div>
+</div>
 
-    <!-- FIXED PERMANENT ALERTS -->
-    <div class="alert-box alert-info">
-      <i class="fa fa-info-circle alert-icon"></i>
-      <div class="alert-text">This system displays your saved alerts permanently.</div>
-    </div>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
-    <div class="alert-box alert-warning">
-      <i class="fa fa-exclamation-circle alert-icon"></i>
-      <div class="alert-text">Reminder: Update your software list regularly.</div>
-    </div>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCZ6UoTAc1BxLkQtnqdq4FXxc3tSTiEZso",
+  authDomain: "systemalert-c2c23.firebaseapp.com",
+  projectId: "systemalert-c2c23",
+  storageBucket: "systemalert-c2c23.firebasestorage.app",
+  messagingSenderId: "458431925330",
+  appId: "1:458431925330:web:722c4afbee90acfcca238b",
+  measurementId: "G-5HVBND1F03"
+};
 
-    <!-- DAILY AUTO-UPDATE ALERT (EVERY 24 HOURS) -->
-    <div id="daily-alert"></div>
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-    <div class="alert-box">
-      <i class="fa fa-info-circle alert-icon"></i>
-      <div class="alert-text">This is a general information alert message for users.</div>
-    </div>
+const alertsArea = document.getElementById("alerts-area");
 
-    <div class="alert-box alert-warning">
-      <i class="fa fa-exclamation-triangle alert-icon"></i>
-      <div class="alert-text">Warning! Your session will expire in 5 minutes. Please save your work.</div>
-    </div>
+let alertCount = 0;
+let loaded = false;
 
-    <div class="alert-box alert-danger">
-      <i class="fa fa-ban alert-icon"></i>
-      <div class="alert-text">Critical Alert! Unauthorized activity detected. Contact administrator immediately.</div>
-    </div>
+// Delay check for no alerts
+setTimeout(() => {
+  if (!loaded) {
+    alertsArea.innerHTML = `
+      <div class='no-alert'>
+        <i class='fa fa-circle-info'></i> No alerts available. Please check daily updates.
+      </div>
+    `;
+  }
+}, 2000);
 
-  </div>
+// Listen for new alerts
+db.ref("alerts").on("child_added", function(snapshot) {
+    const data = snapshot.val();
+    alertCount++;
+    loaded = true;
 
-  <script>
-    function createAlert(type, message){
-      const box=document.createElement('div');
-      box.className=`alert-box alert-${type}`;
-      box.innerHTML=`<i class="fa fa-${type==='danger'?'ban':type==='warning'?'exclamation-triangle':'info-circle'} alert-icon"></i><div class="alert-text">${message}</div>`;
-      document.querySelector('.container').prepend(box);
-      setTimeout(()=>{box.style.opacity='0';box.style.transform='translateY(-10px)';setTimeout(()=>box.remove(),500);},4000);
-    }
-    setTimeout(()=>createAlert('info','Welcome! System is running smoothly.'),1000);
-    setTimeout(()=>createAlert('warning','High traffic detected. Some services may slow.'),3000);
-    setTimeout(()=>createAlert('danger','Security check triggered! Unusual activity found.'),6000);
-  </script>
-  <script>
-    function createAlert(type, message){
-      const box=document.createElement('div');
-      box.className=`alert-box alert-${type}`;
-      box.innerHTML=`<i class=\"fa fa-${type==='danger'?'ban':type==='warning'?'exclamation-triangle':'info-circle'} alert-icon\"></i><div class=\"alert-text\">${message}</div>`;
-      document.querySelector('.container').prepend(box);
-      setTimeout(()=>{box.style.opacity='0';box.style.transform='translateY(-10px)';setTimeout(()=>box.remove(),500);},5000);
+    // Remove loading / no-alert text
+    if (alertCount === 1) {
+      alertsArea.innerHTML = "";
     }
 
-    /* DAILY AUTO MESSAGE */
-    function dailyMessage(){
-      const last = localStorage.getItem('dailyAlertTime');
-      const now = Date.now();
-      const oneDay = 24 * 60 * 60 * 1000;
+    const box = document.createElement("div");
+    box.className = "alert-box alert-" + data.type;
 
-      if(!last || now - last >= oneDay){
-        localStorage.setItem('dailyAlertTime', now);
-        document.getElementById('daily-alert').innerHTML = `
-          <div class=\"alert-box alert-info\"> 
-            <i class=\"fa fa-bell alert-icon\"></i>
-            <div class=\"alert-text\">Daily Update: New features arriving soon. Stay tuned!</div>
-          </div>`;
-      }
-    }
+    let icon =
+        data.type === "warning" ? "exclamation-circle" :
+        data.type === "danger"  ? "ban" : "info-circle";
 
-    dailyMessage();
-  </script>
+    box.innerHTML = `
+      <i class="fa fa-${icon} alert-icon"></i>
+      <div class="alert-text">${data.message}</div>
+    `;
+
+    alertsArea.prepend(box);
+});
+</script>
+
 </body>
 </html>

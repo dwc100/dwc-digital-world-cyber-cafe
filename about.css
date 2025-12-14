@@ -1,0 +1,204 @@
+/* =========================================================
+   GLOBAL RESET
+========================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: "Poppins", sans-serif;
+    overflow-x: hidden;
+}
+
+/* =========================================================
+   BACKGROUND AREA
+========================================================= */
+body {
+    background: radial-gradient(circle at center, #edf3ff 0%, #d3e2ff 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 140px; /* Header avoid overlap */
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #c300ff, #006bff, #ff00ff);
+    background-size: 400% 400%;
+    animation: gradientMove 18s ease-in-out infinite;
+    opacity: 0.35;
+    filter: blur(70px);
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.2rem 5vw;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: rgba(255,255,255,0.22);
+    backdrop-filter: blur(16px);
+    border-bottom-left-radius: 8vw;
+    border-bottom-right-radius: 8vw;
+    border: 2px solid rgba(180,0,255,0.25);
+
+    z-index: 1000;
+}
+
+/* ---------------- Logo ---------------- */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo img {
+    width: clamp(50px, 10vw, 90px);
+    height: clamp(50px, 10vw, 90px);
+    border-radius: 50%;
+    border: 4px solid rgba(190,0,255,0.9);
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.08);
+}
+
+.logo-text {
+    font-family: "Algerian", serif;
+    font-size: clamp(22px, 2.3vw, 42px);
+    font-weight: bold;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #c300ff, #006bff, #b900ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* =========================================================
+   MAIN ABOUT CONTAINER
+========================================================= */
+.about-container {
+    width: 92%;
+    max-width: 900px;
+
+    background: rgba(255,255,255,0.85);
+    padding: 2rem;
+    border-radius: 1.8rem;
+
+    border: 2px solid;
+    border-image: linear-gradient(45deg, #c300ff, #006bff, #ff00ff) 1;
+
+    box-shadow:
+        0 0 25px rgba(0,0,0,0.2),
+        0 0 20px rgba(0,0,0,0.1),
+        0 0 25px #c300ff,
+        0 0 25px #006bff;
+
+    text-align: justify;
+    animation: fadeUp 0.7s ease-in-out;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------------- TITLE ---------------- */
+.about-container h1 {
+    text-align: center;
+    font-size: clamp(22px, 3.6vw, 48px);
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    margin-bottom: 1.4rem;
+    color: #222;
+}
+
+/* ---------------- PARAGRAPHS ---------------- */
+.about-container p {
+    font-size: 1.17rem;
+    color: #222;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+/* =========================================================
+   BUTTON SECTION
+========================================================= */
+.button-container {
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.lang-btn {
+    padding: 0.8rem 2rem;
+    margin: 0 0.6rem;
+
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+
+    background: #fafafa;
+    border: 2px solid #222;
+    border-radius: 14px;
+
+    cursor: pointer;
+    transition: 0.35s ease;
+}
+
+.lang-btn:hover {
+    background: #222;
+    color: #fff;
+    box-shadow: 0 0 15px #222, 0 0 20px #ff00ff;
+    transform: scale(1.05);
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+/* =========================================================
+   RESPONSIVE CODE
+========================================================= */
+@media (max-width: 768px) {
+
+    body {
+        padding-top: 150px;
+    }
+
+    .header {
+        padding: 1rem 4vw;
+    }
+
+    .about-container {
+        padding: 1.5rem;
+    }
+
+    .button-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+}

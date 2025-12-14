@@ -3,536 +3,357 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <title>Digital World Cyber Cafe</title>
-<!-- Meta Tags -->
+
 <meta name="description" content="DWC - Digital World Cyber Cafe offers online form services, printing, digital solutions, and more.">
-<meta name="keywords" content="DWC, Digital World, Cyber Cafe, Online Services, Digital Solutions, Printing, Forms">
-<meta name="author" content="DWC Team">
 
-<!-- Favicon and Apple Touch Icon -->
-<link rel="icon" type="image/png" href="https://i.ibb.co/1gQKw6b/56.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/1gQKw6b/56.png">
-
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-<!-- Font Awesome -->
+<link rel="icon" href="https://i.ibb.co/1gQKw6b/56.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
-<style>
-html, body, * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  -webkit-user-select: none; 
-  -moz-user-select: none;    
-  -ms-user-select: none;     
-  user-select: none;         
-  -webkit-user-drag: none;   
-  -webkit-touch-callout: none;
-  font-family: 'Poppins', sans-serif;
-}
-
-body {
-  background: #fdfcff;
-  color: #1a0033;
-  overflow-x: hidden;
-}
-
-/* ===================== Glow Frame ===================== */
-.glow-frame {
-  position: fixed;
-  inset: 0;
-  border: 0.4vw solid rgba(160, 0, 255, 0.8);
-  box-shadow: 0 0 3vw #b400ff, 0 0 5vw #0077ff;
-  pointer-events: none;
-  border-radius: 1.2vw;
-  transition: all 0.3s ease;
-}
-
-/* ===================== Header ===================== */
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  padding: 2vw 5vw;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(255,255,255,0.2);
-  backdrop-filter: blur(15px);
-  border-bottom-left-radius: 11vw;
-  border-bottom-right-radius: 11vw;
-  border: 0.2vw solid rgba(180, 0, 255, 0.25);
-  box-shadow: 0 0 2.5vw rgba(120,0,225,0.25), 0 0 2.5vw rgba(0,100,225,0.2);
-  transition: all 0.4s ease;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-}
-
-.logo img {
-  width: 10vw;
-  max-width: 90px;
-  height: auto;
-  border-radius: 50%;
-  border: 0.4vw solid rgba(190,0,255,0.9);
-  box-shadow: 0 0 2.5vw rgba(170,0,255,0.8), 0 0 3.5vw #006eff;
-  object-fit: cover;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.logo img:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 3vw #ff00ff, 0 0 4vw #00bbff;
-}
-
-.logo-text {
-  font-family: "Algerian", serif;
-  font-size: 2.0vw;
-  min-font-size: 18px;
-  font-weight: bold;
-  letter-spacing: 0.15vw;
-  margin-left: 1.5vw;
-  background: linear-gradient(90deg, #c300ff, #006bff, #b900ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 1.2vw rgba(170,0,255,0.5), 0 0 2.5vw rgba(0,70,255,0.6), 0 0 4vw rgba(200,0,255,0.7);
-  transition: all 0.3s ease;
-}
-
-.nav {
-  display: flex;
-  gap: 1vw;
-  flex-wrap: nowrap;
-}
-
-.nav button {
-  padding: 1vw 3vw;
-  font-size: 1rem;
-  border-radius: 4vw;
-  font-weight: 600;
-  cursor: pointer;
-  border: 0.2vw solid rgba(180,0,255,0.35);
-  background: rgba(200,225,215,0.1);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 0 1vw rgba(120,0,200,0.25), 0 0 2.0vw rgba(0,70,220,0.3);
-  color: #4a007f;
-  transition: all 0.3s ease;
-}
-
-.nav button:hover {
-  transform: scale(1.08);
-  background: rgba(255,255,255,0.35);
-  box-shadow: 0 0 2.5vw #d000ff, 0 0 3.5vw #0088ff;
-}
-.alert-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 12px 22px;
-  background: #0055ff;
-  color: white;
-  border-radius: 30px;
-  font-weight: 700;
-  text-decoration: none !important; /* ← underline remove */
-}
-
-.alert-btn:hover {
-  background: #003fcc;
-}
-
-.alert-dot {
-  width: 10px;
-  height: 10px;
-  background: red;
-  border-radius: 50%;
-}
-
-
-.alert-dot {
-  width: 1.4vw;
-  height: 1.4vw;
-  min-width: 14px;
-  min-height: 14px;
-  background: #00ff44;
-  border-radius: 50%;
-  box-shadow: 0 0 1.2vw #00ff44, 0 0 2vw #00ff99;
-  margin-right: 0.5vw;
-  animation: blink 1.2s infinite;
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.2; }
-}
-
-/* ===================== Search Box ===================== */
-.search-box {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 600px;
-  width: 90%;
-  display: flex;
-  align-items: center;
-  background: rgba(255,255,255,0.2);
-  border: 0.2vw solid rgba(180,0,255,0.4);
-  border-radius: 50px;
-  padding: 1vw 1.5vw;
-  box-shadow: 0 0 0.1vw #b400ff, 0 0 0.2vw #0077ff;
-  z-index: 999;
-  transition: all 0.3s ease;
-}
-
-.search-box img.logo-inbox {
-  width: 4vw;
-  max-width: 40px;
-  height: auto;
-  border-radius: 50%;
-  margin-right: 1vw;
-  transition: transform 0.3s ease;
-}
-
-.search-box img.logo-inbox:hover {
-  transform: scale(1.1);
-}
-
-.search-box input {
-  flex: 1;
-  padding: 1vw 1vw;
-  border: none;
-  outline: none;
-  font-size: 1rem;
-  background: transparent;
-  color: #1a0033;
-}
-
-.search-box button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.3rem;
-  color: #4a007f;
-  transition: all 0.3s ease;
-}
-
-.search-box button:hover {
-  color: #b400ff;
-  transform: scale(1.1);
-}
-/* Suggestion Box Fully Matching DWC Search Box */
-#suggestionBox {
-  position: fixed;
-  top: calc(50% + 45px);   /* Search box ke bilkul neeche */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 600px;
-
-  background: rgba(255, 255, 255, 0.3);
-  border: 0.2vw solid rgba(180, 0, 255, 0.4);
-  border-top: none;
-  border-radius: 0 0 25px 25px;
-
-  box-shadow: 0 0 2vw #b400ff, 0 0 3vw #0077ff;
-  backdrop-filter: blur(10px);
-
-  max-height: 45vh;
-  overflow-y: auto;
-
-  display: none;
-  z-index: 998; /* Search box ke just neeche */
-}
-
-/* Individual suggestion items */
-#suggestionBox div {
-  padding: 12px 20px;
-  font-size: 1rem;
-  color: #1a0033;
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.1s ease;
-  border-bottom: 1px solid rgba(180,0,255,0.2);
-}
-
-/* Hover effect */
-#suggestionBox div:hover {
-  background: rgba(255, 255, 255, 0.6);
-  transform: scale(1.02);
-}
-
-/* ===================== Quick Buttons ===================== */
-.quick-buttons {
-  position: fixed;
-  top: calc(50% + 6vw);
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 1vw;
-  z-index: 998;
-}
-.btn-icon {
-    margin-right: 0.8vw; /* Space between icon and text */
-    font-size: 1.2rem;   /* Adjust size of icon */
-}
-.quick-buttons button {
-    display: flex;
-    align-items: center;
-    gap: 0.5vw; /* optional: extra spacing if needed */
-    padding: 1vw 3vw;
-    font-size: 1rem;
-    border-radius: 4vw;
-    font-weight: 600;
-    cursor: pointer;
-    border: 0.2vw solid rgba(180,0,255,0.35);
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 1.5vw rgba(150,0,255,0.45), 0 0 2.5vw rgba(0,76,255,0.4);
-    color: #4a007f;
-    transition: all 0.3s ease;
-}
-
-.quick-buttons button:hover {
-    transform: scale(1.08);
-    background: rgba(255,255,255,0.35);
-    box-shadow: 0 0 2.5vw #d000ff, 0 0 3.5vw #0088ff;
-}
-
-.quick-buttons button {
-  padding: 1vw 3vw;
-  font-size: 1rem;
-  border-radius: 4vw;
-  font-weight: 600;
-  cursor: pointer;
-  border: 0.2vw solid rgba(180,0,255,0.35);
-  background: rgba(255,255,255,0.2);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 1.5vw rgba(150,0,255,0.45), 0 0 2.5vw rgba(0,76,255,0.4);
-  color: #4a007f;
-  transition: all 0.3s ease;
-}
-
-.quick-buttons button:hover {
-  transform: scale(1.08);
-  background: rgba(255,255,255,0.35);
-  box-shadow: 0 0 2.5vw #d000ff, 0 0 3.5vw #0088ff;
-}
-
-/* ===================== Info Box ===================== */
-.info-box {
-  position: absolute;
-  max-width: 250px;
-  padding: 1vw 1.2vw;
-  background: rgba(255,255,255,0.95);
-  border-radius: 12px;
-  border: 0.15vw solid #b400ff;
-  box-shadow: 0 0 2vw rgba(180,0,255,0.35);
-  color: #1a0033;
-  font-weight: 500;
-  z-index: 1000;
-  opacity: 0;
-  transform: scale(0.8);
-  transition: all 0.4s ease;
-}
-
-.info-box.active {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.info-box::after {
-  content: "";
-  position: absolute;
-  width: 0; 
-  height: 0; 
-  border-style: solid;
-  border-width: 10px;
-  border-color: #fff transparent transparent transparent;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: -20px;
-}
-
-/* ===================== Login Form ===================== */
-#login-form {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255,255,255,0.95);
-  padding: 1.5vw;
-  border-radius: 1vw;
-  border: 0.2vw solid #b400ff;
-  box-shadow: 0 0 2vw rgba(180,0,255,0.35);
-  z-index: 999;
-  min-width: 250px;
-  transition: all 0.3s ease;
-}
-
-#login-form input {
-  width: 100%;
-  padding: 0.8vw;
-  margin-bottom: 1vw;
-  border-radius: 0.5vw;
-  border: 0.1vw solid #b400ff;
-  font-size: 1rem;
-  outline: none;
-}
-
-#login-form button {
-  width: 100%;
-  padding: 0.8vw;
-  border: none;
-  border-radius: 0.5vw;
-  background: linear-gradient(90deg, #c300ff, #006bff);
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  margin-bottom: 0.5vw;
-  transition: all 0.3s ease;
-}
-
-#login-form button:hover {
-  opacity: 0.9;
-  transform: scale(1.02);
-}
-
-#login-form .google-btn {
-  background: #fff;
-  color: #444;
-  border: 0.1vw solid #b400ff;
-}
-
-#login-btn-container {
-  position: relative;
-}
-#login-form {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255,255,255,0.95);
-    padding: 1.5vw 2vw;
-    border-radius: 1vw;
-    border: 0.2vw solid #b400ff;
-    box-shadow: 0 0 2vw rgba(180,0,255,0.35);
-    z-index: 999;
-    min-width: 250px;
-    text-align: center;
-}
-
-.no-account-msg {
-    font-size: 1rem;
-    color: #1a0033;
-    font-weight: 500;
-}
-
-.no-account-msg .click-here {
-    color: #006bff; /* Blue color */
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: underline;
-    transition: 0.3s ease;
-}
-
-.no-account-msg .click-here:hover {
-    color: #0047b3;
-}
-
-#no-account-box {
-  margin-top: 1vw;
-  padding: 1vw;
-  border: 0.15vw solid #006bff;
-  background: rgba(0,107,255,0.1);
-  border-radius: 0.8vw;
-  font-size: 0.95rem;
-  font-weight: 500;
-}
-
-#no-account-box span {
-  color: #006bff;
-  font-weight: bold;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-#no-account-box span:hover {
-  color: #0047b3;
-}
-/* Remove underline from links wrapping buttons */
-.button-link {
-  text-decoration: none; /* removes underline */
-}
-
-/* ===================== Responsive ===================== */
-@media (max-width: 768px) {
-  .search-box img.logo-inbox { width: 6vw; }
-  .search-box input { font-size: 0.9rem; }
-  .search-box button { font-size: 1rem; }
-  .info-box { max-width: 180px; font-size: 0.85rem; }
-  #login-form { min-width: 200px; padding: 2vw; }
-  .logo-text { font-size: 4vw; }
-}
-
-@media (max-width: 480px) {
-  .search-box { flex-direction: row; padding: 2vw; }
-  .search-box img.logo-inbox { width: 10vw; }
-  .nav button, .quick-buttons button { padding: 2vw 3vw; font-size: 0.85rem; }
-}
-
-</style>
+<link href="dwc.css" rel="stylesheet">
 </head>
 <body>
-
 <div class="glow-frame"></div>
 
+<!-- HEADER -->
 <div class="header">
+  <div class="header-inner">
     <div class="logo">
-        <img src="https://i.ibb.co/1gQKw6b/56.png" alt="Logo">
-        <div class="logo-text">DIGITAL WORLD CYBER CAFE</div>
+      <img src="https://i.ibb.co/1gQKw6b/56.png">
+      <span>DIGITAL WORLD CYBER CAFE</span>
     </div>
-   <div class="nav">
-    <a href="about.html"><button id="about-btn">About</button></a>
-	<a href="dwcalert.html"><button class="alert-btn" id="alert-btn"><span class="alert-dot"></span>New Alert</button></a>
-    <a href="adminacess.html"><button id="admin-btn">Admin</button></a>
-  <div id="login-btn-container">
-    <button id="login-btn">Login</button>
-   <div id="login-form">
-    <input id="login-email" type="email" placeholder="Email ID">
-    <input id="login-password" type="password" placeholder="Password">
-    
-    <button id="email-login-btn">Login</button>
-    <button id="google-login-btn" class="google-btn">Login with Google</button>
 
-    <div id="no-account-box">
-        You don't have an account? 
-        <span onclick="window.location.href='registration.html'" style="cursor:pointer; color:#c300ff; font-weight:600;">
-            Click here
-        </span>
+    <div class="nav">
+      <a href="about.html"><button>About</button></a>
+      <a href="dwcalert.html" class="alert-btn" id="alertBtn">
+  <span class="alert-icon" id="alertIcon">🟣</span>
+  <span class="alert-text" id="alertText">Alert</span>
+</a>
+
+<style>
+/* ===== ALERT BUTTON ADVANCED DESIGN ===== */
+.alert-btn{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:14px 24px;
+  border-radius:50px;
+  background:linear-gradient(135deg,#1e0f3f,#4b0fa3);
+  border:2px solid rgba(180,100,255,0.6);
+  text-decoration:none;
+  color:#fff;
+  font-weight:700;
+  font-size:16px;
+  position:relative;
+  transition:0.3s ease, box-shadow 0.3s ease;
+  box-shadow:0 0 15px rgba(180,100,255,0.4);
+}
+
+/* Hover */
+.alert-btn:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 25px rgba(180,100,255,0.8);
+}
+
+/* ICON */
+.alert-icon{
+  font-size:20px;
+  animation:blink 1.2s infinite;
+  transition:0.3s ease;
+}
+
+/* NORMAL BLINK */
+@keyframes blink{
+  0%, 100%{opacity:1;}
+  50%{opacity:0.2;}
+}
+
+/* SHAKE for danger */
+@keyframes shake{
+  0%{transform:translateX(0);}
+  25%{transform:translateX(-3px);}
+  50%{transform:translateX(3px);}
+  75%{transform:translateX(-3px);}
+  100%{transform:translateX(0);}
+}
+
+/* PULSE animation for icon in danger */
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.4);}
+  100%{transform:scale(1);}
+}
+
+/* ===== STATUS STYLES ===== */
+.alert-btn.status-danger{
+  background:linear-gradient(135deg,#450a0a,#7f1d1d);
+  border-color:#ff4d4d;
+  box-shadow:0 0 25px rgba(255,77,77,0.8);
+  animation:shake 0.5s infinite;
+}
+
+.alert-btn.status-good{
+  background:linear-gradient(135deg,#0a3f45,#0fa37f);
+  border-color:#22c55e;
+  box-shadow:0 0 20px rgba(34,197,94,0.6);
+}
+
+.alert-btn.status-verygood{
+  background:linear-gradient(135deg,#3f0a45,#a30fa3);
+  border-color:#a855f7;
+  box-shadow:0 0 20px rgba(168,85,247,0.7);
+}
+
+.alert-btn.status-green{
+  background:linear-gradient(135deg,#0a3f0a,#0fa30f);
+  border-color:#22c55e;
+  box-shadow:0 0 25px rgba(34,197,94,0.9);
+}
+
+/* Icon pulse on special status */
+.alert-btn.status-danger .alert-icon,
+.alert-btn.status-good .alert-icon,
+.alert-btn.status-verygood .alert-icon,
+.alert-btn.status-green .alert-icon{
+  animation:pulse 1s infinite;
+}
+
+/* MOBILE FRIENDLY */
+@media(max-width:768px){
+  .alert-btn{
+    padding:16px 26px;
+    font-size:17px;
+  }
+  .alert-icon{
+    font-size:22px;
+  }
+}
+
+
+</style>
+<script>
+/* ===== ALERT STATUS CONTROLLER ===== */
+const alertBtn = document.getElementById("alertBtn");
+const alertIcon = document.getElementById("alertIcon");
+const alertText = document.getElementById("alertText");
+
+/* ===== STATUS FUNCTION =====
+   statusCode:
+   "01" => Danger       🚨
+   "02" => Good         👍
+   "03" => Very Good    💜
+   "04" => Green        🟢
+*/
+function setAlertStatus(statusCode, message){
+  // Remove all status classes
+  alertBtn.classList.remove("status-danger","status-good","status-verygood","status-green");
+
+  switch(statusCode){
+    case "01": // Danger
+      alertBtn.classList.add("status-danger");
+      alertIcon.textContent = "🚨";
+      alertText.textContent = message || "Danger Alert!";
+      break;
+
+    case "02": // Good
+      alertBtn.classList.add("status-good");
+      alertIcon.textContent = "👍";
+      alertText.textContent = message || "Good Alert";
+      break;
+
+    case "03": // Very Good
+      alertBtn.classList.add("status-verygood");
+      alertIcon.textContent = "💜";
+      alertText.textContent = message || "Very Good Alert";
+      break;
+
+    case "04": // Green
+      alertBtn.classList.add("status-green");
+      alertIcon.textContent = "🟢";
+      alertText.textContent = message || "All Clear";
+      break;
+
+    default: // Normal
+      alertIcon.textContent = "🟣";
+      alertText.textContent = "Alert";
+  }
+}
+
+/* ===== DEMO ===== */
+setAlertStatus("04","⚠ Server & Alert"); // Danger example
+// setAlertStatus("02","Good Status Active");
+// setAlertStatus("03","Very Good Condition");
+// setAlertStatus("04","System All Clear");
+</script>
+
+
+      <a href="adminacess.html"><button>Admin</button></a>
+
+      <div id="login-btn-container">
+        <button id="login-btn">Login</button>
+        <div id="login-form">
+          <input type="email" placeholder="Email">
+          <input type="password" placeholder="Password">
+          <button>Login</button>
+          <button class="google-btn">Login with Google</button>
+        </div>
+      </div>
     </div>
-</div>
-
   </div>
 </div>
-</div>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } 
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// Your Firebase Config
+<!-- SEARCH -->
+<div class="search-area">
+  <div class="search-box">
+    <img src="https://i.ibb.co/1gQKw6b/56.png">
+    <input id="mySearch" placeholder="Search services & learning items..." onkeyup="showSuggestions()">
+    <button onclick="doSearch()"><i class="fa fa-search"></i></button>
+  </div>
+</div>
+
+<div id="suggestionBox"></div>
+
+<!-- QUICK BUTTONS -->
+<div class="quick-buttons">
+  <a href="dwclearningarea.html"><button><i class="fa fa-book"></i>DWC Learning</button></a>
+  <a href="dwccyberlearning.html"><button><i class="fa fa-shield"></i>Cyber Learning</button></a>
+  <a href="dwcsoftwares.html"><button><i class="fa fa-desktop"></i>Softwares</button></a>
+</div>
+<script src="./dwc.js"></script>
+
+<script type="module">
+/* ===================== BASIC ELEMENTS ===================== */
+const mySearch = document.getElementById("mySearch");
+const suggestionBox = document.getElementById("suggestionBox");
+const loginBtn = document.getElementById("login-btn");
+const loginForm = document.getElementById("login-form");
+
+/* ===================== LOGIN TOGGLE ===================== */
+loginBtn.addEventListener("click", () => {
+  loginForm.style.display =
+    loginForm.style.display === "block" ? "none" : "block";
+});
+
+/* ===================== SEARCH DATA ===================== */
+const defaultSuggestions = [
+  "Class 9th Notes", "Class 9th Chapter 01", "Class 9th Chapter 02",
+  "Class 9th Chapter 03", "Class 9th Chapter 04", "Class 9th Chapter 05",
+  "Class 9th Math Notes", "Class 9th Science Notes",
+  "Class 9th English Notes", "Class 10th Notes",
+  "Online Forms", "Print Service"
+];
+
+/* ===================== LOCAL STORAGE ===================== */
+function getStoredSuggestions() {
+  const stored = JSON.parse(localStorage.getItem("userSearches") || "[]");
+  return [...new Set([...defaultSuggestions, ...stored])];
+}
+
+function storeSearch(query) {
+  if (!query) return;
+  let searches = JSON.parse(localStorage.getItem("userSearches") || "[]");
+  if (!searches.includes(query)) {
+    searches.push(query);
+    localStorage.setItem("userSearches", JSON.stringify(searches));
+  }
+}
+
+/* ===================== SUGGESTIONS ===================== */
+window.showSuggestions = function () {
+  const input = mySearch.value.toLowerCase();
+  suggestionBox.innerHTML = "";
+  suggestionBox.style.display = "none";
+
+  if (!input) return;
+
+  const filtered = getStoredSuggestions().filter(item =>
+    item.toLowerCase().includes(input)
+  );
+
+  filtered.forEach(item => {
+    const div = document.createElement("div");
+    div.innerText = item;
+    div.onclick = () => {
+      mySearch.value = item;
+      storeSearch(item);
+      doSearch();
+    };
+    suggestionBox.appendChild(div);
+  });
+
+  if (filtered.length) suggestionBox.style.display = "block";
+};
+
+/* ===================== SEARCH ===================== */
+function doSearch() {
+  const query = mySearch.value.trim();
+  if (query !== "") {
+    storeSearch(query);
+    window.location.href =
+      "dwcsearchresult.html?q=" + encodeURIComponent(query);
+  }
+}
+
+mySearch.addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    doSearch();
+  }
+});
+
+/* ===================== TOUR INFO BOX ===================== */
+const tourSteps = [
+  { element: '#login-btn', text: 'Login here to access your account.' },
+  { element: '.search-box', text: 'Search DWC services here.' },
+  { element: '.quick-buttons', text: 'Quick access buttons.' }
+];
+
+const infoBox = document.getElementById("info-box");
+let stepIndex = 0;
+
+function showStep(index) {
+  if (!infoBox) return;
+  const step = tourSteps[index];
+  const el = document.querySelector(step.element);
+  if (!el) return;
+
+  const rect = el.getBoundingClientRect();
+  infoBox.textContent = step.text;
+
+  infoBox.style.left =
+    rect.left + rect.width / 2 - 125 + "px";
+  infoBox.style.top =
+    rect.top - 60 + "px";
+
+  infoBox.classList.add("active");
+
+  setTimeout(() => {
+    infoBox.classList.remove("active");
+    if (stepIndex < tourSteps.length - 1) {
+      stepIndex++;
+      showStep(stepIndex);
+    }
+  }, 2500);
+}
+
+window.addEventListener("load", () => {
+  if (infoBox) showStep(stepIndex);
+});
+
+/* ===================== FIREBASE ===================== */
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup
+} from
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyBHnpCgh9RFyVrZLxMeYMv2SkokolLI2Vs",
   authDomain: "use-data-7f613.firebaseapp.com",
-  databaseURL: "https://use-data-7f613-default-rtdb.firebaseio.com",
   projectId: "use-data-7f613",
   storageBucket: "use-data-7f613.firebasestorage.app",
   messagingSenderId: "34772531349",
@@ -543,188 +364,31 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-// Login Button Click
-document.querySelector("#login-form button:nth-of-type(1)").addEventListener("click", () => {
-    const email = document.querySelector("#login-form input[type='email']").value;
-    const password = document.querySelector("#login-form input[type='password']").value;
+/* EMAIL LOGIN */
+document.querySelector("#login-form button:nth-of-type(1)")
+?.addEventListener("click", () => {
+  const email = loginForm.querySelector("input[type='email']").value;
+  const password = loginForm.querySelector("input[type='password']").value;
 
-    signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-            alert("Login successful!");
-            window.location.href = "userloginpage.html"; // redirect optional
-        })
-        .catch((error) => {
-            alert("Login failed: " + error.message);
-        });
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      alert("Login Successful");
+      window.location.href = "userloginpage.html";
+    })
+    .catch(err => alert(err.message));
 });
 
-// Google Login
-document.querySelector(".google-btn").addEventListener("click", () => {
-    signInWithPopup(auth, provider)
-        .then(() => {
-            alert("Google Login Successful!");
-            window.location.href = "userloginpage.html";
-        })
-        .catch((error) => {
-            alert("Google Login Failed: " + error.message);
-        });
-});
-</script>
-
-<div class="search-box">
-    <img src="https://i.ibb.co/1gQKw6b/56.png" alt="Logo" class="logo-inbox">
-    <input type="text" id="mySearch" placeholder="Search..." onkeyup="showSuggestions()">
-    <button onclick="doSearch()">🔍</button>
-
-    <!-- Suggestions box -->
-    <div id="suggestionBox"></div>
-</div>
-
-<script>
-const defaultSuggestions = [
-    "Class 9th Notes", "Class 9th Chapter 01", "Class 9th Chapter 02",
-    "Class 9th Chapter 03", "Class 9th Chapter 04", "Class 9th Chapter 05",
-    "Class 9th Math Notes", "Class 9th Science Notes", "Class 9th English Notes", "Class 10th Notes"
-];
-
-// Load stored searches from localStorage
-function getStoredSuggestions() {
-    const stored = JSON.parse(localStorage.getItem("userSearches") || "[]");
-    return [...new Set([...defaultSuggestions, ...stored])]; // Merge default + stored, remove duplicates
-}
-
-// Save a search term
-function storeSearch(query) {
-    if (!query) return;
-    let searches = JSON.parse(localStorage.getItem("userSearches") || "[]");
-    if (!searches.includes(query)) {
-        searches.push(query);
-        localStorage.setItem("userSearches", JSON.stringify(searches));
-    }
-}
-
-// Show suggestions in real-time
-function showSuggestions() {
-    let input = document.getElementById("mySearch").value.toLowerCase();
-    let box = document.getElementById("suggestionBox");
-
-    box.innerHTML = "";
-    box.style.display = "none";
-
-    if (input === "") return;
-
-    const suggestionsData = getStoredSuggestions();
-    let filtered = suggestionsData.filter(item =>
-        item.toLowerCase().includes(input)
-    );
-
-    if (filtered.length === 0) return;
-
-    filtered.forEach(item => {
-        let div = document.createElement("div");
-        div.innerText = item;
-
-        div.onclick = function () {
-            document.getElementById("mySearch").value = item;
-            storeSearch(item); // store on click as well
-            doSearch();
-        };
-
-        box.appendChild(div);
-    });
-
-    box.style.display = "block";
-}
-
-// Perform search
-function doSearch() {
-    let query = document.getElementById("mySearch").value.trim();
-    if (query !== "") {
-        storeSearch(query); // store current search
-        window.location.href = "dwcsearchresult.html?q=" + encodeURIComponent(query);
-    }
-}
-
-// ENTER key
-document.getElementById("mySearch").addEventListener("keydown", function(event) {
-    if (event.key === "Enter") {
-        event.preventDefault();
-        doSearch();
-    }
-});
-
-// SEARCH BUTTON
-document.getElementById("searchButton").addEventListener("click", function() {
-    doSearch();
-});
-</script>
-
-
-<div class="quick-buttons">
-    <button id="dwcc-btn">
-        <i class="fas fa-book btn-icon"></i>
-        DWC Learning
-    </button>
-    <button id="cyber-btn">
-        <i class="fas fa-shield-alt btn-icon"></i>
-        DWC Cyber Learning
-    </button>
-   <a href="dwcsoftwares.html" class="button-link">
-  <button id="soft-btn"><i class="fas fa-desktop btn-icon"></i> DWC Softwares</button>
-</a>
-
-</div>
-
-
-<div class="info-box" id="info-box"></div>
-
-<script>
-const tourSteps = [
-    { element: '#about-btn', text: 'This is the About button. Learn more about DWC here.' },
-    { element: '#alert-btn', text: 'This button shows new alerts and notifications.' },
-    { element: '#login-btn', text: 'Login button for authorized users.' },
-    { element: '#dwcc-btn', text: 'DWC Learning resources.' },
-    { element: '#cyber-btn', text: 'DWC Cyber Learning programs.' },
-    { element: '#soft-btn', text: 'DWC Software tools available.' }
-];
-
-const infoBox = document.getElementById('info-box');
-let stepIndex = 0;
-
-function showStep(index) {
-    const step = tourSteps[index];
-    const el = document.querySelector(step.element);
-    const rect = el.getBoundingClientRect();
-
-    infoBox.textContent = step.text;
-
-    const boxWidth = infoBox.offsetWidth || 250;
-    infoBox.style.left = (window.scrollX + rect.left + rect.width/2 - boxWidth/2) + 'px';
-    infoBox.style.top = (window.scrollY + rect.top - 60) + 'px';
-
-    infoBox.classList.add('active');
-
-    setTimeout(() => {
-        infoBox.classList.remove('active');
-        if(stepIndex < tourSteps.length -1){
-            stepIndex++;
-            showStep(stepIndex);
-        }
-    }, 3000);
-}
-
-window.addEventListener('load', () => {
-    showStep(stepIndex);
-});
-
-// Login toggle
-const loginBtn = document.getElementById('login-btn');
-const loginForm = document.getElementById('login-form');
-
-loginBtn.addEventListener('click', () => {
-    loginForm.style.display = loginForm.style.display === 'block' ? 'none' : 'block';
+/* GOOGLE LOGIN */
+document.querySelector(".google-btn")
+?.addEventListener("click", () => {
+  signInWithPopup(auth, provider)
+    .then(() => {
+      alert("Google Login Successful");
+      window.location.href = "userloginpage.html";
+    })
+    .catch(err => alert(err.message));
 });
 </script>
 
 </body>
-</html> 
+</html>
