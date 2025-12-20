@@ -245,17 +245,6 @@ tr:hover{background:#f1f1f1;}
 </header>
 
 <div class="page">
-
-<!-- Dashboard -->
-<h2>Dashboard Summary</h2>
-<div class="cards">
-    <div class="card">Total Products <span id="totalProducts">0</span></div>
-    <div class="card">Total Inventory Value <span id="totalValue">0.00</span></div>
-    <div class="card">Total Revenue <span id="totalRevenue">0.00</span></div>
-</div>
-
-<!-- Add Product -->
-<h2>Add New Product</h2>
 <form class="product-form" id="productForm">
     <input type="text" id="prodName" placeholder="Product Name" required>
     <input type="number" id="prodQty" placeholder="Total Quantity" required>
@@ -268,12 +257,7 @@ tr:hover{background:#f1f1f1;}
 <h2>Product Inventory</h2>
 <table id="productTable">
     <thead>
-        <tr>
-            <th>ID</th><th>Name</th><th>Total Qty</th><th>Sold Qty</th>
-            <th>Remaining</th><th>Price</th><th>Discount</th>
-            <th>Amount</th><th>Revenue</th><th>Actions</th>
-        </tr>
-    </thead>
+            </thead>
     <tbody></tbody>
 </table>
 
@@ -423,7 +407,7 @@ async function loadProducts() {
                 <td>${p.qty - p.sold}</td>
                 <td>${p.price}</td>
                 <td>${p.discount}%</td>
-                <td>${(p.final || (p.price - (p.price*p.discount/100))*p.qty).toFixed(2)}</td>
+        
                 <td>${p.revenue.toFixed(2)}</td>
                 <td>
                     <button class="btn btn-delete" onclick="deleteProduct('${id}')">Delete</button>
@@ -519,8 +503,7 @@ medicineSelect.addEventListener("change", ()=>{
 /* =========================================================
    ADD ITEM TO BILL
 ========================================================= */
-addMedToBillBtn.addEventListener("click", ()=>{
-    if(!medName.value.trim()) return alert("Enter Product Name");
+  if(!medName.value.trim()) return alert("Enter Product Name");
 
     let name = medName.value.trim();
     let price = Number(medPrice.value);
@@ -569,8 +552,7 @@ function renderBill(){
     billSummary.innerHTML = `
         <h3>Bill Summary</h3>
         <p><b>Customer Name:</b> ${selectedPatient}</p>
-        <p><b>Total:</b> ₹${total.toFixed(2)}</p>
-        <button class="bill-btn" style="background:#00b44e" onclick="saveAndPrint()">Save & Print</button>
+    <button class="bill-btn" style="background:#00b44e" onclick="saveAndPrint()">Save & Print</button>
     `;
 }
 
@@ -651,22 +633,11 @@ function printBill(){
     });
 
     html += `
-        <tr>
-            <td colspan="4"><b>Total Amount</b></td>
-            <td><b>${total.toFixed(2)}</b></td>
+       <td><b>${total.toFixed(2)}</b></td>
         </tr>
-    </table>`;
-
-    let w = window.open();
-    w.document.write(html);
-    w.print();
-    w.close();
-}
-
-</script>
-
-
-<!-- ================= JS COMES IN PART–3 ================= -->
+`;
+======== -->
 
 </body>
 </html>
+
